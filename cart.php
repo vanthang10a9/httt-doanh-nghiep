@@ -1,3 +1,17 @@
+<?php
+session_start();
+print_r($_SESSION);
+//xử lý khi người dùng chỉnh sửa đơn hàng
+
+//kiểm tra giỏ hàng có tồn tại sản phẩm
+$ok = 1;
+if (isset($_SESSION['cart'])) {
+	foreach ($_SESSION['cart'] as $k => $v) {
+		if (isset($k))
+			$ok = 2;
+	}
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,71 +54,80 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12 ftco-animate">
-					<div class="cart-list">
-						<table class="table">
-							<thead class="thead-primary">
-								<tr class="text-center">
-									<th>&nbsp;</th>
-									<th>&nbsp;</th>
-									<th>Product name</th>
-									<th>Price</th>
-									<th>Quantity</th>
-									<th>Total</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr class="text-center">
-									<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+					<?php
+					if ($ok == 2) {
+						?>
+						<div class="cart-list">
+							<table class="table">
+								<thead class="thead-primary">
+									<tr class="text-center">
+										<th>&nbsp;</th>
+										<th>&nbsp;</th>
+										<th>Tên sản phẩm</th>
+										<th>Giá</th>
+										<th>Số lượng</th>
+										<th>Tổng tiền</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+										//tìm kiếm, hiển thị tất cả sản phẩm có id trong session
+										foreach ($_SESSION['cart'] as $key => $value) {
+											$item[] = $key;
+										}
+										$str = implode(",", $item);
+										$query = "SELECT * FROM sanpham WHERE idSP IN ($str)";
+										$results = DataProvider::executeQuery($query);
+										$totalPrice = 0;
+										while ($row = mysqli_fetch_array($results)) { ?>
 
-									<td class="image-prod">
-										<div class="img" style="background-image:url(images/product-3.jpg);"></div>
-									</td>
+										<tr class="text-center">
+											<td class="product-remove"><a href="delete-cart.php?id=<?php echo $row['idSP']; ?>"><span class="ion-ios-close"></span></a></td>
 
-									<td class="product-name">
-										<h3>Bell Pepper</h3>
-										<p>Far far away, behind the word mountains, far from the countries</p>
-									</td>
+											<td class="image-prod">
+												<div class="img" style="background-image:url(images/products/<?php echo $row['hinhanhSP']?>);"></div>
+											</td>
 
-									<td class="price">$4.90</td>
+											<td class="product-name">
+												<h3><?php echo $row['tenSP']; ?></h3>
+											</td>
 
-									<td class="quantity">
-										<div class="input-group mb-3">
-											<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-										</div>
-									</td>
+											<?php 
+											//tính giá tiền nếu có khuyến mãi + tổng tiền
+											if (!empty($row['kmSP'])) {
+												$price = $row['giaSP'] - ($row['giaSP'] * $row['kmSP']) / 100;
+											} else {
+												$price = $row['giaSP'];
+											}
+											
+											$totalPrice += $price * $_SESSION['cart'][$row['idSP']];
+											
+											?>
+											<td class="price"><?php echo $price ?></td>
 
-									<td class="total">$4.90</td>
-								</tr><!-- END TR-->
+											<td class="quantity">
+												<div class="input-group mb-3">
+													<input type="text" name="quantity" class="quantity form-control input-number" value="<?php echo $_SESSION['cart'][$row['idSP']]; ?>" min="1" max="100">
+												</div>
+											</td>
 
-								<tr class="text-center">
-									<td class="product-remove"><a href="#"><span class="ion-ios-close"></span></a></td>
+											<td class="total"><?php echo ($price * $_SESSION['cart'][$row['idSP']]); ?></td>
+										</tr><!-- END TR-->
+										<?php
+										}
+										?>
 
-									<td class="image-prod">
-										<div class="img" style="background-image:url(images/product-4.jpg);"></div>
-									</td>
-
-									<td class="product-name">
-										<h3>Bell Pepper</h3>
-										<p>Far far away, behind the word mountains, far from the countries</p>
-									</td>
-
-									<td class="price">$15.70</td>
-
-									<td class="quantity">
-										<div class="input-group mb-3">
-											<input type="text" name="quantity" class="quantity form-control input-number" value="1" min="1" max="100">
-										</div>
-									</td>
-
-									<td class="total">$15.70</td>
-								</tr><!-- END TR-->
-							</tbody>
-						</table>
-					</div>
+								</tbody>
+							</table>
+						</div>
+					<?php } else { ?>
+						<p>Không có sản phẩm nào trong giỏ hàng</p>
+					<?php } ?>
 				</div>
 			</div>
 			<div class="row justify-content-end">
-				<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+				<!-- Phần khuyến mại + thanh toán: thương mại điện tử làm -->
+				<!-- <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
 					<div class="cart-total mb-3">
 						<h3>Coupon Code</h3>
 						<p>Enter your coupon code if you have one</p>
@@ -137,26 +160,26 @@
 						</form>
 					</div>
 					<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Estimate</a></p>
-				</div>
+				</div> -->
 				<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
 					<div class="cart-total mb-3">
 						<h3>Cart Totals</h3>
 						<p class="d-flex">
 							<span>Subtotal</span>
-							<span>$20.60</span>
+							<span><?php echo $totalPrice; ?></span>
 						</p>
-						<p class="d-flex">
+						<!-- <p class="d-flex">
 							<span>Delivery</span>
 							<span>$0.00</span>
 						</p>
 						<p class="d-flex">
 							<span>Discount</span>
 							<span>$3.00</span>
-						</p>
+						</p> -->
 						<hr>
 						<p class="d-flex total-price">
-							<span>Total</span>
-							<span>$17.60</span>
+							<span>Tổng tiền</span>
+							<span><?php echo $totalPrice; ?></span>
 						</p>
 					</div>
 					<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>

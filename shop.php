@@ -28,6 +28,8 @@
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/icomoon.css">
 	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+
 </head>
 
 <body class="goto-here">
@@ -50,18 +52,40 @@
 			</div>
 			<div class="row">
 				<?php
-				$sql = "SELECT * FROM sanpham";
+				//thuật toán phân trang -  Nguồn: https://freetuts.net/thuat-toan-phan-trang-voi-php-va-mysql-550.html
+				//tìm số records
+				$result = DataProvider::executeQuery("SELECT count(idSP) AS total FROM sanpham");
+				$row = mysqli_fetch_assoc($result);
+				$total_records = $row['total'];
+
+				//tìm limit, current_page
+				$current_page = isset($_GET['page']) ? $_GET['page'] : 1;
+				$limit = 8;
+
+				//tính total_page, start
+				$total_page = ceil($total_records / $limit);
+				//giới hạn current_page
+				if ($current_page > $total_page) {
+					$current_page = $total_page;
+				} else if ($current_page < 1) {
+					$current_page = 1;
+				}
+				//start
+				$start = ($current_page - 1) * $limit;
+
+				//lấy dánh sách sản phẩm
+				$sql = "SELECT * FROM sanpham LIMIT $start, $limit";
 				$result = DataProvider::executeQuery($sql);
 				while ($row = mysqli_fetch_array($result)) {
 					?>
 					<div class="col-md-6 col-lg-3 ftco-animate">
 						<div class="product">
-							<a href="#" class="img-prod"><img class="img-fluid" src="images/product-1.jpg" alt="Colorlib Template">
+							<a href="product-single.php?id=<?php echo $row['idSP']; ?>" class="img-prod"><img class="img-fluid" src="images/product-1.jpg" alt="Colorlib Template">
 								<?php if (!empty($row['kmSP'])) { ?><span class="status"><?php echo $row['kmSP']; ?> %</span> <?php } ?>
 								<div class="overlay"></div>
 							</a>
 							<div class="text py-3 pb-4 px-3 text-center">
-								<h3><a href="#"><?php echo $row['tenSP']; ?></a></h3>
+								<h3><a href="product-single.php?id=<?php echo $row['idSP']; ?>"><?php echo $row['tenSP']; ?></a></h3>
 								<div class="d-flex">
 									<div class="pricing">
 										<p class="price">
@@ -78,12 +102,12 @@
 										</p>
 									</div>
 								</div>
-								<div class="bottom-area d-flex px-3">
+								<div class="bottom-area d-flex px-3 product-id-<?php echo $row['idSP']; ?>" id="<?php echo $row['idSP']; ?>">
 									<div class="m-auto d-flex">
 										<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
 											<span><i class="ion-ios-menu"></i></span>
 										</a>
-										<a href="#" class="buy-now d-flex justify-content-center align-items-center mx-1">
+										<a href="" class="buy-now d-flex justify-content-center align-items-center mx-1" id="addcart-<?php echo $row['idSP']; ?>">
 											<span><i class="ion-ios-cart"></i></span>
 										</a>
 										<a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -91,6 +115,24 @@
 										</a>
 									</div>
 								</div>
+								<script type="text/javascript">
+									$("a#addcart-<?php echo $row['idSP']; ?>").click(function() {
+										var id = $(".product-id-<?php echo $row['idSP']?>").attr('id');
+										alert(id);
+										$.ajax({
+											type: "POST",
+											url:"addcart.php",
+											data: {id : id},
+											cache: false,
+											success: function(results) {
+												//alert(results);
+												window.location.reload();
+											}
+										});
+										//alert("audio Here");
+									});
+									
+								</script>
 							</div>
 						</div>
 					</div>
@@ -100,13 +142,24 @@
 				<div class="col text-center">
 					<div class="block-27">
 						<ul>
-							<li><a href="#">&lt;</a></li>
-							<li class="active"><span>1</span></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">&gt;</a></li>
+							<?php
+							//hiển thị nút prev
+							if ($current_page > 1 && $total_page > 1) { ?>
+								<li><a href="shop.php?page=<?php echo ($current_page - 1); ?>">&lt;</a></li>
+								<?php
+								}
+								for ($i = 1; $i < $total_page; $i++) {
+									if ($i == $current_page) { ?>
+									<li class="active"><span><?php echo $i; ?></span></li>
+								<?php } else { ?>
+									<li><a href="shop.php?page=<?php echo $i; ?>"><?php echo $i; ?></a></li>
+								<?php }
+								}
+
+								if ($current_page < $total_page && $total_page > 1) { ?>
+								<li><a href="shop.php?page=<?php echo ($current_page + 1); ?>">&gt;</a></li>
+							<?php }
+							?>
 						</ul>
 					</div>
 				</div>
@@ -151,6 +204,7 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
+
 
 </body>
 
