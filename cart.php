@@ -23,6 +23,7 @@ if (isset($_SESSION['cart'])) {
 	<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
 	<link rel="stylesheet" href="css/open-iconic-bootstrap.min.css">
 	<link rel="stylesheet" href="css/animate.css">
@@ -82,27 +83,27 @@ if (isset($_SESSION['cart'])) {
 										while ($row = mysqli_fetch_array($results)) { ?>
 
 										<tr class="text-center">
-											<td class="product-remove"><a href="delete-cart.php?id=<?php echo $row['idSP']; ?>"><span class="ion-ios-close"></span></a></td>
+											<td class="product-remove"><a id="delete-product-<?php echo $row['idSP']; ?>" href="delete-cart.php?id=<?php echo $row['idSP']; ?>"><span class="ion-ios-close"></span></a></td>
 
 											<td class="image-prod">
-												<div class="img" style="background-image:url(images/products/<?php echo $row['hinhanhSP']?>);"></div>
+												<div class="img" style="background-image:url(images/products/<?php echo $row['hinhanhSP'] ?>);"></div>
 											</td>
 
 											<td class="product-name">
 												<h3><?php echo $row['tenSP']; ?></h3>
 											</td>
 
-											<?php 
-											//tính giá tiền nếu có khuyến mãi + tổng tiền
-											if (!empty($row['kmSP'])) {
-												$price = $row['giaSP'] - ($row['giaSP'] * $row['kmSP']) / 100;
-											} else {
-												$price = $row['giaSP'];
-											}
-											
-											$totalPrice += $price * $_SESSION['cart'][$row['idSP']];
-											
-											?>
+											<?php
+													//tính giá tiền nếu có khuyến mãi + tổng tiền
+													if (!empty($row['kmSP'])) {
+														$price = $row['giaSP'] - ($row['giaSP'] * $row['kmSP']) / 100;
+													} else {
+														$price = $row['giaSP'];
+													}
+
+													$totalPrice += $price * $_SESSION['cart'][$row['idSP']];
+
+													?>
 											<td class="price"><?php echo $price ?></td>
 
 											<td class="quantity">
@@ -112,22 +113,24 @@ if (isset($_SESSION['cart'])) {
 											</td>
 
 											<td class="total"><?php echo ($price * $_SESSION['cart'][$row['idSP']]); ?></td>
+
+											<!-- xóa giỏ sản phẩm bằng ajax cho nó chuyên nghiệp :D -->
+											<script type="text/javascript">
+												$("a#delete-product-<?php echo $row['idSP']; ?>").click(function() {
+													alert("đâs");
+												});
+											</script>
 										</tr><!-- END TR-->
-										<?php
+									<?php
 										}
 										?>
 
 								</tbody>
 							</table>
 						</div>
-					<?php } else { ?>
-						<p>Không có sản phẩm nào trong giỏ hàng</p>
-					<?php } ?>
-				</div>
-			</div>
-			<div class="row justify-content-end">
-				<!-- Phần khuyến mại + thanh toán: thương mại điện tử làm -->
-				<!-- <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+						<div class="row justify-content-end">
+							<!-- Phần khuyến mại + thanh toán: thương mại điện tử làm -->
+							<!-- <div class="col-lg-4 mt-5 cart-wrap ftco-animate">
 					<div class="cart-total mb-3">
 						<h3>Coupon Code</h3>
 						<p>Enter your coupon code if you have one</p>
@@ -161,14 +164,14 @@ if (isset($_SESSION['cart'])) {
 					</div>
 					<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Estimate</a></p>
 				</div> -->
-				<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
-					<div class="cart-total mb-3">
-						<h3>Cart Totals</h3>
-						<p class="d-flex">
-							<span>Subtotal</span>
-							<span><?php echo $totalPrice; ?></span>
-						</p>
-						<!-- <p class="d-flex">
+							<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
+								<div class="cart-total mb-3">
+									<h3>Cart Totals</h3>
+									<p class="d-flex">
+										<span>Subtotal</span>
+										<span><?php echo $totalPrice; ?></span>
+									</p>
+									<!-- <p class="d-flex">
 							<span>Delivery</span>
 							<span>$0.00</span>
 						</p>
@@ -176,14 +179,19 @@ if (isset($_SESSION['cart'])) {
 							<span>Discount</span>
 							<span>$3.00</span>
 						</p> -->
-						<hr>
-						<p class="d-flex total-price">
-							<span>Tổng tiền</span>
-							<span><?php echo $totalPrice; ?></span>
-						</p>
-					</div>
-					<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+									<hr>
+									<p class="d-flex total-price">
+										<span>Tổng tiền</span>
+										<span><?php echo $totalPrice; ?></span>
+									</p>
+								</div>
+								<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+							</div>
+						</div>
 				</div>
+			<?php } else { ?>
+				<p>Không có sản phẩm nào trong giỏ hàng</p>
+			<?php } ?>
 			</div>
 		</div>
 	</section>

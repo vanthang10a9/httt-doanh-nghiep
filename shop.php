@@ -116,20 +116,20 @@
 									</div>
 								</div>
 								<script type="text/javascript">
-									$("a#addcart-<?php echo $row['idSP']; ?>").click(function() {
-										var id = $(".product-id-<?php echo $row['idSP']?>").attr('id');
-										alert(id);
+									$("a#addcart-<?php echo $row['idSP']; ?>").click(function(e) {
+										e.preventDefault();
+										var item = {'id': $(".product-id-<?php echo $row['idSP']?>").attr('id'), 'quantity': 1};
 										$.ajax({
 											type: "POST",
 											url:"addcart.php",
-											data: {id : id},
+											data: item,
 											cache: false,
 											success: function(results) {
-												//alert(results);
-												window.location.reload();
+												//console.log(data);
+												console.log(results); 
+												//window.location.reload();
 											}
 										});
-										//alert("audio Here");
 									});
 									
 								</script>

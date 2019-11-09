@@ -121,7 +121,7 @@
 							?></p>
 						</div>
 					</div>
-					<p><a href="cart.php" class="btn btn-black py-3 px-5">Add to Cart</a></p>
+					<p><a href="" class="btn btn-black py-3 px-5" id="add-cart">Add to Cart</a></p>
 				</div>
 			</div>
 		</div>
@@ -222,6 +222,20 @@
 				if (quantity > 0) {
 					$('#quantity').val(quantity - 1);
 				}
+			});
+
+			$('a#add-cart').click(function(e) {
+				e.preventDefault();
+				var item = {'id': <?php echo $idSP ;?>, 'quantity': $('#quantity').val()}
+				$.ajax({
+					type: "POST",
+					url: "addcart.php",
+					data: item,
+					cache: false,
+					success: function(results) {
+						console.log(results);
+					}
+				})
 			});
 
 		});
