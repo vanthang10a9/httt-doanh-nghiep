@@ -80,10 +80,12 @@ if (isset($_SESSION['cart'])) {
 										$query = "SELECT * FROM sanpham WHERE idSP IN ($str)";
 										$results = DataProvider::executeQuery($query);
 										$totalPrice = 0;
-										while ($row = mysqli_fetch_array($results)) { ?>
-
-										<tr class="text-center">
-											<td class="product-remove"><a id="delete-product-<?php echo $row['idSP']; ?>" href="delete-cart.php?id=<?php echo $row['idSP']; ?>"><span class="ion-ios-close"></span></a></td>
+										while ($row = mysqli_fetch_array($results)) { 
+											$idSP = $row['idSP'];	
+										?>
+								
+										<tr class="text-center" id="product-<?php echo $row['idSP']; ?>">
+											<td class="product-remove"><a id="delete-product-<?php echo $row['idSP']; ?>" href=""><span class="ion-ios-close"></span></a></td>
 
 											<td class="image-prod">
 												<div class="img" style="background-image:url(images/products/<?php echo $row['hinhanhSP'] ?>);"></div>
@@ -116,8 +118,15 @@ if (isset($_SESSION['cart'])) {
 
 											<!-- xóa giỏ sản phẩm bằng ajax cho nó chuyên nghiệp :D -->
 											<script type="text/javascript">
-												$("a#delete-product-<?php echo $row['idSP']; ?>").click(function() {
-													alert("đâs");
+												$("a#delete-product-<?php echo $row['idSP']; ?>").click(function(e) {
+													e.preventDefault();
+													$.ajax ({
+														type: "POST",
+														url: "delete-cart.php?id=<?php echo $row['idSP']; ?>",
+														success: function(results) {
+															$('#product-<?php echo $row['idSP']; ?>').remove();
+														}
+													});
 												});
 											</script>
 										</tr><!-- END TR-->
