@@ -30,6 +30,15 @@
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
+	<!-- MDB icon -->
+	<link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="css/mdb.min.css">
+  
 </head>
 
 <body class="goto-here">
@@ -37,6 +46,7 @@
 	include('modules/header.php');
 	include('modules/content/title.php'); //tieu de & hinh nen tieu de
 	?>
+
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row justify-content-center">
@@ -56,6 +66,35 @@
 					</ul>
 				</div>
 			</div>
+
+			<form class="form-inline md-form mr-auto mb-4">
+				<select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
+					<option value="" disabled selected>Choose your country</option>
+					<option value="1">USA</option>
+					<option value="2">Germany</option>
+					<option value="3">France</option>
+					<option value="4">Poland</option>
+					<option value="5">Japan</option>
+				</select>
+				<label class="mdb-main-label">Label example</label>
+
+				<select class="mdb-select" multiple searchable="Search here..">
+					<optgroup label="team 1">
+						<option value="1">Option 1</option>
+						<option value="2">Option 2</option>
+					</optgroup>
+					<optgroup label="team 2">
+						<option value="3">Option 3</option>
+						<option value="4">Option 4</option>
+					</optgroup>
+				</select>
+
+			</form>
+			<form class="form-inline md-form mr-auto mb-4">
+				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+				<button class="btn aqua-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
+			</form>
+
 			<div class="row">
 				<?php
 
