@@ -14,7 +14,7 @@ database:
 các sản phẩm, nhà cung cấp, đơn hàng (đơn hàng admin không duyệt)
 + Admin quản lý user: Thêm user, sửa thông tin user, cấp quyền cho user. Duyệt tài khoản khách hàng
 -------------------------------- QUẢN LÝ KHO ----------------------------------
---báo cáo quản lý kho:
+. báo cáo quản lý kho:
 báo cáo về tình trạng của những sản phẩm cho admin
 lược đồ (sau cùng)
 
