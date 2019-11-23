@@ -35,8 +35,8 @@
         <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản lý tài khoản</h6>
-                <a class="collapse-item" href="buttons.html">Nhân viên</a>
-                <a class="collapse-item" href="cards.html">Khách hàng</a>
+                <a class="collapse-item" href="useractivation.php">Duyệt tài khoản khách hàng</a>
+                <a class="collapse-item" href="users.php">Tất cả tài khoản</a>
             </div>
         </div>
     </li>

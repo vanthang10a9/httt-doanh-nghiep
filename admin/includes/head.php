@@ -1,5 +1,5 @@
-<?php  
-    require('../core/DataProvider.php');  
+<?php
+require('../core/DataProvider.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,5 +22,13 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- Bootstrap core JavaScript-->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+</script>
 
 </head>
