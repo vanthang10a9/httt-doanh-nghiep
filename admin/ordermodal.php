@@ -2,7 +2,7 @@
 $sqlcat = "SELECT * FROM loaisanpham";
 $run = DataProvider::executeQuery($sqlcat);
 ?>
-<div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="ordermodal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -46,7 +46,7 @@ $run = DataProvider::executeQuery($sqlcat);
                 </form>
             </div>
             <div class="modal-footer">
-                <a href="" id="action-button" class="btn btn-primary">
+                <a href="" class="btn btn-primary">
                     Thực hiện
                 </a>
             </div>

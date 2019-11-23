@@ -112,6 +112,7 @@ include("includes/head.php");
             $("#product")[0].reset();
             $('#image-label').text("Chọn hình ảnh sản phẩm");
             $('.js-file-list').html('');
+            $("#productModal #action-button").html("Thêm sản phẩm");
         });
 
         $('#dataTable').dataTable({
@@ -157,6 +158,7 @@ include("includes/head.php");
                     var filename= imageSrc.split('/').pop()
                     $('.js-file-image').attr('src', imageSrc);
                     $('#image-label').text(filename);
+            $("#productModal #action-button").html("Sửa sản phẩm");
             $("#productModal").modal("show");
 
         });

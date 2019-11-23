@@ -85,6 +85,7 @@ include("includes/head.php");
 
 
     <?php
+    include('ordermodal.php');
     include('includes/scroll-logout.php');
     include('includes/scripts.php')
     ?>
@@ -97,12 +98,28 @@ include("includes/head.php");
     <script type="text/javascript">
         $('#dataTable').dataTable({
             "columnDefs": [{
-                "orderable": false,
-                "targets": [5,6]
-            }]
+                    "orderable": false,
+                    "targets": [5, 6]
+                },
+                {
+                    "targets": 5,
+                    "data": null,
+                    "defaultContent": '<button class="btn btn-outline-primary m-1 ct">Chi tiết</button>'
+                }
+            ]
+        });
+        $('#dataTable tbody').on('click', '.ct', function(e) {
+            //var productid = $(this).closest('tr').attr('id');
+            //bodyalert("kakak");
+            $("#ordermodal").modal("show");
         });
     </script>
 
 </body>
+<style>
+    .ct {
+        padding: 0.1rem 0.1rem;
+    }
+</style>
 
 </html>
