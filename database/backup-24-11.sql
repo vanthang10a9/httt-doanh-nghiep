@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Máy chủ: 127.0.0.1
--- Thời gian đã tạo: Th10 24, 2019 lúc 04:01 AM
+-- Thời gian đã tạo: Th10 23, 2019 lúc 10:11 AM
 -- Phiên bản máy phục vụ: 10.1.38-MariaDB
 -- Phiên bản PHP: 7.3.2
 
@@ -115,27 +115,6 @@ INSERT INTO `donhang` (`idDH`, `idUser`, `nameDH`, `phoneDH`, `addressDH`, `emai
 -- --------------------------------------------------------
 
 --
--- Cấu trúc bảng cho bảng `donnhap`
---
-
-CREATE TABLE `donnhap` (
-  `maNCC` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
-  `MASP` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
-  `tongtien` int(20) NOT NULL,
-  `ngaynhap` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `duyet` tinyint(2) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `donnhap`
---
-
-INSERT INTO `donnhap` (`maNCC`, `MASP`, `tongtien`, `ngaynhap`, `duyet`) VALUES
-('NCC01', 'HS001', 2000000, '2019-11-24 09:47:39', 0);
-
--- --------------------------------------------------------
-
---
 -- Cấu trúc bảng cho bảng `khuyenmai`
 --
 
@@ -194,14 +173,6 @@ CREATE TABLE `nhacungcap` (
   `tenNCC` varchar(100) COLLATE utf8_unicode_ci NOT NULL,
   `thongtin` varchar(255) COLLATE utf8_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
-
---
--- Đang đổ dữ liệu cho bảng `nhacungcap`
---
-
-INSERT INTO `nhacungcap` (`maNCC`, `tenNCC`, `thongtin`) VALUES
-('NCC01', 'Thuận', 'aaaaaa'),
-('NCC02', 'Thái', 'aaaa');
 
 -- --------------------------------------------------------
 
@@ -297,7 +268,7 @@ CREATE TABLE `taikhoan` (
   `email` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `phone` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `level` int(1) NOT NULL,
-  `note` tinyint(1) NOT NULL DEFAULT '0'
+  `note` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 --
@@ -305,12 +276,12 @@ CREATE TABLE `taikhoan` (
 --
 
 INSERT INTO `taikhoan` (`idUser`, `username`, `password`, `name`, `cmnd`, `address`, `email`, `phone`, `level`, `note`) VALUES
-(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin', 123456789, '123 admin', 'admin@gmail.com', '0120147841', 2, 1),
-(2, 'anhtuan', '15f8182445bac21b05802649a8a698e7', 'Trần Anh Tuấn', 1234567890, '123 thiên đàng, quận 12', 'anhtuan@gmail.com', '0123456789', 1, 1),
-(3, 'duyvang', '8d0fa2cd4ed157b401daa62590c4c27a', 'Nguyễn Duy Vàng', 1234567891, '287 thành công, quận tân phú, tp Hồ Chí Minh', 'duyvang@gmail.com', '0123456744', 1, 1),
-(8, 'thientam', 'b58c6ee1f5147f41204f3225a3039e99', 'Phan Thiên Tâm', 123456789, 'Số 10 đường 13, Thiên Đàng, TP. Cửu U', 'thientam@gmail.com', '01234567120', 0, 1),
+(1, 'admin', 'e10adc3949ba59abbe56e057f20f883e', 'admin', 123456789, '123 admin', 'admin@gmail.com', '0120147841', 2, 0),
+(2, 'anhtuan', '15f8182445bac21b05802649a8a698e7', 'Trần Anh Tuấn', 1234567890, '123 thiên đàng, quận 12', 'anhtuan@gmail.com', '0123456789', 1, 0),
+(3, 'duyvang', '8d0fa2cd4ed157b401daa62590c4c27a', 'Nguyễn Duy Vàng', 1234567891, '287 thành công, quận tân phú, tp Hồ Chí Minh', 'duyvang@gmail.com', '0123456744', 1, 0),
+(8, 'thientam', 'b58c6ee1f5147f41204f3225a3039e99', 'Phan Thiên Tâm', 123456789, 'Số 10 đường 13, Thiên Đàng, TP. Cửu U', 'thientam@gmail.com', '01234567120', 0, 0),
 (10, 'huatiensinh', 'ccef8c9a83e883430038c91805b316ed', 'Hứa Bán Thần', 123456789, 'tiểu miếu sông Vong Thủy', 'huatiensinh@gmail.com', '01234567877', 0, 1),
-(13, 'vang01', 'e10adc3949ba59abbe56e057f20f883e', 'duy vang', 123456789, '132 3 tháng 2 quận 10 tp hcm', 'duyvang260498@gmail.com', '0911482088', 0, 1),
+(13, 'vang01', 'e10adc3949ba59abbe56e057f20f883e', 'duy vang', 123456789, '132 3 tháng 2 quận 10 tp hcm', 'duyvang260498@gmail.com', '0911482088', 0, 0),
 (14, 'xuantai', 'b4bec8de2e29ee17f082d03ff139c361', 'Nguyễn Xuân Tài', 1231648941, '287 thành công quận tân phú tp hcm', 'xuantai@gmail.com', '0120369850', 0, 0),
 (15, 'minhkhai', '25f9e794323b453885f5181f1b624d0b', 'Nguyễn Thị Minh Khai', 1012410124, '123 bùi đình túy quận bình thạnh, tp hcm', 'vang260498@gmail.com', '0985102104', 0, 0);
 
