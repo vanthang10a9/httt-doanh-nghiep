@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.php">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -13,7 +13,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="index.html">
+        <a class="nav-link" href="index.php">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>
@@ -50,7 +50,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản lý danh mục</h6>
-                <a class="collapse-item" href="utilities-color.html">Danh mục sản phẩm</a>
+                <a class="collapse-item" href="utilities-color.php">Danh mục sản phẩm</a>
             </div>
         </div>
     </li>
@@ -64,9 +64,9 @@
         <div id="collapseThree" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản lý sản phẩm</h6>
-                <a class="collapse-item" href="utilities-color.html">Tất cả sản phẩm</a>
-                <a class="collapse-item" href="utilities-color.html">Sản phẩm khuyến mãi</a>
-                <a class="collapse-item" href="utilities-color.html">Sản phẩm mới</a>
+                <a class="collapse-item" href="utilities-color.php">Tất cả sản phẩm</a>
+                <a class="collapse-item" href="utilities-color.php">Sản phẩm khuyến mãi</a>
+                <a class="collapse-item" href="utilities-color.php">Sản phẩm mới</a>
             </div>
         </div>
     </li>
@@ -75,13 +75,15 @@
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>Hóa đơn</span>
+            <span>Đơn hàng</span>
         </a>
         <div id="collapseFour" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Quản lý bán</h6>
+                <a class="collapse-item" href="orders.php">Hóa đơn bán hàng</a>
                 <h6 class="collapse-header">Quản lý bán & nhập</h6>
-                <a class="collapse-item" href="orders.php">Hóa đơn nhập hàng</a>
-                <a class="collapse-item" href="goodsReceipt.php">Hóa đơn bán hàng</a>
+                <a class="collapse-item" href="accept-receipt.php">Duyệt đơn nhập</a>
+                <a class="collapse-item" href="goodsReceipt.php">Hóa đơn nhập hàng</a>
             </div>
         </div>
     </li>
@@ -95,7 +97,7 @@
         <div id="collapseFive" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản lý nhà cung cấp</h6>
-                <a class="collapse-item" href="utilities-color.html">Nhà cung cấp</a>
+                <a class="collapse-item" href="supplier.php">Nhà cung cấp</a>
             </div>
         </div>
     </li>
