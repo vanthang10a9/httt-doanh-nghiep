@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+	<title>PizzaHot - Checkout</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -41,28 +41,28 @@
 			<div class="row justify-content-center">
 				<div class="col-xl-7 ftco-animate">
 					<form action="#" class="billing-form">
-						<h3 class="mb-4 billing-heading">Billing Details</h3>
+						<h3 class="mb-4 billing-heading">Chi tiết thanh toán</h3>
 						<div class="row align-items-end">
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="firstname">Firt Name</label>
+									<label for="firstname">Họ và đệm</label>
 									<input type="text" class="form-control" placeholder="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="lastname">Last Name</label>
+									<label for="lastname">Tên</label>
 									<input type="text" class="form-control" placeholder="">
 								</div>
 							</div>
 							<div class="w-100"></div>
 							<div class="col-md-12">
 								<div class="form-group">
-									<label for="country">State / Country</label>
+									<label for="country">Khu vực / Quốc gia</label>
 									<div class="select-wrap">
 										<div class="icon"><span class="ion-ios-arrow-down"></span></div>
 										<select name="" id="" class="form-control">
-											<option value="">France</option>
+											<option value="">VietNam</option>
 											<option value="">Italy</option>
 											<option value="">Philippines</option>
 											<option value="">South Korea</option>
@@ -75,38 +75,38 @@
 							<div class="w-100"></div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="streetaddress">Street Address</label>
-									<input type="text" class="form-control" placeholder="House number and street name">
+									<label for="streetaddress">Địa chỉ</label>
+									<input type="text" class="form-control" placeholder="Số nhà và tên đường">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<input type="text" class="form-control" placeholder="Appartment, suite, unit etc: (optional)">
-								</div>
-							</div>
-							<div class="w-100"></div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="towncity">Town / City</label>
-									<input type="text" class="form-control" placeholder="">
-								</div>
-							</div>
-							<div class="col-md-6">
-								<div class="form-group">
-									<label for="postcodezip">Postcode / ZIP *</label>
-									<input type="text" class="form-control" placeholder="">
+									<input type="text" class="form-control" placeholder="Thông tin chi tiết: Chung cư, Tòa nhà ... )">
 								</div>
 							</div>
 							<div class="w-100"></div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="phone">Phone</label>
+									<label for="towncity">Thị trấn / Thành phố</label>
 									<input type="text" class="form-control" placeholder="">
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class="form-group">
-									<label for="emailaddress">Email Address</label>
+									<label for="postcodezip">Mã nhận / ZIP *</label>
+									<input type="text" class="form-control" placeholder="">
+								</div>
+							</div>
+							<div class="w-100"></div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="phone">Sdt</label>
+									<input type="text" class="form-control" placeholder="">
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class="form-group">
+									<label for="emailaddress">Email</label>
 									<input type="text" class="form-control" placeholder="">
 								</div>
 							</div>
@@ -114,8 +114,8 @@
 							<div class="col-md-12">
 								<div class="form-group mt-4">
 									<div class="radio">
-										<label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
-										<label><input type="radio" name="optradio"> Ship to different address</label>
+										<label class="mr-3"><input type="radio" name="optradio"> Tạo 1 địa chỉ nhận </label>
+										<label><input type="radio" name="optradio"> Vận chuyển tới chỗ khác</label>
 									</div>
 								</div>
 							</div>
@@ -126,58 +126,58 @@
 					<div class="row mt-5 pt-3">
 						<div class="col-md-12 d-flex mb-5">
 							<div class="cart-detail cart-total p-3 p-md-4">
-								<h3 class="billing-heading mb-4">Cart Total</h3>
+								<h3 class="billing-heading mb-4">Tổng chi</h3>
 								<p class="d-flex">
-									<span>Subtotal</span>
-									<span>$20.60</span>
+									<span>Phụ chi</span>
+									<span>109k</span>
 								</p>
 								<p class="d-flex">
-									<span>Delivery</span>
-									<span>$0.00</span>
+									<span>Phí giao</span>
+									<span>15k</span>
 								</p>
 								<p class="d-flex">
-									<span>Discount</span>
-									<span>$3.00</span>
+									<span> Giảm giá</span>
+									<span>12k</span>
 								</p>
 								<hr>
 								<p class="d-flex total-price">
-									<span>Total</span>
-									<span>$17.60</span>
+									<span>Tổng</span>
+									<span>113k</span>
 								</p>
 							</div>
 						</div>
 						<div class="col-md-12">
 							<div class="cart-detail p-3 p-md-4">
-								<h3 class="billing-heading mb-4">Payment Method</h3>
+								<h3 class="billing-heading mb-4">Phương thức thanh toán</h3>
 								<div class="form-group">
 									<div class="col-md-12">
 										<div class="radio">
-											<label><input type="radio" name="optradio" class="mr-2"> Direct Bank Tranfer</label>
+											<label><input type="radio" name="optradio" class="mr-2"> Thẻ ngân hàng</label>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-md-12">
 										<div class="radio">
-											<label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
+											<label><input type="radio" name="optradio" class="mr-2"> Ví điện tử</label>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-md-12">
 										<div class="radio">
-											<label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
+											<label><input type="radio" name="optradio" class="mr-2"> Tiền mặt</label>
 										</div>
 									</div>
 								</div>
 								<div class="form-group">
 									<div class="col-md-12">
 										<div class="checkbox">
-											<label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
+											<label><input type="checkbox" value="" class="mr-2"> Tôi đã đọc và chấp nhận các điều khoản thanh toán</label>
 										</div>
 									</div>
 								</div>
-								<p><a href="#" class="btn btn-primary py-3 px-4">Place an order</a></p>
+								<p><a href="#" class="btn btn-primary py-3 px-4">Đặt hàng</a></p>
 							</div>
 						</div>
 					</div>
