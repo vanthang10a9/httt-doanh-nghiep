@@ -28,6 +28,7 @@ tao biết đường giao tiếp. giờ t cũng chưa suy nghĩ ra việc phù h
 - Sửa lại tiếng việt vẫn còn chưa sửa
 - Ở trang product-single.php lấy số lượng sản phẩm để hiển thị tình trạng sản phẩm (số lượng = 0 => hết hàng, > 0 => còn hàng)
 - Trang product-single.php Xử lý khi khách đặt số lượng > số hàng còn => không cho đặt và thông báo
+- Tìm hiểu stored procedure  
 ## nghĩa bùi
 - tìm kiếm thường + nâng cao trong shop.php
   
