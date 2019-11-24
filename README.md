@@ -18,18 +18,18 @@ các sản phẩm, nhà cung cấp, đơn hàng (đơn hàng admin không duyệ
 báo cáo về tình trạng của những sản phẩm cho admin
 lược đồ (sau cùng)
 
-## ------------------------------- CÔNG VIỆC 23/11 -------------------------------
+## ------------------------------- CÔNG VIỆC 25/11 -------------------------------
 tạm thời nhiêu đây... tới 11h30 chủ nhật làm tới đâu thì đánh dấu trong file này để 
 tao biết đường giao tiếp. giờ t cũng chưa suy nghĩ ra việc phù hợp nữa T_T 
 ## van thang
-- chỉnh lại tiếng việt (trong thư mục modules header.php, footer.php, body.php)
-- tìm hình ảnh sản phẩm, danh mục
-- link trang đăng nhập, đăng ký (admin/congcu/login.html & register.html)
-- xóa những gì liên quan tới wish list
-
+- Tìm thêm hình cho title mấy trang shop.php
+- thêm class active khi nhấn vào danh mục sản phẩm trong shop.php
+- Chỉnh background cho trang đăng kí + đăng nhập đồng bộ màu xanh lá.
+- Sửa lại tiếng việt vẫn còn chưa sửa
+- Ở trang product-single.php lấy số lượng sản phẩm để hiển thị tình trạng sản phẩm (số lượng = 0 => hết hàng, > 0 => còn hàng)
+- Trang product-single.php Xử lý khi khách đặt số lượng > số hàng còn => không cho đặt và thông báo
 ## nghĩa bùi
 - tìm kiếm thường + nâng cao trong shop.php
-- thêm class active khi nhấn vào danh mục sản phẩm trong shop.php
   
 ## quoc thang
 - thêm khóa ngoại
