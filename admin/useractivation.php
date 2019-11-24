@@ -51,38 +51,25 @@ include("includes/head.php");
                                             <th>Địa chỉ</th>
                                             <th>Email</th>
                                             <th>Số điện thoại</th>
-                                            <th>Vai trò</th>
-                                            <th>Thao tác</th>
+                                            <th>Duyệt</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM taikhoan";
+                                        $sql = "SELECT * FROM taikhoan WHERE level = 0 AND note = 0";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
-                                            $level = $row['level'];
-                                            switch ($level) {
-                                                case 2:
-                                                    $role = "Admin";
-                                                    break;
-                                                case 1:
-                                                    $role = "Nhân viên";
-                                                    break;
-                                                default:
-                                                    $role = "Khách hàng";
-                                            }
                                             ?>
-                                                <tr idUser="<?php echo $row['idUser']; ?>">
-                                                    <td><?php echo $row['username']; ?></td>
-                                                    <td><?php echo $row['name']; ?></td>
-                                                    <td><?php echo $row['cmnd']; ?></td>
-                                                    <td><?php echo $row['address']; ?></td>
-                                                    <td><?php echo $row['email']; ?></td>
-                                                    <td><?php echo $row['phone']; ?></td>
-                                                    <td id="<?php echo $level; ?>"><?php echo $role; ?></td>
-                                                    <td style='display:flex'></td>
-                                                </tr>
-                                            <?php } ?>
+                                            <tr idUser="<?php echo $row['idUser']; ?>">
+                                                <td><?php echo $row['username']; ?></td>
+                                                <td><?php echo $row['name']; ?></td>
+                                                <td><?php echo $row['cmnd']; ?></td>
+                                                <td><?php echo $row['address']; ?></td>
+                                                <td><?php echo $row['email']; ?></td>
+                                                <td><?php echo $row['phone']; ?></td>
+                                                <td style='display:flex'></td>
+                                            </tr>
+                                        <?php } ?>
                                     </tbody>
                                     <tfoot>
                                     </tfoot>
@@ -107,8 +94,31 @@ include("includes/head.php");
     </div>
     <!-- End of Page Wrapper -->
 
+    <!-- activation modal-->
+    <div class="modal fade" id="activationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Chấp nhận đăng kí tài khoản</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <a href="" class="btn btn-primary">
+                        Chấp nhận
+                    </a>
+                    <a href="" class="btn btn-secondary">
+                        Thoát
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <?php
     include('includes/scroll-logout.php');
+    include('deleteModal.php');
     include('usermodal.php');
     include('includes/scripts.php')
     ?>
@@ -131,39 +141,31 @@ include("includes/head.php");
 
         $('#dataTable').dataTable({
             "columnDefs": [{
-                "orderable": false,
-                "targets": [2, 5, -1],
-            },
-            {
-                "targets": -1,
-                "data": null,
-                "defaultContent": '<button class="btn-xs btn-info m-1 edit"><i class="fa fa-edit"></i></button>' +
-                    '<button class="btn-xs btn-danger m-1 delete"><i class="fa fa-trash"></i></button>'
-            }]
+                    "orderable": false,
+                    "targets": [2, 5, -1],
+                },
+                {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": '<button class="btn btn-outline-info m-1 activation"><i class="fa fa-check"></i></button>' +
+                        '<button class="btn btn-outline-danger m-1 delete"><i class="fa fa-times"></i></button>'
+                }
+            ]
         });
 
         //Handle click on "Edit" button
-        $('#dataTable tbody').on('click', '.btn-info', function(e) {
+        $('#dataTable tbody').on('click', '.activation', function(e) {
             var userid = $(this).closest('tr').attr('id');
             var tds = $(this).closest('tr').find('td');
-            var elements = [];
-            for (i = 0; i < tds.length; i++) {
-                if (i == tds.length - 2) {
-                    elements[i] = tds.eq(i).attr('id');
-                } else {
-                    elements[i] = tds.eq(i).text();
-                }
-            }
+            $("#activationModal").modal("show");
 
-            $(".modal-body #editUserModal #username").val(elements[0]);
-            $(".modal-body #editUserModal #name").val(elements[1]);
-            $(".modal-body #editUserModal #identity").val(elements[2]);
-            $(".modal-body #editUserModal #address").val(elements[3]);
-            $(".modal-body #editUserModal #email").val(elements[4]);
-            $(".modal-body #editUserModal #phonenumber").val(elements[5]);
-            $(".modal-body #editUserModal #role").val(elements[tds.length - 2]);
-            $("#editUserModal").modal("show");
+        });
 
+        //Handle click on "Edit" button
+        $('#dataTable tbody').on('click', '.delete', function(e) {
+            var userid = $(this).closest('tr').attr('id');
+            var tds = $(this).closest('tr').find('td');
+            $("#deleteModal").modal("show");
         });
     </script>
 

@@ -28,7 +28,7 @@
 
     <!-- Nav Item - quản trị tài khoản -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseTwo">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             <i class="fas fa-fw fa-cog"></i>
             <span>Tài khoản</span>
         </a>
@@ -43,7 +43,7 @@
 
     <!-- Nav Item - Quản trị danh mục -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true" aria-controls="collapseTwo">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Danh mục</span>
         </a>
@@ -57,7 +57,7 @@
 
     <!-- Nav Item - Quản trị sản phẩm -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
             <i class="fas fa-fw fa-wrench"></i>
             <span>Sản phẩm</span>
         </a>
@@ -73,15 +73,29 @@
 
     <!-- Nav Item - Quản trị đơn hàng -->
     <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseUtilities">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>Đơn hàng</span>
+            <span>Hóa đơn</span>
         </a>
         <div id="collapseFour" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Quản lý đơn hàng</h6>
-                <a class="collapse-item" href="utilities-color.html">Đơn hàng chưa xử lý</a>
-                <a class="collapse-item" href="utilities-color.html">Đơn hàng đã xử lý</a>
+                <h6 class="collapse-header">Quản lý bán & nhập</h6>
+                <a class="collapse-item" href="orders.php">Hóa đơn nhập hàng</a>
+                <a class="collapse-item" href="goodsReceipt.php">Hóa đơn bán hàng</a>
+            </div>
+        </div>
+    </li>
+
+    <!-- Nav Item - Quản trị nhà cung cấp -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFive" aria-expanded="true" aria-controls="collapseFive">
+            <i class="fas fa-fw fa-wrench"></i>
+            <span>Nhà cung cấp</span>
+        </a>
+        <div id="collapseFive" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Quản lý nhà cung cấp</h6>
+                <a class="collapse-item" href="utilities-color.html">Nhà cung cấp</a>
             </div>
         </div>
     </li>

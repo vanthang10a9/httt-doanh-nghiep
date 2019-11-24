@@ -57,7 +57,7 @@ include("includes/head.php");
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM taikhoan";
+                                        $sql = "SELECT * FROM taikhoan WHERE NOTE = 1";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             $level = $row['level'];
@@ -137,8 +137,8 @@ include("includes/head.php");
             {
                 "targets": -1,
                 "data": null,
-                "defaultContent": '<button class="btn-xs btn-info m-1 edit"><i class="fa fa-edit"></i></button>' +
-                    '<button class="btn-xs btn-danger m-1 delete"><i class="fa fa-trash"></i></button>'
+                "defaultContent": '<button class="btn btn-outline-info m-1 edit"><i class="fa fa-edit"></i></button>' +
+                    '<button class="btn btn-outline-danger m-1 delete"><i class="fa fa-trash"></i></button>'
             }]
         });
 

@@ -1,5 +1,7 @@
 <?php
 include("includes/head.php");
+$sql = "SELECT * FROM loaisanpham ORDER BY idCL";
+$result = DataProvider::executeQuery($sql);
 ?>
 
 <body id="page-top">
@@ -42,6 +44,35 @@ include("includes/head.php");
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length">
+                                            <label>
+                                                <select id="categories" class="custom-select custom-select-sm form-control form-control-sm">
+                                                    <option value="" selected>Tìm theo danh mục</option>
+                                                    <?php
+                                                    while ($row = mysqli_fetch_assoc($result)) { ?>
+                                                        <option value="<?php echo $row['tenCL']; ?>"><?php echo $row['tenCL']; ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length">
+                                            <label style="display:inline-block">
+                                                Tìm theo giá
+                                                <input class="form-control form-control-sm" id="minp">
+                                                đến
+                                                <input class="form-control form-control-sm" id="maxp">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -151,13 +182,13 @@ include("includes/head.php");
             $(".modal-body #product #category").val(elements[4]);
             //set image
             var str = '<div class="mb-3">' +
-                        '<img class="img-thumbnail js-file-image" style="width: 100px">' +
-                        '</div>';
-                    $('.js-file-list').html(str);
-                    var imageSrc = elements[5];
-                    var filename= imageSrc.split('/').pop()
-                    $('.js-file-image').attr('src', imageSrc);
-                    $('#image-label').text(filename);
+                '<img class="img-thumbnail js-file-image" style="width: 100px">' +
+                '</div>';
+            $('.js-file-list').html(str);
+            var imageSrc = elements[5];
+            var filename = imageSrc.split('/').pop()
+            $('.js-file-image').attr('src', imageSrc);
+            $('#image-label').text(filename);
             $("#productModal #action-button").html("Sửa sản phẩm");
             $("#productModal").modal("show");
 
@@ -182,6 +213,39 @@ include("includes/head.php");
                     $('#image-label').text(fileName);
                 };
                 fileReader.readAsDataURL(file);
+            });
+        });
+
+        $(document).ready(function() {
+            var table = $('#dataTable').DataTable();
+
+            $('#categories').on('change', function() {
+                table.columns(4).search(this.value).draw();
+            });
+        });
+        /* Custom filtering function which will search data in column four between two values */
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = parseInt($('#minp').val(), 10);
+                var max = parseInt($('#maxp').val(), 10);
+                var price = parseFloat(data[2]) || 0; // use data for the age column
+
+                if ((isNaN(min) && isNaN(max)) ||
+                    (isNaN(min) && price <= max) ||
+                    (min <= price && isNaN(max)) ||
+                    (min <= price && price <= max)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        $(document).ready(function() {
+            var table = $('#dataTable').DataTable();
+
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#minp, #maxp').keyup(function() {
+                table.draw();
             });
         });
     </script>
