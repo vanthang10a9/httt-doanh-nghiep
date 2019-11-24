@@ -5,8 +5,8 @@
             <div class="container">
                 <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
                     <div class="col-md-12 ftco-animate text-center">
-                        <h1 class="mb-2">We serve Fresh Vegestables &amp; Fruits</h1>
-                        <h2 class="subheading mb-4">We deliver organic vegetables &amp; fruits</h2>
+                        <h1 class="mb-2">Chúng tôi luôn tạo &amp; giữ sự tươi ngon</h1>
+                        <h2 class="subheading mb-4">Chế biến và đóng gói giao hàng trong sự liền mạch</h2>
                     </div>
 
                 </div>
@@ -18,8 +18,8 @@
             <div class="container">
                 <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
                     <div class="col-sm-12 ftco-animate text-center">
-                        <h1 class="mb-2">100% Fresh &amp; Organic Foods</h1>
-                        <h2 class="subheading mb-4">We deliver organic vegetables &amp; fruits</h2>
+                        <h1 class="mb-2">100% an toàn &amp; vệ sinh thực phẩm</h1>
+                        <h2 class="subheading mb-4">Chúng tôi luôn đặt chất lượng và niền tin lên hàng đầu</h2>
                     </div>
 
                 </div>
@@ -31,8 +31,8 @@
             <div class="container">
                 <div class="row slider-text justify-content-center align-items-center" data-scrollax-parent="true">
                     <div class="col-sm-12 ftco-animate text-center">
-                        <h1 class="mb-2">100% Fresh &amp; Organic Foods</h1>
-                        <h2 class="subheading mb-4">We deliver organic vegetables &amp; fruits</h2>
+                        <h1 class="mb-2">Dịch vụ giao hàng &amp; hỗ trợ tốt nhất</h1>
+                        <h2 class="subheading mb-4">Chúng tôi có đội ngũ nhân viên nhiệt quyết luôn sẵn sàng phục vụ các bạn</h2>
                     </div>
 
                 </div>

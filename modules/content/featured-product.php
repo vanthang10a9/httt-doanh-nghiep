@@ -11,7 +11,7 @@ while ($row = mysqli_fetch_array($result)) {
     ?>
     <div class="col-md-6 col-lg-3 ftco-animate">
         <div class="product">
-            <a href="#" class="img-prod"><img class="img-fluid" src="images/product-1.jpg" alt="Colorlib Template">
+            <a href="#" class="img-prod"><img class="img-fluid" src="images/products/<?php echo $row['hinhanhSP']; ?>" alt="Colorlib Template">
                 <?php if (!empty($row['kmSP'])) { ?><span class="status"><?php echo $row['kmSP']; ?></span> <?php } ?>
                 <div class="overlay"></div>
             </a>

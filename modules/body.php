@@ -7,8 +7,8 @@
                         <span class="flaticon-shipped"></span>
                     </div>
                     <div class="media-body">
-                        <h3 class="heading">Free Shipping</h3>
-                        <span>On order over $100</span>
+                        <h3 class="heading">Miễn phí vận chuyển</h3>
+                        <span>Với hóa đơn trên 500 nghìn</span>
                     </div>
                 </div>
             </div>
@@ -18,8 +18,8 @@
                         <span class="flaticon-diet"></span>
                     </div>
                     <div class="media-body">
-                        <h3 class="heading">Always Fresh</h3>
-                        <span>Product well package</span>
+                        <h3 class="heading">Luôn sẵn sàng</h3>
+                        <span>Sản phẩm luôn được làm mới và đóng gói tốt</span>
                     </div>
                 </div>
             </div>
@@ -29,8 +29,8 @@
                         <span class="flaticon-award"></span>
                     </div>
                     <div class="media-body">
-                        <h3 class="heading">Superior Quality</h3>
-                        <span>Quality Products</span>
+                        <h3 class="heading">Chất lượng tốt</h3>
+                        <span>Sản phẩm ngon và đảm bảo an toàn</span>
                     </div>
                 </div>
             </div>
@@ -40,8 +40,8 @@
                         <span class="flaticon-customer-service"></span>
                     </div>
                     <div class="media-body">
-                        <h3 class="heading">Support</h3>
-                        <span>24/7 Support</span>
+                        <h3 class="heading">Dịch vụ hỗ trợ</h3>
+                        <span>Hotline hỗ trợ 24/7</span>
                     </div>
                 </div>
             </div>
@@ -53,16 +53,16 @@
     <div class="container">
         <div class="row justify-content-center mb-3 pb-3">
             <div class="col-md-12 heading-section text-center ftco-animate">
-                <span class="subheading">Featured Products</span>
-                <h2 class="mb-4">Our Products</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+                <span class="subheading">Sản phẩm nổi bật</span>
+                <h2 class="mb-4">Sản phẩm của chúng tôi</h2>
+                <p>Xa xa có mùi hương lạ, lại gần mới biết đó là pizza</p>
             </div>
         </div>
     </div>
     <div class="container">
         <div class="row">
             <?php
-                include('content/featured-product.php');
+            include('content/featured-product.php');
             ?>
             <!-- <div class="col-md-6 col-lg-3 ftco-animate">
                 <div class="product">
@@ -96,20 +96,20 @@
     </div> -->
 </section>
 
-<section class="ftco-section img" style="background-image: url(images/bg_3.jpg);">
+<section class="ftco-section img" style="background-image: url(images/products/background_deal.png);">
     <div class="container">
         <div class="row justify-content-end">
             <div class="col-md-6 heading-section ftco-animate deal-of-the-day ftco-animate">
-                <span class="subheading">Best Price For You</span>
-                <h2 class="mb-4">Deal of the day</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
-                <h3><a href="#">Spinach</a></h3>
-                <span class="price">$10 <a href="#">now $5 only</a></span>
+                <span class="subheading">Giá tốt cho bạn</span>
+                <h2 class="mb-4">Khuyến mãi trong ngày</h2>
+                <p>Xa xa mùi gì lạ lạ, lại gần mới biết đó là pizza</p>
+                <h3><a href="#">Pizza Mặt trời</a></h3>
+                <span class="price"><del>249k</del> <a>giờ chỉ còn 169k</a></span>
                 <div id="timer" class="d-flex mt-5">
-                    <div class="time" id="days"></div>
-                    <div class="time pl-3" id="hours"></div>
-                    <div class="time pl-3" id="minutes"></div>
-                    <div class="time pl-3" id="seconds"></div>
+                    <div class="time" id="days">0</div>
+                    <div class="time pl-3" id="hours">15</div>
+                    <div class="time pl-3" id="minutes">24</div>
+                    <div class="time pl-3" id="seconds">36</div>
                 </div>
             </div>
         </div>
@@ -120,10 +120,9 @@
     <div class="container">
         <div class="row justify-content-center mb-5 pb-3">
             <div class="col-md-7 heading-section ftco-animate text-center">
-                <span class="subheading">Testimony</span>
-                <h2 class="mb-4">Our satisfied customer says</h2>
-                <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there
-                    live the blind texts. Separated they live in</p>
+                <span class="subheading">Đánh giá</span>
+                <h2 class="mb-4">Đánh giá hài lòng của khách hàng</h2>
+                <p>Xa xa mùi gì lạ lùng, lùng sục một hồi thì ra pizza, Pizza thì ở quanh đây, Tìm xa chi rứa, không thấy mệt à</p>
             </div>
         </div>
         <div class="row ftco-animate">
@@ -137,10 +136,11 @@
                                 </span>
                             </div>
                             <div class="text text-center">
-                                <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the
-                                    countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Garreth Smith</p>
-                                <span class="position">Marketing Manager</span>
+                                <p class="mb-5 pl-4 line">Tôi đánh giá cao chât lượng pizza tại đây, nó mang hơi hơi hướng phương tây,
+                                    nhưng vẫn ko lấn át mất hương vị truyền thống. Đây thực sự là một nơi đáng để bạn thử ít nhất 1 lần.
+                                </p>
+                                <p class="name">Hồ Hồng Phúc</p>
+                                <span class="position">Chuyên viên báo cáo</span>
                             </div>
                         </div>
                     </div>
@@ -152,10 +152,11 @@
                                 </span>
                             </div>
                             <div class="text text-center">
-                                <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the
-                                    countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Garreth Smith</p>
-                                <span class="position">Interface Designer</span>
+                                <p class="mb-5 pl-4 line">Nó ngon phải nói là ở tầm vũ trụ các bạn ạ. Tôi đã nghiện ngay từ lần đầu tiên thưởng thức
+                                    và bạn bè tôi cũng vậy. Tôi nghĩ bạn cũng nên rủ bạn bè cùng thưỡng thức ngay đi thôi.
+                                </p>
+                                <p class="name">Trần Quốc Thắng</p>
+                                <span class="position">Cố vấn dữ liệu</span>
                             </div>
                         </div>
                     </div>
@@ -167,10 +168,12 @@
                                 </span>
                             </div>
                             <div class="text text-center">
-                                <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the
-                                    countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Garreth Smith</p>
-                                <span class="position">UI Designer</span>
+                                <p class="mb-5 pl-4 line">Tôi đánh giá cao dịch vụ tại đây. Nó hoàn hảo đến mức tôi không có gì phàn nàn.
+                                    Chiến dịch quảng cáo, chất lượng sản phẩm, dịch cụ giao hàng và chăm sóc khách hàng, ... tôi chưa thấy sự bất tiện nào
+                                    ngoại trừ website còn chưa hoàn thiện lắm, nhưng tui nghĩ như thế là quá đủ cho 5 sao rồi.
+                                </p>
+                                <p class="name">Nguyễn Thái Thuận</p>
+                                <span class="position">Leader hệ thống thông tin</span>
                             </div>
                         </div>
                     </div>
@@ -197,10 +200,11 @@
                                 </span>
                             </div>
                             <div class="text text-center">
-                                <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the
-                                    countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Garreth Smith</p>
-                                <span class="position">System Analyst</span>
+                                <p class="mb-5 pl-4 line">Nhân viên rất nhiệt tình và năng nổ. Tôi thích cách quản lí của cửa hàng. Dịch vụ online cũng rất 
+                                    là ok. Phải nói là website thiết kế nhìn khá là mát mắt đối với người dùng. Đó là một điểm cộng lớn cho cửa hàng của các bạn.
+                                </p>
+                                <p class="name">Trần Anh Tuấn</p>
+                                <span class="position">Giám đốc cty mã nguồn Web</span>
                             </div>
                         </div>
                     </div>
