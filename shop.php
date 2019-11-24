@@ -30,14 +30,6 @@
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-	<!-- MDB icon -->
-	<link rel="icon" href="img/mdb-favicon.ico" type="image/x-icon">
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
-  <!-- Bootstrap core CSS -->
-  <link rel="stylesheet" href="css/bootstrap.min.css">
-  <!-- Material Design Bootstrap -->
-  <link rel="stylesheet" href="css/mdb.min.css">
   
 </head>
 
@@ -52,7 +44,7 @@
 			<div class="row justify-content-center">
 				<div class="col-md-10 mb-5 text-center">
 					<ul class="product-category">
-						<li><a href="#" class="active" id="li-all">All</a></li>
+						<li><a href="#" class="active" id="li-all">Tất cả</a></li>
 						<?php
 						$result = DataProvider::executeQuery("SELECT * FROM loaisanpham");
 						while ($row = mysqli_fetch_assoc($result)) {
@@ -67,33 +59,6 @@
 				</div>
 			</div>
 
-			<form class="form-inline md-form mr-auto mb-4">
-				<select class="mdb-select md-form colorful-select dropdown-primary" multiple searchable="Search here..">
-					<option value="" disabled selected>Choose your country</option>
-					<option value="1">USA</option>
-					<option value="2">Germany</option>
-					<option value="3">France</option>
-					<option value="4">Poland</option>
-					<option value="5">Japan</option>
-				</select>
-				<label class="mdb-main-label">Label example</label>
-
-				<select class="mdb-select" multiple searchable="Search here..">
-					<optgroup label="team 1">
-						<option value="1">Option 1</option>
-						<option value="2">Option 2</option>
-					</optgroup>
-					<optgroup label="team 2">
-						<option value="3">Option 3</option>
-						<option value="4">Option 4</option>
-					</optgroup>
-				</select>
-
-			</form>
-			<form class="form-inline md-form mr-auto mb-4">
-				<input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-				<button class="btn aqua-gradient btn-rounded btn-sm my-0" type="submit">Search</button>
-			</form>
 
 			<div class="row">
 				<?php
@@ -134,7 +99,7 @@
 					while ($row = mysqli_fetch_array($result)) { ?>
 						<div class="col-md-6 col-lg-3 ftco-animate">
 							<div class="product">
-								<a href="product-single.php?id=<?php echo $row['idSP']; ?>" class="img-prod"><img class="img-fluid" src="images/product-1.jpg" alt="Colorlib Template">
+								<a href="product-single.php?id=<?php echo $row['idSP']; ?>" class="img-prod"><img class="img-fluid" src="images/products/<?php echo $row['hinhanhSP']; ?>" alt="Colorlib Template">
 									<?php if (!empty($row['kmSP'])) { ?><span class="status"><?php echo $row['kmSP']; ?> %</span> <?php } ?>
 									<div class="overlay"></div>
 								</a>
@@ -224,24 +189,7 @@
 		</div>
 	</section>
 
-	<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
-		<div class="container py-4">
-			<div class="row d-flex justify-content-center py-5">
-				<div class="col-md-6">
-					<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
-					<span>Get e-mail updates about our latest shops and special offers</span>
-				</div>
-				<div class="col-md-6 d-flex align-items-center">
-					<form action="#" class="subscribe-form">
-						<div class="form-group d-flex">
-							<input type="text" class="form-control" placeholder="Enter email address">
-							<input type="submit" value="Subscribe" class="submit px-3">
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</section>
+	<?php include('modules/content/subcribe.php'); ?>
 
 	<?php include('modules/footer.php'); ?>
 

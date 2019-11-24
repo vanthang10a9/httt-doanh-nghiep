@@ -25,10 +25,7 @@ include("includes/head.php");
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Danh sách bán hàng</h1>
-                        <a href="" id="export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Xuất báo cáo bán</a>
-                    </div>
+                    <h1 class="h3 mb-2 text-gray-800">Danh sách nhập hàng</h1>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
@@ -36,42 +33,30 @@ include("includes/head.php");
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Tên</th>
-                                            <th>Địa chỉ</th>
-                                            <th>Số điện thoại</th>
+                                            <th>Tên nhà cung cấp</th>
+                                            <th>Tên sản phẩm</th>
+                                            <th>Ngày nhập</th>
                                             <th>Tổng tiền</th>
-                                            <th>Thời gian đặt</th>
-                                            <th class="noExp">Chi tiết</th>
-                                            <th>Trạng thái</th>
+                                            <th>Chi tiết</th>
+                                            <th>Duyệt</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM donhang";
+                                        $sql = "SELECT * FROM donnhap d INNER JOIN NHACUNGCAP ncc ON d.maNCC = ncc.maNCC INNER JOIN sanpham sp ON d.maSP = sp.maSP WHERE d.duyet = 0";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
-                                            switch ($row['statusDH']) {
-                                                case 1:
-                                                    $trangthai = "Tiếp nhận";
-                                                    break;
-                                                case 2:
-                                                    $trangthai = "Hoàn thành";
-                                                    break;
-                                                default:
-                                                    $trangthai = "Đang xử lý";
-                                            }
                                             ?>
-                                                <tr>
-                                                    <td><?php echo $row['nameDH']; ?></td>
-                                                    <td><?php echo $row['addressDH']; ?></td>
-                                                    <td><?php echo $row['phoneDH']; ?></td>
-                                                    <td><?php echo $row['tongtienDH']; ?></td>
-                                                    <td><?php echo $row['ngayDH']; ?></td>
-                                                    <td class="noExp"></td>
-                                                    <td><?php echo $trangthai; ?></td>
-                                                </tr>
+                                            <tr>
+                                                <td><?php echo $row['tenNCC']; ?></td>
+                                                <td><?php echo $row['tenSP']; ?></td>
+                                                <td><?php echo $row['ngaynhap']; ?></td>
+                                                <td><?php echo $row['tongtien']; ?></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
 
-                                            <?php } ?>
+                                        <?php } ?>
                                     </tbody>
                                     <tfoot>
                                     </tfoot>
@@ -100,10 +85,10 @@ include("includes/head.php");
     <?php
     include('ordermodal.php');
     include('includes/scroll-logout.php');
-    include('includes/scripts.php')
+    include('includes/scripts.php');
+    include('deleteModal.php');
     ?>
     <!-- Page level plugins -->
-    <script src="vendor/jquery/jquery.table2excel.js"></script>
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
@@ -113,12 +98,18 @@ include("includes/head.php");
         $('#dataTable').dataTable({
             "columnDefs": [{
                     "orderable": false,
-                    "targets": [5, 6]
+                    "targets": [4,5]
                 },
                 {
-                    "targets": 5,
+                    "targets": 4,
                     "data": null,
                     "defaultContent": '<button class="btn btn-outline-primary m-1 ct">Chi tiết</button>'
+                },
+                {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": '<button class="btn btn-outline-info m-1 activation"><i class="fa fa-check"></i></button>' +
+                        '<button class="btn btn-outline-danger m-1 delete"><i class="fa fa-times"></i></button>'
                 }
             ]
         });
@@ -127,26 +118,12 @@ include("includes/head.php");
             //bodyalert("kakak");
             $("#ordermodal").modal("show");
         });
-
-        //export report
-        $("a#export").click(function() {
-            $("#dataTable").table2excel({
-                // exclude CSS class
-                name: "Worksheet Name",
-                exclude: ".noExp",
-                filename: "DS_hoadon_ban", //do not include extensi
-                fileext: ".xls", // file extension
-                exclude_img: true,
-                exclude_links: true,
-                exclude_inputs: true,
-            });
-        });
     </script>
 
 </body>
 <style>
     .ct {
-        padding: 0.1rem 0.1rem;
+        padding: 0.3rem 0.3rem;
     }
 </style>
 

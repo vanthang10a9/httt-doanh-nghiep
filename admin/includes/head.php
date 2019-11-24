@@ -27,8 +27,8 @@ require('../core/DataProvider.php');
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-    <script type="text/javascript" charset="utf-8">
-</script>
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script> 
 
+    
+    
 </head>
