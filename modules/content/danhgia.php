@@ -67,10 +67,10 @@
                                 </span>
                             </div>
                             <div class="text text-center">
-                                <p class="mb-5 pl-4 line">Far far away, behind the word mountains, far from the
-                                    countries Vokalia and Consonantia, there live the blind texts.</p>
-                                <p class="name">Garreth Smith</p>
-                                <span class="position">Web Developer</span>
+                                <p class="mb-5 pl-4 line">Tôi từng đi trễ nhiều lần chỉ vì để xếp hàng chờ mua được pizza ở đây, 
+                                    Nhưng giờ công nghệ đã giúp tôi giải quyết được điều này. Chẳng hạn như website đặt online này vậy, tôi khá hài lòng về nó.</p>
+                                <p class="name">Bùi Thanh Nghĩa</p>
+                                <span class="position">Kĩ sư tư vấn giải thuật</span>
                             </div>
                         </div>
                     </div>
