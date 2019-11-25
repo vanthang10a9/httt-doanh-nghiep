@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-  <title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+  <title>PiizaHot - Contact</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -41,22 +41,22 @@
         <div class="w-100"></div>
         <div class="col-md-3 d-flex">
           <div class="info bg-white p-4">
-            <p><span>Address:</span> 198 West 21th Street, Suite 721 New York NY 10016</p>
+            <p><span>Địa chỉ:</span> 123, đường Lê Văn Liệt, phường 16, quận Tân Bình, tp HCM</p>
           </div>
         </div>
         <div class="col-md-3 d-flex">
           <div class="info bg-white p-4">
-            <p><span>Phone:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
+            <p><span>Điện thoại:</span> <a href="tel://1234567920">+ 1235 2355 98</a></p>
           </div>
         </div>
         <div class="col-md-3 d-flex">
           <div class="info bg-white p-4">
-            <p><span>Email:</span> <a href="mailto:info@yoursite.com">info@yoursite.com</a></p>
+            <p><span>Email:</span> <a href="mailto:info@yoursite.com">pizzahot@email.com</a></p>
           </div>
         </div>
         <div class="col-md-3 d-flex">
           <div class="info bg-white p-4">
-            <p><span>Website</span> <a href="#">yoursite.com</a></p>
+            <p><span>Website</span> <a href="#">pizzahot.com.vn</a></p>
           </div>
         </div>
       </div>
@@ -64,19 +64,19 @@
         <div class="col-md-6 order-md-last d-flex">
           <form action="#" class="bg-white p-5 contact-form">
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Your Name">
+              <input type="text" class="form-control" placeholder="Nhập tên">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Your Email">
+              <input type="text" class="form-control" placeholder="Nhập email">
             </div>
             <div class="form-group">
-              <input type="text" class="form-control" placeholder="Subject">
+              <input type="text" class="form-control" placeholder="Nhập tiêu đề">
             </div>
             <div class="form-group">
-              <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Message"></textarea>
+              <textarea name="" id="" cols="30" rows="7" class="form-control" placeholder="Ý kiến của bạn"></textarea>
             </div>
             <div class="form-group">
-              <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
+              <input type="submit" value="Gửi ý kiến" class="btn btn-primary py-3 px-5">
             </div>
           </form>
 
@@ -88,6 +88,9 @@
       </div>
     </div>
   </section>
+
+  <?php include('modules/content/danhgia.php') ?>
+
   <?php
   include('modules/footer.php');
   ?>
