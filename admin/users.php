@@ -143,7 +143,7 @@ include("includes/head.php");
         });
 
         //Handle click on "Edit" button
-        $('#dataTable tbody').on('click', '.btn-info', function(e) {
+        $('#dataTable tbody').on('click', '.edit', function(e) {
             var userid = $(this).closest('tr').attr('id');
             var tds = $(this).closest('tr').find('td');
             var elements = [];

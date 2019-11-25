@@ -25,7 +25,7 @@ include("includes/head.php");
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Danh sách nhập hàng</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Danh sách nhà cung cấp</h1>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
@@ -33,26 +33,22 @@ include("includes/head.php");
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <th>Mã NCC</th>
                                             <th>Tên nhà cung cấp</th>
-                                            <th>Tên sản phẩm</th>
-                                            <th>Ngày nhập</th>
-                                            <th>Tổng tiền</th>
-                                            <th>Chi tiết</th>
+                                            <th>Thông tin</th>
                                             <th>Duyệt</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM donnhap d INNER JOIN NHACUNGCAP ncc ON d.maNCC = ncc.maNCC INNER JOIN sanpham sp ON d.maSP = sp.maSP WHERE d.duyet = 0";
+                                        $sql = "SELECT * FROM nhacungcap";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
                                             <tr>
+                                                <td><?php echo $row['maNCC']; ?></td>
                                                 <td><?php echo $row['tenNCC']; ?></td>
-                                                <td><?php echo $row['tenSP']; ?></td>
-                                                <td><?php echo $row['ngaynhap']; ?></td>
-                                                <td><?php echo $row['tongtien']; ?></td>
-                                                <td></td>
+                                                <td><?php echo $row['thongtin']; ?></td>
                                                 <td></td>
                                             </tr>
 
@@ -79,6 +75,37 @@ include("includes/head.php");
 
     </div>
     <!-- End of Page Wrapper -->
+    <!-- Add Categories Modal-->
+    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thêm danh mục</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="category">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="categoryname" placeholder="Tên danh mục">
+                        </div>
+                        <div class="custom-file" style="margin-bottom:1rem">
+                            <input type="file" id="image" class="custom-file-input">
+                            <label id="image-label" class="custom-file-label" for="validatedCustomFile">Chọn hình ảnh sản phẩm</label>
+                        </div>
+                        <div class="container js-file-list">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <a href="" class="btn btn-primary">
+                        Thêm danh mục
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- activation modal-->
     <div class="modal fade" id="activationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -102,10 +129,7 @@ include("includes/head.php");
         </div>
     </div>
 
-
-
     <?php
-    include('ordermodal.php');
     include('includes/scroll-logout.php');
     include('includes/scripts.php');
     include('deleteModal.php');
@@ -116,30 +140,16 @@ include("includes/head.php");
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" charset="utf-8">
         $('#dataTable').dataTable({
             "columnDefs": [{
-                    "orderable": false,
-                    "targets": [4, 5]
-                },
-                {
-                    "targets": 4,
-                    "data": null,
-                    "defaultContent": '<button class="btn btn-outline-primary m-1 ct">Chi tiết</button>'
-                },
-                {
-                    "targets": -1,
-                    "data": null,
-                    "defaultContent": '<button class="btn btn-outline-info m-1 activation"><i class="fa fa-check"></i></button>' +
-                        '<button class="btn btn-outline-danger m-1 delete"><i class="fa fa-times"></i></button>'
-                }
-            ]
+                "targets": -1,
+                "data": null,
+                "defaultContent": '<button class="btn btn-outline-info m-1 activation"><i class="fa fa-check"></i></button>' +
+                    '<button class="btn btn-outline-danger m-1 delete"><i class="fa fa-times"></i></button>'
+            }]
         });
-        $('#dataTable tbody').on('click', '.ct', function(e) {
-            //var productid = $(this).closest('tr').attr('id');
-            //bodyalert("kakak");
-            $("#ordermodal").modal("show");
-        });
+
         //Handle click on "Edit" button
         $('#dataTable tbody').on('click', '.activation', function(e) {
             var userid = $(this).closest('tr').attr('id');
@@ -156,11 +166,7 @@ include("includes/head.php");
         });
     </script>
 
+
 </body>
-<style>
-    .ct {
-        padding: 0.3rem 0.3rem;
-    }
-</style>
 
 </html>

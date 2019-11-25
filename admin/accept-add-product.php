@@ -1,5 +1,7 @@
 <?php
 include("includes/head.php");
+$sql = "SELECT * FROM loaisanpham ORDER BY idCL";
+$result = DataProvider::executeQuery($sql);
 ?>
 
 <body id="page-top">
@@ -25,35 +27,71 @@ include("includes/head.php");
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Danh sách nhập hàng</h1>
+                    <h1 class="h3 mb-2 text-gray-800">Danh sách danh mục</h1>
+
+                    <!-- Table button -->
+
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length">
+                                            <label>
+                                                <select id="categories" class="custom-select custom-select-sm form-control form-control-sm">
+                                                    <option value="" selected>Tìm theo danh mục</option>
+                                                    <?php
+                                                    while ($row = mysqli_fetch_assoc($result)) { ?>
+                                                        <option value="<?php echo $row['tenCL']; ?>"><?php echo $row['tenCL']; ?></option>
+                                                    <?php
+                                                    }
+                                                    ?>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length">
+                                            <label style="display:inline-block">
+                                                Tìm theo giá
+                                                <input class="form-control form-control-sm" id="minp">
+                                                đến
+                                                <input class="form-control form-control-sm" id="maxp">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <th>Tên nhà cung cấp</th>
+                                            <th>Mã</th>
                                             <th>Tên sản phẩm</th>
-                                            <th>Ngày nhập</th>
-                                            <th>Tổng tiền</th>
-                                            <th>Chi tiết</th>
+                                            <th>Nhà cung cấp</th>
+                                            <th>Loại sản phẩm</th>
+                                            <th>Số lượng</th>
                                             <th>Duyệt</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM donnhap d INNER JOIN NHACUNGCAP ncc ON d.maNCC = ncc.maNCC INNER JOIN sanpham sp ON d.maSP = sp.maSP WHERE d.duyet = 0";
+                                        $sql = "SELECT * FROM themsanpham tsp 
+                                                INNER JOIN sanpham sp ON tsp.maSP = sp.maSP
+                                                INNER JOIN loaisanpham lsp ON tsp.idCL = lsp.idCL 
+                                                INNER JOIN nhacungcap ncc ON tsp.maNCC = ncc.maNCC";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
+
                                             ?>
                                             <tr>
-                                                <td><?php echo $row['tenNCC']; ?></td>
+                                                <td><?php echo $row['maSP']; ?></td>
                                                 <td><?php echo $row['tenSP']; ?></td>
-                                                <td><?php echo $row['ngaynhap']; ?></td>
-                                                <td><?php echo $row['tongtien']; ?></td>
-                                                <td></td>
-                                                <td></td>
+                                                <td><?php echo $row['tenNCC']; ?></td>
+                                                <td><?php echo $row['tenCL']; ?></td>
+                                                <td><?php echo $row['soluong']; ?></td>
+                                                <td style="display:flex"></td>
                                             </tr>
 
                                         <?php } ?>
@@ -102,10 +140,8 @@ include("includes/head.php");
         </div>
     </div>
 
-
-
     <?php
-    include('ordermodal.php');
+    include('productmodal.php');
     include('includes/scroll-logout.php');
     include('includes/scripts.php');
     include('deleteModal.php');
@@ -116,16 +152,11 @@ include("includes/head.php");
 
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
-    <script type="text/javascript">
+    <script type="text/javascript" charset="utf-8">
         $('#dataTable').dataTable({
             "columnDefs": [{
                     "orderable": false,
-                    "targets": [4, 5]
-                },
-                {
-                    "targets": 4,
-                    "data": null,
-                    "defaultContent": '<button class="btn btn-outline-primary m-1 ct">Chi tiết</button>'
+                    "targets": [5, -1]
                 },
                 {
                     "targets": -1,
@@ -135,11 +166,41 @@ include("includes/head.php");
                 }
             ]
         });
-        $('#dataTable tbody').on('click', '.ct', function(e) {
-            //var productid = $(this).closest('tr').attr('id');
-            //bodyalert("kakak");
-            $("#ordermodal").modal("show");
+
+
+        $(document).ready(function() {
+            var table = $('#dataTable').DataTable();
+
+            $('#categories').on('change', function() {
+                table.columns(4).search(this.value).draw();
+            });
         });
+        /* Custom filtering function which will search data in column four between two values */
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = parseInt($('#minp').val(), 10);
+                var max = parseInt($('#maxp').val(), 10);
+                var price = parseFloat(data[2]) || 0; // use data for the age column
+
+                if ((isNaN(min) && isNaN(max)) ||
+                    (isNaN(min) && price <= max) ||
+                    (min <= price && isNaN(max)) ||
+                    (min <= price && price <= max)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+
+        $(document).ready(function() {
+            var table = $('#dataTable').DataTable();
+
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#minp, #maxp').keyup(function() {
+                table.draw();
+            });
+        });
+
         //Handle click on "Edit" button
         $('#dataTable tbody').on('click', '.activation', function(e) {
             var userid = $(this).closest('tr').attr('id');
@@ -157,10 +218,5 @@ include("includes/head.php");
     </script>
 
 </body>
-<style>
-    .ct {
-        padding: 0.3rem 0.3rem;
-    }
-</style>
 
 </html>
