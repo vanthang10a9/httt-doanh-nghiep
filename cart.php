@@ -16,7 +16,7 @@ if (isset($_SESSION['cart'])) {
 <html lang="en">
 
 <head>
-	<title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+	<title>PizzaHot - Cart</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -194,7 +194,7 @@ if (isset($_SESSION['cart'])) {
 										<span><?php echo $totalPrice; ?></span>
 									</p>
 								</div>
-								<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Proceed to Checkout</a></p>
+								<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
 							</div>
 						</div>
 				</div>

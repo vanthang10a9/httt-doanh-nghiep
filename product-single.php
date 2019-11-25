@@ -91,10 +91,10 @@
 								<div class="select-wrap">
 									<div class="icon"><span class="ion-ios-arrow-down"></span></div>
 									<select name="" id="" class="form-control">
-										<option value="">Small</option>
-										<option value="">Medium</option>
-										<option value="">Large</option>
-										<option value="">Extra Large</option>
+										<option value="">Nhỏ</option>
+										<option value="">Vừa</option>
+										<option value="">To</option>
+										<option value="">Đặc biệt</option>
 									</select>
 								</div>
 							</div>
@@ -116,12 +116,15 @@
 						<div class="w-100"></div>
 						<div class="col-md-12">
 							<p style="color: #000;"><?php
-								if($row['tinhtrangSP'] == 1) echo "Còn hàng";
-								else echo "Hết hàng";
+									$soluong = "";
+								
+								if($row['tinhtrangSP'] >= 1) $soluong ="Còn &nbsp" . $row['tinhtrangSP'] . " &nbsp cái";
+								else $soluong = "Hết hàng";
+								echo $soluong;
 							?></p>
 						</div>
 					</div>
-					<p><a href="" class="btn btn-black py-3 px-5" id="add-cart">Add to Cart</a></p>
+					<p><a href="" class="btn btn-black py-3 px-5" id="add-cart">Thêm vào giỏ hàng</a></p>
 				</div>
 			</div>
 		</div>
@@ -131,9 +134,9 @@
 		<div class="container">
 			<div class="row justify-content-center mb-3 pb-3">
 				<div class="col-md-12 heading-section text-center ftco-animate">
-					<span class="subheading">Products</span>
-					<h2 class="mb-4">Related Products</h2>
-					<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia</p>
+					<span class="subheading">Sản phẩm</span>
+					<h2 class="mb-4">Sản phẩm liên quan</h2>
+					<p>Một số gợi ý của của những người đã ăn loại trên thường sẽ thích thêm những loại bên dưới.</p>
 				</div>
 			</div>
 		</div>
@@ -146,24 +149,7 @@
 		</div>
 	</section>
 
-	<section class="ftco-section ftco-no-pt ftco-no-pb py-5 bg-light">
-		<div class="container py-4">
-			<div class="row d-flex justify-content-center py-5">
-				<div class="col-md-6">
-					<h2 style="font-size: 22px;" class="mb-0">Subcribe to our Newsletter</h2>
-					<span>Get e-mail updates about our latest shops and special offers</span>
-				</div>
-				<div class="col-md-6 d-flex align-items-center">
-					<form action="#" class="subscribe-form">
-						<div class="form-group d-flex">
-							<input type="text" class="form-control" placeholder="Enter email address">
-							<input type="submit" value="Subscribe" class="submit px-3">
-						</div>
-					</form>
-				</div>
-			</div>
-		</div>
-	</section>
+<?php include('modules/content/subcribe.php') ?>
 
 	<?php include('modules/footer.php'); ?>
 	<style>
@@ -190,6 +176,7 @@
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 
+	
 	<script>
 		$(document).ready(function() {
 
@@ -225,8 +212,20 @@
 			});
 
 			$('a#add-cart').click(function(e) {
-				e.preventDefault();
-				var item = {'id': <?php echo $idSP ;?>, 'quantity': $('#quantity').val()}
+				e.preventDefault(); 
+/* xử lí alert ko đủ hàng nhưng lỗi
+				let slcon = <?php echo $row['tinhtrangSP'] ?>;
+				slcon = parseInt(slcon);
+				let slmua = parseInt($('#quantity').val());
+				slmua = parseInt(slmua);
+				if(slcon<slmua){
+					
+					alert("Không đủ hàng !");
+					return;
+				}
+
+*/
+		item = {'id': <?php echo $idSP ;?>, 'quantity': $('#quantity').val()}
 				$.ajax({
 					type: "POST",
 					url: "addcart.php",
