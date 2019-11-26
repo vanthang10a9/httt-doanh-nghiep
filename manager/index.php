@@ -67,8 +67,6 @@ $run_unaccept_recept = DataProvider::executeQuery($s_unaccept_recept);
 $count_recept = mysqli_num_rows($run_unaccept_recept);
 ?>
 
-?>
-
 
 <body id="page-top">
 

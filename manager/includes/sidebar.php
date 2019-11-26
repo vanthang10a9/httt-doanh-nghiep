@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">Quản lý cửa hàng</div>
+        <div class="sidebar-brand-text mx-3">Quản lý kho</div>
     </a>
 
     <!-- Divider -->
@@ -23,23 +23,8 @@
 
     <!-- Heading -->
     <div class="sidebar-heading">
-        Quản lý
+        Quản lý kho
     </div>
-
-    <!-- Nav Item - quản trị tài khoản -->
-    <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            <i class="fas fa-fw fa-cog"></i>
-            <span>Tài khoản</span>
-        </a>
-        <div id="collapseOne" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Quản lý tài khoản</h6>
-                <a class="collapse-item" href="accept-user.php">Duyệt tài khoản khách hàng</a>
-                <a class="collapse-item" href="users.php">Tất cả tài khoản</a>
-            </div>
-        </div>
-    </li>
 
     <!-- Nav Item - Quản trị danh mục -->
     <li class="nav-item">
@@ -71,18 +56,17 @@
         </div>
     </li>
 
-    <!-- Nav Item - Quản trị đơn hàng -->
+    <!-- Nav Item - Quản trị đơn hàng nhập -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseFour" aria-expanded="true" aria-controls="collapseFour">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>Đơn hàng</span>
+            <span>Nhập hàng</span>
         </a>
         <div id="collapseFour" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Quản lý bán</h6>
-                <a class="collapse-item" href="orders.php">Hóa đơn bán hàng</a>
-                <h6 class="collapse-header">Quản lý bán & nhập</h6>
-                <a class="collapse-item" href="accept-receipt.php">Duyệt đơn nhập</a>
+                <h6 class="collapse-header">Quản lý nhập hàng</h6>
+                <a class="collapse-item" href="add-receipt.php">Thêm đơn nhập</a>
+                <a class="collapse-item" href="wait-accept.php">Đơn nhập chờ duyệt</a>
                 <a class="collapse-item" href="goodsReceipt.php">Hóa đơn nhập hàng</a>
             </div>
         </div>
@@ -97,7 +81,7 @@
         <div id="collapseFive" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản lý nhà cung cấp</h6>
-                <a class="collapse-item" href="accept-supplier.php">Duyệt nhà cung cấp mới</a>
+                <a class="collapse-item" href="accept-supplier.php">Thêm nhà cung cấp mới</a>
                 <a class="collapse-item" href="suppliers.php">Nhà cung cấp</a>
             </div>
         </div>

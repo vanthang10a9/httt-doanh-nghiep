@@ -37,7 +37,10 @@ tao biết đường giao tiếp. giờ t cũng chưa suy nghĩ ra việc phù h
 - vẽ sơ đồ
 - user đăng kí tài khoản zô databse. Thêm 1 cột duyệt trong table tài khoản. Để mặc định 
 là 0.(tham khảo cột duyệt trong table sanpham)
-
+- Thêm table chi tiết đơn nhập.
+- Table donnhap{maDN*, maNV, ngaynhap,tongtien, duyet(defaul=0)} (* khóa chính)
+- table chitietdonnhap{maDN, maSP, soluong, gianhap}
+ 
 
 ## tuấn trần:
 - liên hệ hồng phúc vẽ sơ đồ
