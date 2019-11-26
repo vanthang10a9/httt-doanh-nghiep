@@ -57,13 +57,16 @@ include("includes/head.php");
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM taikhoan WHERE NOTE = 1";
+                                        $sql = "SELECT * FROM taikhoan WHERE DUYET = 1";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
-                                            $level = $row['level'];
+                                            $level = $row['LEVEL'];
                                             switch ($level) {
-                                                case 2:
+                                                case 3:
                                                     $role = "Admin";
+                                                    break;
+                                                case 2:
+                                                    $role = "Nhân viên";
                                                     break;
                                                 case 1:
                                                     $role = "Nhân viên";
@@ -72,13 +75,13 @@ include("includes/head.php");
                                                     $role = "Khách hàng";
                                             }
                                             ?>
-                                                <tr idUser="<?php echo $row['idUser']; ?>">
-                                                    <td><?php echo $row['username']; ?></td>
-                                                    <td><?php echo $row['name']; ?></td>
-                                                    <td><?php echo $row['cmnd']; ?></td>
-                                                    <td><?php echo $row['address']; ?></td>
-                                                    <td><?php echo $row['email']; ?></td>
-                                                    <td><?php echo $row['phone']; ?></td>
+                                                <tr id="<?php echo $row['IDUSER']; ?>">
+                                                    <td><?php echo $row['USERNAME']; ?></td>
+                                                    <td><?php echo $row['NAME']; ?></td>
+                                                    <td><?php echo $row['CMND']; ?></td>
+                                                    <td><?php echo $row['ADDRESS']; ?></td>
+                                                    <td><?php echo $row['EMAIL']; ?></td>
+                                                    <td><?php echo $row['PHONE']; ?></td>
                                                     <td id="<?php echo $level; ?>"><?php echo $role; ?></td>
                                                     <td style='display:flex'></td>
                                                 </tr>
@@ -131,20 +134,20 @@ include("includes/head.php");
 
         $('#dataTable').dataTable({
             "columnDefs": [{
-                "orderable": false,
-                "targets": [2, 5, -1],
-            },
-            {
-                "targets": -1,
-                "data": null,
-                "defaultContent": '<button class="btn btn-outline-info m-1 edit"><i class="fa fa-edit"></i></button>' +
-                    '<button class="btn btn-outline-danger m-1 delete"><i class="fa fa-trash"></i></button>'
-            }]
+                    "orderable": false,
+                    "targets": [2, 5, -1],
+                },
+                {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": '<button class="btn btn-outline-info m-1 edit"><i class="fa fa-edit"></i></button>' +
+                        '<button class="btn btn-outline-danger m-1 delete"><i class="fa fa-trash"></i></button>'
+                }
+            ]
         });
 
         //Handle click on "Edit" button
         $('#dataTable tbody').on('click', '.edit', function(e) {
-            var userid = $(this).closest('tr').attr('id');
             var tds = $(this).closest('tr').find('td');
             var elements = [];
             for (i = 0; i < tds.length; i++) {
@@ -163,6 +166,33 @@ include("includes/head.php");
             $(".modal-body #editUserModal #phonenumber").val(elements[5]);
             $(".modal-body #editUserModal #role").val(elements[tds.length - 2]);
             $("#editUserModal").modal("show");
+
+        });
+        //handle click delete
+        $('#dataTable tbody').on('click', '.delete', function(e) {
+            var userid = $(this).closest('tr').attr('id');
+            var r = confirm("Xóa user");
+            if (r == true) {
+                $.ajax({
+                type: "POST",
+                url: "edit-account.php",
+                data: {
+                    
+                        'action-delete': 'true',
+                        'userid': userid
+                },
+                success: function(response) {
+
+                    alert("Xóa thành công");
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                    alert("Xóa thất bại");
+
+                }
+            });
+            }
+            
 
         });
     </script>

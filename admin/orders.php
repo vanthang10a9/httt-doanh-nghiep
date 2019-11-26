@@ -50,7 +50,7 @@ include("includes/head.php");
                                         $sql = "SELECT * FROM donhang";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
-                                            switch ($row['statusDH']) {
+                                            switch ($row['STATUS']) {
                                                 case 1:
                                                     $trangthai = "Tiếp nhận";
                                                     break;
@@ -62,11 +62,11 @@ include("includes/head.php");
                                             }
                                             ?>
                                                 <tr>
-                                                    <td><?php echo $row['nameDH']; ?></td>
-                                                    <td><?php echo $row['addressDH']; ?></td>
-                                                    <td><?php echo $row['phoneDH']; ?></td>
-                                                    <td><?php echo $row['tongtienDH']; ?></td>
-                                                    <td><?php echo $row['ngayDH']; ?></td>
+                                                    <td><?php echo $row['NAME']; ?></td>
+                                                    <td><?php echo $row['ADDRESS']; ?></td>
+                                                    <td><?php echo $row['PHONE']; ?></td>
+                                                    <td><?php echo $row['TONGTIEN']; ?></td>
+                                                    <td><?php echo $row['NGAYDH']; ?></td>
                                                     <td class="noExp"></td>
                                                     <td><?php echo $trangthai; ?></td>
                                                 </tr>

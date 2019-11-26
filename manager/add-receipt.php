@@ -1,5 +1,19 @@
 <?php
 include("includes/head.php");
+$s_suppliers = "SELECT * FROM nhacungcap";
+$run_suppliers = DataProvider::executeQuery($s_suppliers);
+//
+$s_categories = "SELECT * FROM loaisanpham";
+$run_categories = DataProvider::executeQuery($s_categories);
+while ($row = mysqli_fetch_assoc($run_categories)) {
+    $arr_categories[] = $row;
+}
+//
+$s_products = "SELECT * FROM sanpham";
+$run_products = DataProvider::executeQuery($s_products);
+while ($row = mysqli_fetch_assoc($run_products)) {
+    $arr_products[] = $row;
+}
 ?>
 
 <body id="page-top">
@@ -36,13 +50,12 @@ include("includes/head.php");
                                             <div class="form-group">
                                                 <select required class="form-control" id="supplier">
                                                     <option value="" disabled selected>Chọn nhà cung cấp</option>
-                                                    <option value="0">Người dùng</option>
-                                                    <option value="1">Nhân viên</option>
-                                                    <option value="2">Quản trị viên</option>
+                                                    <option value="">Thêm nhà cung cấp mới...</option>
+                                                    <?php while ($row = mysqli_fetch_assoc($run_suppliers)) { ?>
+                                                        <option value="<?php echo $row['MANCC']; ?>"><?php echo $row['TENNCC']; ?></option>
+                                                    <?php } ?>
                                                 </select>
                                             </div>
-
-
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
                                                     <input class="form-control" type="text" placeholder="Người nhập " readonly>
@@ -57,22 +70,22 @@ include("includes/head.php");
                                                     <h1 class="h5 text-gray-900 mb-2">Nhập sản phẩm</h1>
                                                 </div>
                                                 <div class="col-sm-12 mb-3 mb-0">
-                                                    <select required class="form-control" id="category">
+                                                    <select required class="form-control category">
                                                         <option value="" disabled selected>Chọn danh mục</option>
-                                                        <option value="0">Người dùng</option>
-                                                        <option value="1">Nhân viên</option>
-                                                        <option value="2">Quản trị viên</option>
+                                                        <option value="">Thêm danh mục mới...</option>
+                                                        <?php foreach ($arr_categories as $row) { ?>
+                                                            <option value="<?php echo $row['MACL']; ?>"><?php echo $row['TENCL']; ?></option>
+                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6 mb-3 mb-0">
-                                                    <input list="brow" class="form-control" placeholder="Chọn sản phẩm...">
-                                                    <datalist id="brow">
-                                                        <option value="Internet Explorer">
-                                                        <option value="Firefox">
-                                                        <option value="Chrome">
-                                                        <option value="Opera">
-                                                        <option value="Safari">
-                                                    </datalist>
+                                                    <select required class="form-control product">
+                                                        <option value="" disabled selected>Chọn sản phẩm</option>
+                                                        <option value="">Thêm sản phẩm mới...</option>
+                                                        <?php foreach ($arr_products as $row) { ?>
+                                                            <option value="<?php echo $row['MASP']; ?>" macl="<?php echo $row['MACL']; ?>"><?php echo $row['TENSP']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <input type="number" value="0" class="form-control soluong" min="1" placeholder="Số lượng nhập">
@@ -86,22 +99,23 @@ include("includes/head.php");
                                                     <h1 class="h5 text-gray-900 mb-2">Nhập sản phẩm</h1>
                                                 </div>
                                                 <div class="col-sm-12 mb-3 mb-0">
-                                                    <select required class="form-control" id="category">
+                                                    <select required class="form-control category">
                                                         <option value="" disabled selected>Chọn danh mục</option>
-                                                        <option value="0">Người dùng</option>
-                                                        <option value="1">Nhân viên</option>
-                                                        <option value="2">Quản trị viên</option>
+                                                        <option value="">Thêm danh mục mới...</option>
+                                                        <?php foreach ($arr_categories as $row) { ?>
+                                                            <option value="<?php echo $row['MACL']; ?>"><?php echo $row['TENCL']; ?></option>
+                                                        <?php } ?>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6 mb-3 mb-0">
-                                                    <input list="brow" class="form-control" placeholder="Chọn sản phẩm...">
-                                                    <datalist id="brow">
-                                                        <option value="Internet Explorer">
-                                                        <option value="Firefox">
-                                                        <option value="Chrome">
-                                                        <option value="Opera">
-                                                        <option value="Safari">
-                                                    </datalist>
+                                                <select required class="form-control product">
+                                                        <option value="" disabled selected>Chọn sản phẩm</option>
+                                                        <option value="">Thêm sản phẩm mới...</option>
+                                                        <?php foreach ($arr_products as $row) { ?>
+                                                            <option value="<?php echo $row['MASP']; ?>" macl="<?php echo $row['MACL']; ?>"><?php echo $row['TENSP']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <input type="number" value="0" class="form-control soluong" min="1" placeholder="Số lượng nhập">
@@ -120,8 +134,8 @@ include("includes/head.php");
 
                                             <hr>
 
-                                            <a href="login.html" class="btn btn-primary btn-user btn-block">
-                                                Register Account
+                                            <a href="" id="submit" class="btn btn-primary btn-user btn-block">
+                                                Thêm đơn hàng
                                             </a>
                                         </form>
                                     </div>
@@ -181,7 +195,7 @@ include("includes/head.php");
                 //alert(typeof(sum));
                 sum += subtotal;
             });
-            
+
 
 
 
@@ -198,16 +212,41 @@ include("includes/head.php");
         });
 
 
-        // // set this from local
-        // $('span.productTotal').each(function() {
-        //     $(this).before("&euro;")
-        // });
+        $('select#supplier').on('change', function() {
+            if ($(this)[0].selectedIndex == 1) {
+                location.href = 'categories.php';
+            }
+        });
 
-        // // unit price
-        // $('.product p').each(function() {
-        //     var $price = $(this).parents("div").data('price');
-        //     $(this).before($price);
-        // });
+        var initProduct = function() {
+            $('.add-product').each(function() {
+
+
+                if ($('select.category', this).val() != null) {
+                    $('datalist option', this).attr('disabled', 'disabled');
+                    //alert("aaa");
+                    //console.log($('.category', this).val());
+                    //$('datalist option[idcl="' + $('.category', this).val() + '"]', this).prop('disabled', false);
+                    // // add this code to select 1'st of streets automaticaly 
+                    // // when city changed
+                } else {
+                    console.log("ssss");
+                }
+                // if ($('.datalist option[idcl="' + cat + '"]', this).length) {
+                //     $('.datalist option[idcl="' + cat + '"]', this).first().prop('selected', true);
+                // }
+                // // in case if there's no corresponding street: 
+                // // reset select element
+                // else {
+                //     $('.datalist', this).val('');
+                // };
+            });
+        }
+
+        $('.category').on('change', function() {
+            //alert($(this).val());
+            initProduct();
+        });
     </script>
 
 </body>

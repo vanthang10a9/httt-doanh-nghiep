@@ -45,9 +45,9 @@ include("includes/head.php");
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
                                             <tr>
-                                                <td><?php echo $row['maNCC']; ?></td>
-                                                <td><?php echo $row['tenNCC']; ?></td>
-                                                <td><?php echo $row['thongtin']; ?></td>
+                                                <td><?php echo $row['MANCC']; ?></td>
+                                                <td><?php echo $row['TENNCC']; ?></td>
+                                                <td><?php echo $row['THONGTIN']; ?></td>
                                             </tr>
 
                                         <?php } ?>

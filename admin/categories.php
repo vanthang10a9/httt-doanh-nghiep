@@ -58,9 +58,9 @@ include("includes/head.php");
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
                                             <tr>
-                                                <td><?php echo $row['idCL']; ?></td>
-                                                <td><?php echo $row['tenCL']; ?></td>
-                                                <td><img src="../images/products/<?php echo $row['hinhanhCL']; ?>" alt="" width="100px"></td>
+                                                <td><?php echo $row['MACL']; ?></td>
+                                                <td><?php echo $row['TENCL']; ?></td>
+                                                <td><img src="../images/products/<?php echo $row['HINHANHSP']; ?>" alt="" width="100px"></td>
                                                 <td style="display:flex; align-items: center; justify-content: center;"></td>
                                             </tr>
 
