@@ -35,27 +35,39 @@ d
                             <div class="text-center">
                                 <h1 class="h4 text-gray-900 mb-4">Tạo tài khoản!</h1>
                             </div>
-                            <form class="user">
-                                <div class="form-group row">
-                                    <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="text" class="form-control form-control-user" id="exampleFirstName" placeholder="Họ và đệm">
-                                    </div>
-                                    <div class="col-sm-6">
-                                        <input type="text" class="form-control form-control-user" id="exampleLastName" placeholder="Tên">
-                                    </div>
+                            <form class="user" action="register.php" method="POST">
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" name="txtFullname" placeholder="Họ và tên">
                                 </div>
                                 <div class="form-group">
-                                    <input type="email" class="form-control form-control-user" id="exampleInputEmail" placeholder="Email ">
+                                    <input type="text" class="form-control form-control-user" name="txtEmail" placeholder="Email">
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" name="txtAddress" placeholder="Địa chỉ">
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-sm-6 mb-3 mb-sm-0">
-                                        <input type="password" class="form-control form-control-user" id="exampleInputPassword" placeholder="Mật khẩu">
+                                        <input type="text" class="form-control form-control-user" name="txtPhone" placeholder="Sdt">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control form-control-user" name="txtCmnd" placeholder="CMND">
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" class="form-control form-control-user" name="txtUsername" placeholder="Tên đăng nhập ">
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-sm-6 mb-3 mb-sm-0">
+                                        <input type="password" class="form-control form-control-user" name="txtPassword" placeholder="Mật khẩu">
                                     </div>
                                     <div class="col-sm-6">
                                         <input type="password" class="form-control form-control-user" id="exampleRepeatPassword" placeholder="Nhập lại mật khẩu">
                                     </div>
                                 </div>
-                                <a href="login.html" class="btn btn-primary btn-user btn-block">Đăng kí</a>
+                                <input type="submit" class="btn btn-primary btn-user btn-block" value="Đăng ký" />
+
                                 <hr>
                                 <a href="index.html" class="btn btn-google btn-user btn-block">
                                     <i class="fab fa-google fa-fw"></i> Đăng kí với Google

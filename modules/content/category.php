@@ -5,8 +5,8 @@
     $arrayCategory = array();
     $arrayImages = array();
     while($row = mysqli_fetch_array($result)) {
-        $arrayCategory[$row['idCL']] = $row['tenCL'];
-        $arrayImages[$row['idCL']] = $row['hinhanhSP'];
+        $arrayCategory[$row['MACL']] = $row['TENCL'];
+        $arrayImages[$row['MACL']] = $row['HINHANHSP'];
     }
 ?>
 <section class="ftco-section ftco-category ftco-no-pt">

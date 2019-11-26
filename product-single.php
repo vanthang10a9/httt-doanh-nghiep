@@ -9,7 +9,7 @@
 		$idSP = $_GET['id'];
 	}
 	?>
-	<title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+	<title>PizzaHot - product-single</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -42,20 +42,20 @@
 	include('modules/header.php');
 	include('modules/content/title.php'); //tieu de & hinh nen tieu de
 	?>
-
+	
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row">
 				<?php
-				$sql = "SELECT * FROM sanpham WHERE idSP =  $idSP ";
+				$sql = "SELECT * FROM sanpham WHERE MASP =  '$idSP'";
 				$result = DataProvider::executeQuery($sql);
 				$row = mysqli_fetch_assoc($result);
 				?>
 				<div class="col-lg-6 mb-5 ftco-animate">
-					<a href="images/products/<?php echo $row['hinhanhSP']; ?>" class="image-popup"><img src="images/products/<?php echo $row['hinhanhSP']; ?>" class="img-fluid" alt="Colorlib Template"></a>
+					<a href="images/products/<?php echo $row['HINHANHSP']; ?>" class="image-popup"><img src="images/products/<?php echo $row['HINHANHSP']; ?>" class="img-fluid" alt="Colorlib Template"></a>
 				</div>
 				<div class="col-lg-6 product-details pl-md-5 ftco-animate">
-					<h3><?php echo $row['tenSP']; ?></h3>
+					<h3><?php echo $row['TENSP']; ?></h3>
 					<div class="rating d-flex">
 						<p class="text-left mr-4">
 							<a href="#" class="mr-2">5.0</a>
@@ -74,16 +74,16 @@
 					</div>
 					<p class="price">
 						<?php
-						if (!empty($row['kmSP'])) {
-							$price = $row['giaSP'] - ($row['giaSP'] * $row['kmSP']) / 100; ?>
-							<span class="mr-2 price-dc"><?php echo $row['giaSP']; ?></span>
+						if (!empty($row['KMSP'])) {
+							$price = $row['GIASP'] - ($row['GIASP'] * $row['KMSP']) / 100; ?>
+							<span class="mr-2 price-dc"><?php echo $row['GIASP']; ?></span>
 						<?php
 						} else {
-							$price = $row['giaSP'];
+							$price = $row['GIASP'];
 						}
 						?>
 						<span class="price-sale"><?php echo $price; ?></span></p>
-					<p><?php echo $row['motaSP'] ?>
+					<p><?php echo $row['MOTASP'] ?>
 					</p>
 					<div class="row mt-4">
 						<div class="col-md-6">
@@ -118,7 +118,7 @@
 							<p style="color: #000;"><?php
 									$soluong = "";
 								
-								if($row['tinhtrangSP'] >= 1) $soluong ="Còn &nbsp" . $row['tinhtrangSP'] . " &nbsp cái";
+								if($row['SOLUONGSP'] >= 1) $soluong ="Còn &nbsp" . $row['SOLUONGSP'] . " &nbsp cái";
 								else $soluong = "Hết hàng";
 								echo $soluong;
 							?></p>
@@ -214,7 +214,7 @@
 			$('a#add-cart').click(function(e) {
 				e.preventDefault(); 
 /* xử lí alert ko đủ hàng nhưng lỗi
-				let slcon = <?php echo $row['tinhtrangSP'] ?>;
+				let slcon = <?php echo $row['SOLUONGSP'] ?>;
 				slcon = parseInt(slcon);
 				let slmua = parseInt($('#quantity').val());
 				slmua = parseInt(slmua);

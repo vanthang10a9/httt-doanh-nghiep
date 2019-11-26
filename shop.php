@@ -48,8 +48,8 @@
 						<?php
 						$result = DataProvider::executeQuery("SELECT * FROM loaisanpham");
 						while ($row = mysqli_fetch_assoc($result)) {
-							$category = $row['tenCL'];
-							$categoryId = $row['idCL'];
+							$category = $row['TENCL'];
+							$categoryId = $row['MACL'];
 							?>
 							<li><a id="li-<?php echo $categoryId; ?>" href="shop.php?category=<?php echo $categoryId; ?>"><?php echo $category; ?></a></li>
 						<?php
@@ -68,12 +68,12 @@
 
 				$condition = "";
 				if (!is_null($category))
-					$condition .= " AND idCL = $category";
+					$condition .= " AND MACL = $category";
 
 
 				//thuật toán phân trang -  Nguồn: https://freetuts.net/thuat-toan-phan-trang-voi-php-va-mysql-550.html
 				//tìm số records
-				$result = DataProvider::executeQuery("SELECT count(idSP) AS total FROM sanpham WHERE '1' = '1'" . $condition);
+				$result = DataProvider::executeQuery("SELECT count(MACL) AS total FROM sanpham WHERE '1' = '1'" . $condition);
 				$row = mysqli_fetch_assoc($result);
 				$total_records = $row['total'];
 
@@ -99,34 +99,34 @@
 					while ($row = mysqli_fetch_array($result)) { ?>
 						<div class="col-md-6 col-lg-3 ftco-animate">
 							<div class="product">
-								<a href="product-single.php?id=<?php echo $row['idSP']; ?>" class="img-prod"><img class="img-fluid" src="images/products/<?php echo $row['hinhanhSP']; ?>" alt="Colorlib Template">
-									<?php if (!empty($row['kmSP'])) { ?><span class="status"><?php echo $row['kmSP']; ?> %</span> <?php } ?>
+								<a href="product-single.php?id=<?php echo $row['MASP']; ?>" class="img-prod"><img class="img-fluid" src="images/products/<?php echo $row['HINHANHSP']; ?>" alt="Colorlib Template">
+									<?php if (!empty($row['KMSP'])) { ?><span class="status"><?php echo $row['KMSP']; ?> %</span> <?php } ?>
 									<div class="overlay"></div>
 								</a>
 								<div class="text py-3 pb-4 px-3 text-center">
-									<h3><a href="product-single.php?id=<?php echo $row['idSP']; ?>"><?php echo $row['tenSP']; ?></a></h3>
+									<h3><a href="product-single.php?id=<?php echo $row['MASP']; ?>"><?php echo $row['TENSP']; ?></a></h3>
 									<div class="d-flex">
 										<div class="pricing">
 											<p class="price">
 												<?php
-														if (!empty($row['kmSP'])) {
-															$price = $row['giaSP'] - ($row['giaSP'] * $row['kmSP']) / 100; ?>
-													<span class="mr-2 price-dc"><?php echo $row['giaSP']; ?></span>
+														if (!empty($row['KMSP'])) {
+															$price = $row['GIASP'] - ($row['GIASP'] * $row['KMSP']) / 100; ?>
+													<span class="mr-2 price-dc"><?php echo $row['GIASP']; ?></span>
 												<?php
 														} else {
-															$price = $row['giaSP'];
+															$price = $row['GIASP'];
 														}
 														?>
 												<span class="price-sale"><?php echo $price; ?></span>
 											</p>
 										</div>
 									</div>
-									<div class="bottom-area d-flex px-3 product-id-<?php echo $row['idSP']; ?>" id="<?php echo $row['idSP']; ?>">
+									<div class="bottom-area d-flex px-3 product-id-<?php echo $row['MASP']; ?>" id="<?php echo $row['MASP']; ?>">
 										<div class="m-auto d-flex">
 											<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
 												<span><i class="ion-ios-menu"></i></span>
 											</a>
-											<a href="" class="buy-now d-flex justify-content-center align-items-center mx-1" id="addcart-<?php echo $row['idSP']; ?>">
+											<a href="" class="buy-now d-flex justify-content-center align-items-center mx-1" id="addcart-<?php echo $row['MASP']; ?>">
 												<span><i class="ion-ios-cart"></i></span>
 											</a>
 											<a href="#" class="heart d-flex justify-content-center align-items-center ">
@@ -135,10 +135,10 @@
 										</div>
 									</div>
 									<script type="text/javascript">
-										$("a#addcart-<?php echo $row['idSP']; ?>").click(function(e) {
+										$("a#addcart-<?php echo $row['MASP']; ?>").click(function(e) {
 											e.preventDefault();
 											var item = {
-												'id': $(".product-id-<?php echo $row['idSP'] ?>").attr('id'),
+												'id': $(".product-id-<?php echo $row['MASP'] ?>").attr('id'),
 												'quantity': 1
 											};
 											$.ajax({
