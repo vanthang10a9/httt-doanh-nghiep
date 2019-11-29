@@ -117,6 +117,7 @@
 						<div class="col-md-12">
 							<p style="color: #000;"><?php
 									$soluong = "";
+									$soluongsp= $row['SOLUONGSP'];
 								
 								if($row['SOLUONGSP'] >= 1) $soluong ="Còn &nbsp" . $row['SOLUONGSP'] . " &nbsp cái";
 								else $soluong = "Hết hàng";
@@ -179,7 +180,7 @@
 	
 	<script>
 		$(document).ready(function() {
-
+			
 			var quantitiy = 0;
 			$('.quantity-right-plus').click(function(e) {
 
@@ -213,19 +214,18 @@
 
 			$('a#add-cart').click(function(e) {
 				e.preventDefault(); 
-/* xử lí alert ko đủ hàng nhưng lỗi
-				let slcon = <?php echo $row['SOLUONGSP'] ?>;
+						//xử lí alert ko đủ hàng
+				var slcon = <?php echo $soluongsp; ?>;
 				slcon = parseInt(slcon);
-				let slmua = parseInt($('#quantity').val());
+				var slmua = parseInt($('#quantity').val());
 				slmua = parseInt(slmua);
-				if(slcon<slmua){
-					
+				if(slcon<slmua){					
 					alert("Không đủ hàng !");
 					return;
 				}
+			
 
-*/
-		item = {'id': <?php echo $idSP ;?>, 'quantity': $('#quantity').val()}
+		item = {'id': '<?php echo $idSP ;?>' , 'quantity': $('#quantity').val()}
 				$.ajax({
 					type: "POST",
 					url: "addcart.php",
@@ -233,6 +233,7 @@
 					cache: false,
 					success: function(results) {
 						console.log(results);
+						alert(results);
 					}
 				})
 			});

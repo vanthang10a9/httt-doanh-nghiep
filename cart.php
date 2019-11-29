@@ -1,6 +1,6 @@
 <?php
 session_start();
-print_r($_SESSION);
+//print_r($_SESSION);
 //xử lý khi người dùng chỉnh sửa đơn hàng
 
 //kiểm tra giỏ hàng có tồn tại sản phẩm
@@ -11,6 +11,7 @@ if (isset($_SESSION['cart'])) {
 			$ok = 2;
 	}
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +57,7 @@ if (isset($_SESSION['cart'])) {
 			<div class="row">
 				<div class="col-md-12 ftco-animate">
 					<?php
-					if ($ok == 2) {
+					if ($ok == 2) { 
 						?>
 						<div class="cart-list">
 							<table class="table">
@@ -74,57 +75,58 @@ if (isset($_SESSION['cart'])) {
 									<?php
 										//tìm kiếm, hiển thị tất cả sản phẩm có id trong session
 										foreach ($_SESSION['cart'] as $key => $value) {
-											$item[] = $key;
+											$item[] = "'".$key."'";	
+																				
 										}
-										$str = implode(",", $item);
-										$query = "SELECT * FROM sanpham WHERE idSP IN ($str)";
+										$str = implode(",", $item); 
+										$query = "SELECT * FROM sanpham WHERE MASP IN ($str)";
 										$results = DataProvider::executeQuery($query);
 										$totalPrice = 0;
 										while ($row = mysqli_fetch_array($results)) { 
-											$idSP = $row['idSP'];	
+											$idSP = $row['MASP'];	
 										?>
 								
-										<tr class="text-center" id="product-<?php echo $row['idSP']; ?>">
-											<td class="product-remove"><a id="delete-product-<?php echo $row['idSP']; ?>" href=""><span class="ion-ios-close"></span></a></td>
+										<tr class="text-center" id="product-<?php echo $row['MASP']; ?>">
+											<td class="product-remove"><a id="delete-product-<?php echo $row['MASP']; ?>" href=""><span class="ion-ios-close"></span></a></td>
 
 											<td class="image-prod">
-												<div class="img" style="background-image:url(images/products/<?php echo $row['hinhanhSP'] ?>);"></div>
+												<div class="img" style="background-image:url(images/products/<?php echo $row['HINHANHSP'] ?>); width:150px;"></div>
 											</td>
 
 											<td class="product-name">
-												<h3><?php echo $row['tenSP']; ?></h3>
+												<h3><?php echo $row['TENSP']; ?></h3>
 											</td>
 
 											<?php
 													//tính giá tiền nếu có khuyến mãi + tổng tiền
-													if (!empty($row['kmSP'])) {
-														$price = $row['giaSP'] - ($row['giaSP'] * $row['kmSP']) / 100;
+													if (!empty($row['KMSP'])) {
+														$price = $row['GIASP'] - ($row['GIASP'] * $row['KMSP']) / 100;
 													} else {
-														$price = $row['giaSP'];
+														$price = $row['GIASP'];
 													}
 
-													$totalPrice += $price * $_SESSION['cart'][$row['idSP']];
+													$totalPrice += $price * $_SESSION['cart'][$row['MASP']];
 
 													?>
 											<td class="price"><?php echo $price ?></td>
 
 											<td class="quantity">
 												<div class="input-group mb-3">
-													<input type="text" name="quantity" class="quantity form-control input-number" value="<?php echo $_SESSION['cart'][$row['idSP']]; ?>" min="1" max="100">
+													<input type="text" name="quantity" class="quantity form-control input-number" value="<?php echo $_SESSION['cart'][$row['MASP']]; ?>" min="1" max="100">
 												</div>
 											</td>
 
-											<td class="total"><?php echo ($price * $_SESSION['cart'][$row['idSP']]); ?></td>
+											<td class="total"><?php echo ($price * $_SESSION['cart'][$row['MASP']]); ?></td>
 
 											<!-- xóa giỏ sản phẩm bằng ajax cho nó chuyên nghiệp :D -->
 											<script type="text/javascript">
-												$("a#delete-product-<?php echo $row['idSP']; ?>").click(function(e) {
+												$("a#delete-product-<?php echo $row['MASP']; ?>").click(function(e) {
 													e.preventDefault();
 													$.ajax ({
 														type: "POST",
-														url: "delete-cart.php?id=<?php echo $row['idSP']; ?>",
+														url: "delete-cart.php?id=<?php echo $row['MASP']; ?>",
 														success: function(results) {
-															$('#product-<?php echo $row['idSP']; ?>').remove();
+															$('#product-<?php echo $row['MASP']; ?>').remove();
 														}
 													});
 												});
@@ -175,23 +177,23 @@ if (isset($_SESSION['cart'])) {
 				</div> -->
 							<div class="col-lg-4 mt-5 cart-wrap ftco-animate">
 								<div class="cart-total mb-3">
-									<h3>Cart Totals</h3>
+									<h3>Thanh toán</h3>
 									<p class="d-flex">
-										<span>Subtotal</span>
+										<span>Tiền sản phẩm</span>
 										<span><?php echo $totalPrice; ?></span>
 									</p>
-									<!-- <p class="d-flex">
-							<span>Delivery</span>
-							<span>$0.00</span>
+									<p class="d-flex">
+							<span>Phí vận chuyển</span>
+							<span>15000</span>
 						</p>
-						<p class="d-flex">
+						<!-- <p class="d-flex">
 							<span>Discount</span>
 							<span>$3.00</span>
 						</p> -->
 									<hr>
 									<p class="d-flex total-price">
 										<span>Tổng tiền</span>
-										<span><?php echo $totalPrice; ?></span>
+										<span><?php echo (int)$totalPrice+15000; ?></span>
 									</p>
 								</div>
 								<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
