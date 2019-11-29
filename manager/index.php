@@ -2,11 +2,13 @@
 include('includes/head.php');
 $cur_year = date('Y');
 $cur_month = date('m');
-$s_monthlyIncome = "SELECT MONTH(ngayDH) as thang, SUM(tongtienDH) as tt 
+
+$s_monthlyIncome = "SELECT MONTH(NGAYDH) as thang, SUM(TONGTIEN) as tt 
                     FROM DONHANG 
-                    WHERE year(ngayDH) = $cur_year
+                    WHERE year(NGAYDH) = $cur_year
                     GROUP BY thang";
-$run_monthlyIncome = DataProvider::executeQuery($s_monthlyIncome);
+echo ($s_monthlyIncome);
+//$run_monthlyIncome = DataProvider::executeQuery($s_monthlyIncome);
 $months = array();
 $monthlyIncomes = array();
 for ($i = 1; $i <= 12; $i++) {
@@ -20,25 +22,25 @@ while ($monthlyIncome = mysqli_fetch_assoc($run_monthlyIncome)) {
 $monthlyIncomes = array_values($monthlyIncomes);
 
 //
-$s_lastMonthIncome = "SELECT MONTH(ngayDH) as thang, SUM(tongtienDH) as tt 
+$s_lastMonthIncome = "SELECT month(NGAYDH) as thang, SUM(TONGTIEN) as tt 
                       FROM DONHANG 
-                      WHERE year(ngayDH) = $cur_year AND month(ngayDH) = ($cur_month - 1)
+                      WHERE year(NGAYDH) = $cur_year AND month(NGAYDH) = ($cur_month - 1)
                       GROUP BY thang";
 $run_lastMonthIncome = DataProvider::executeQuery($s_lastMonthIncome);
 $lastMonthIncome = mysqli_fetch_assoc($run_lastMonthIncome);
 //
-$s_currentYearIncome = "SELECT YEAR(ngayDH) as y, SUM(tongtienDH) as tt 
+$s_currentYearIncome = "SELECT YEAR(NGAYDH) as y, SUM(TONGTIEN) as tt 
                       FROM DONHANG 
-                      WHERE year(ngayDH) = $cur_year
+                      WHERE year(NGAYDH) = $cur_year
                       GROUP BY y";
 $run_currentYearIncome = DataProvider::executeQuery($s_currentYearIncome);
 $currentYearIncome = mysqli_fetch_assoc($run_currentYearIncome);
 
 //
-$s_categories = "SELECT SUM(soluong) as sl, tenCL 
+$s_categories = "SELECT SUM(SOLUONGSP) as sl, TENCL 
                   FROM sanpham sp
                   INNER JOIN loaisanpham lsp ON sp.idCL = lsp.idCL
-                  GROUP BY tenCL";
+                  GROUP BY TENCL";
 
 $run_categories = DataProvider::executeQuery($s_categories);
 

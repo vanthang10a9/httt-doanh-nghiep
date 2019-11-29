@@ -56,17 +56,17 @@ include("includes/head.php");
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM taikhoan WHERE level = 0 AND note = 0";
+                                        $sql = "SELECT * FROM taikhoan WHERE LEVEL = 0 AND DUYET = 0";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
-                                            <tr idUser="<?php echo $row['idUser']; ?>">
-                                                <td><?php echo $row['username']; ?></td>
-                                                <td><?php echo $row['name']; ?></td>
-                                                <td><?php echo $row['cmnd']; ?></td>
-                                                <td><?php echo $row['address']; ?></td>
-                                                <td><?php echo $row['email']; ?></td>
-                                                <td><?php echo $row['phone']; ?></td>
+                                            <tr idUser="<?php echo $row['IDUSER']; ?>">
+                                                <td><?php echo $row['USERNAME']; ?></td>
+                                                <td><?php echo $row['NAME']; ?></td>
+                                                <td><?php echo $row['CMND']; ?></td>
+                                                <td><?php echo $row['ADDRESS']; ?></td>
+                                                <td><?php echo $row['EMAIL']; ?></td>
+                                                <td><?php echo $row['PHONE']; ?></td>
                                                 <td style='display:flex'></td>
                                             </tr>
                                         <?php } ?>

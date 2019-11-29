@@ -28,8 +28,5 @@ require('../core/DataProvider.php');
 
     <!-- Core plugin JavaScript-->
     <script src="vendor/jquery-easing/jquery.easing.min.js"></script> 
-    <script type="text/javascript" src="/js/moment.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap-datetimepicker.js"></script>
-    <link rel="stylesheet" href="/css/bootstrap-datetimepicker.css" />
     
 </head>

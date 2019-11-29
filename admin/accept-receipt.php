@@ -43,15 +43,15 @@ include("includes/head.php");
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM donnhap d INNER JOIN NHACUNGCAP ncc ON d.maNCC = ncc.maNCC INNER JOIN sanpham sp ON d.maSP = sp.maSP WHERE d.duyet = 0";
+                                        $sql = "SELECT * FROM donnhap d INNER JOIN nhacungcap ncc ON d.MANCC = ncc.MANCC INNER JOIN sanpham sp ON d.MASP = sp.MASP WHERE d.DUYET = 0";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
                                             <tr>
-                                                <td><?php echo $row['tenNCC']; ?></td>
-                                                <td><?php echo $row['tenSP']; ?></td>
-                                                <td><?php echo $row['ngaynhap']; ?></td>
-                                                <td><?php echo $row['tongtien']; ?></td>
+                                                <td><?php echo $row['TENNCC']; ?></td>
+                                                <td><?php echo $row['TENSP']; ?></td>
+                                                <td><?php echo $row['NGAYNHAP']; ?></td>
+                                                <td><?php echo $row['TONGTIEN']; ?></td>
                                                 <td></td>
                                                 <td></td>
                                             </tr>

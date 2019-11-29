@@ -1,4 +1,3 @@
-
 <div class="modal fade" id="addUserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -11,40 +10,41 @@
             <div class="modal-body">
                 <form id="addUserModal">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" value="" placeholder="Họ và tên">
+                        <input type="text" class="form-control" name="name" id="aname" value="" placeholder="Họ và tên">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="username" placeholder="Email">
+                        <input type="text" class="form-control" name="username" id="ausername" placeholder="Tài khoản">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="address" placeholder="Địa chỉ">
+                        <input type="text" class="form-control" name="address" id="aaddress" placeholder="Địa chỉ">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="identity" placeholder="Chứng minh nhân dân">
+                        <input type="text" class="form-control" name="identity" id="aidentity" placeholder="Chứng minh nhân dân">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="phonenumber" placeholder="Số điện thoại">
+                        <input type="text" class="form-control" name="phonenumber" id="aphonenumber" placeholder="Số điện thoại">
                     </div>
                     <div class="form-group">
-                        <select required class="form-control" id="role">
+                        <select required class="form-control" name="role" id="arole">
                             <option value="" disabled selected>Chọn vai trò</option>
                             <option value="0">Người dùng</option>
                             <option value="1">Nhân viên</option>
-                            <option value="2">Quản trị viên</option>
+                            <option value="2">Quản lý</option>
+                            <option value="3">Quản trị viên</option>
                         </select>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-6 mb-3 mb-sm-0">
-                            <input type="password" class="form-control" id="password" placeholder="Mật khẩu">
+                            <input type="password" class="form-control" name="password" id="password" placeholder="Mật khẩu">
                         </div>
                         <div class="col-sm-6">
-                            <input type="password" class="form-control" id="repassword" placeholder="Nhập lại mật khẩu">
+                            <input type="password" class="form-control" name="repassword" id="repassword" placeholder="Nhập lại mật khẩu">
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <a href="" class="btn btn-primary">
+                <a href="" id="addAccount" class="btn btn-primary">
                     Thêm tài khoản
                 </a>
             </div>
@@ -64,35 +64,78 @@
             <div class="modal-body">
                 <form id="editUserModal">
                     <div class="form-group">
-                        <input type="text" class="form-control" id="name" value="" placeholder="Họ và tên">
+                        <input type="text" class="form-control" name="name" id="name" value="" placeholder="Họ và tên">
                     </div>
                     <div class="form-group">
-                        <input type="email" class="form-control" id="username" placeholder="Email">
+                        <input type="email" class="form-control" name="username" id="username" placeholder="Tài khoản" readonly>
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="address" placeholder="Địa chỉ">
+                        <input type="text" class="form-control" name="address" id="address" placeholder="Địa chỉ">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="identity" placeholder="Chứng minh nhân dân">
+                        <input type="text" class="form-control" name="identity" id="identity" placeholder="Chứng minh nhân dân">
                     </div>
                     <div class="form-group">
-                        <input type="text" class="form-control" id="phonenumber" placeholder="Số điện thoại">
+                        <input type="text" class="form-control" name="phonenumber" id="phonenumber" placeholder="Số điện thoại">
                     </div>
                     <div class="form-group">
-                        <select required class="form-control" id="role">
+                        <select required class="form-control" name="role" id="role">
                             <option value="" disabled selected>Chọn vai trò</option>
                             <option value="0">Người dùng</option>
                             <option value="1">Nhân viên</option>
-                            <option value="2">Quản trị viên</option>
+                            <option value="2">Quản lý</option>
+                            <option value="3">Quản trị viên</option>
                         </select>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <a href="" class="btn btn-primary">
+                <a href="" id="editAccount" class="btn btn-primary">
                     Sửa tài khoản
                 </a>
             </div>
         </div>
     </div>
 </div>
+
+<script type="text/javascript" charset="utf-8">
+    $('#addAccount').click(function(event) {
+        var x = $('form#addUserModal').serialize();
+        console.log(x);
+        $.ajax({
+            type: "POST",
+            url: "add-account.php",
+            data: x,
+            success: function(response) {
+
+                alert("Đăng kí thành công");
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+
+                alert("Đăng kí thất bại");
+
+            }
+        });
+        event.preventDefault();
+    });
+
+    $('#editAccount').click(function(event) {
+        var x = $('form#editUserModal').serialize();
+        console.log(JSON.stringify(x));
+        $.ajax({
+            type: "POST",
+            url: "edit-account.php",
+            data: x,
+            success: function(response) {
+
+                alert("Chỉnh sửa kí thành công");
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+
+                alert("Chỉnh sửa thất bại");
+
+            }
+        });
+        event.preventDefault();
+    });
+</script>
