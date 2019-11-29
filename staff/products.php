@@ -1,6 +1,6 @@
 <?php
 include("includes/head.php");
-$sql = "SELECT * FROM loaisanpham ORDER BY idCL";
+$sql = "SELECT * FROM loaisanpham ORDER BY MACL";
 $result = DataProvider::executeQuery($sql);
 ?>
 
@@ -52,7 +52,7 @@ $result = DataProvider::executeQuery($sql);
                                                     <option value="" selected>Tìm theo danh mục</option>
                                                     <?php
                                                     while ($row = mysqli_fetch_assoc($result)) { ?>
-                                                        <option value="<?php echo $row['tenCL']; ?>"><?php echo $row['tenCL']; ?></option>
+                                                        <option value="<?php echo $row['TENCL']; ?>"><?php echo $row['TENCL']; ?></option>
                                                     <?php
                                                     }
                                                     ?>
@@ -87,18 +87,18 @@ $result = DataProvider::executeQuery($sql);
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM sanpham sp INNER JOIN loaisanpham lsp ON sp.idCL = lsp.idCL";
+                                        $sql = "SELECT * FROM sanpham sp INNER JOIN loaisanpham lsp ON sp.MACL = lsp.MACL";
                                         $result = DataProvider::executeQuery($sql);
-                                        while ($row = mysqli_fetch_assoc($result)) {
-
+                                        while ($row = mysqli_fetch_array($result)) {
+                                            
                                             ?>
                                             <tr>
-                                                <td><?php echo $row['maSP']; ?></td>
-                                                <td><?php echo $row['tenSP']; ?></td>
-                                                <td><?php echo $row['giaSP']; ?></td>
-                                                <td><?php echo $row['motaSP']; ?></td>
-                                                <td id="<?php echo $row['idCL']; ?>"><?php echo $row['tenCL']; ?></td>
-                                                <td><img src="../images/products/<?php echo $row['hinhanhSP']; ?>" alt="" width="100px"></td>
+                                                <td><?php echo $row['MASP']; ?></td>
+                                                <td><?php echo $row['TENSP']; ?></td>
+                                                <td><?php echo $row['GIASP']; ?></td>
+                                                <td><?php echo $row['MOTASP']; ?></td>
+                                                <td id="<?php echo $row['MACL']; ?>"><?php echo $row['TENCL']; ?></td>
+                                                <td><img src="../images/products/<?php echo $row['HINHANHSP']; ?>.png" alt="" width="100px"></td>
                                                 <td style="display:flex"></td>
                                             </tr>
 
