@@ -80,7 +80,7 @@
     //Thông báo quá trình lưu
     if ($addmember)
         echo "Quá trình đăng ký thành công. <a href='login.html'>Về trang chủ</a>";
-     //else
-    //  die("Error " . mysql_errno( ) . " : " . mysql_error(  ));
+     else
+     die("Error " . mysql_errno( ) . " : " . mysql_error(  ));
     //     echo "Có lỗi xảy ra trong quá trình đăng ký. <a href='register.html'>Thử lại</a>";
 ?>
