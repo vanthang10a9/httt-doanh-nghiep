@@ -9,19 +9,14 @@
         $phone = $_POST['phonenumber'];
         $role = $_POST['role'];
         
-        $sql = 'UPDATE taikhoan 
-                SET NAME = ".$name.", 
-                    ADDRESS = ".$address.",
-                    CMND = ".$identity.",
-                    PHONE = ".$phone.",
-                    LEVEL = ".$role." WHERE USERNAME=".$username."';
+        $sql = "UPDATE taikhoan SET NAME = '$name', ADDRESS = '$address', CMND = '$identity', PHONE = '$phone', LEVEL = '$role' WHERE USERNAME='$username'";
         
         $check = "select USERNAME from TAIKHOAN where USERNAME = '$username'";
         $run_check = DataProvider::executeQuery($check);
         if (mysqli_num_rows($run_check) == 1)
         {
-            DataProvider::executeQuery($sql);
-            echo '<script>alert("Bạn đăng ký thành công!");window.location="../../../index.php"</script>';                
+            echo $sql;
+            DataProvider::executeQuery($sql);         
         }
         else
             echo '<script>alert("Bạn đăng ký thất bại!");window.location="../../../index.php"</script>';  

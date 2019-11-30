@@ -98,7 +98,7 @@ $result = DataProvider::executeQuery($sql);
                                                 <td><?php echo $row['GIASP']; ?></td>
                                                 <td><?php echo $row['MOTASP']; ?></td>
                                                 <td id="<?php echo $row['MACL']; ?>"><?php echo $row['TENCL']; ?></td>
-                                                <td><img src="../images/products/<?php echo $row['HINHANHSP']; ?>.png" alt="" width="100px"></td>
+                                                <td><img src="../images/products/<?php echo $row['HINHANHSP']; ?>" alt="" width="100px"></td>
                                                 <td style="display:flex"></td>
                                             </tr>
 

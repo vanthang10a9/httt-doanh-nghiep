@@ -108,7 +108,7 @@
             data: x,
             success: function(response) {
 
-                alert("Đăng kí thành công");
+                location.reload(true);
             },
             error: function(jqXHR, textStatus, errorThrown) {
 
@@ -120,6 +120,7 @@
     });
 
     $('#editAccount').click(function(event) {
+        event.preventDefault();
         var x = $('form#editUserModal').serialize();
         console.log(JSON.stringify(x));
         $.ajax({
@@ -128,7 +129,7 @@
             data: x,
             success: function(response) {
 
-                alert("Chỉnh sửa kí thành công");
+                location.reload(true);
             },
             error: function(jqXHR, textStatus, errorThrown) {
 
@@ -136,6 +137,6 @@
 
             }
         });
-        event.preventDefault();
+
     });
 </script>

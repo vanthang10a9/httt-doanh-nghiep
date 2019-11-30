@@ -132,7 +132,7 @@ include("includes/head.php");
                 .prop('selected', false);
         })
 
-        $('#dataTable').dataTable({
+        var table = $('#dataTable').dataTable({
             "columnDefs": [{
                     "orderable": false,
                     "targets": [2, 5, -1],
@@ -170,7 +170,8 @@ include("includes/head.php");
         });
         //handle click delete
         $('#dataTable tbody').on('click', '.delete', function(e) {
-            var userid = $(this).closest('tr').attr('id');
+            var selector = $(this).closest('tr'); 
+            var userid = selector.attr('id');
             var r = confirm("Xóa user");
             if (r == true) {
                 $.ajax({
@@ -182,8 +183,8 @@ include("includes/head.php");
                         'userid': userid
                 },
                 success: function(response) {
-
-                    alert("Xóa thành công");
+                    $('#dataTable').DataTable().row(selector).remove().draw(false);
+                    //location.reload(true);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
 
