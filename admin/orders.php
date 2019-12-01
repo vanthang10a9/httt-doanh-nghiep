@@ -51,17 +51,17 @@ include("includes/head.php");
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             switch ($row['STATUS']) {
-                                                case 1:
-                                                    $trangthai = "Tiếp nhận";
+                                                case 0:
+                                                    $trangthai = "Chưa tiếp nhận";
                                                     break;
-                                                case 2:
+                                                case 1:
                                                     $trangthai = "Hoàn thành";
                                                     break;
                                                 default:
-                                                    $trangthai = "Đang xử lý";
+                                                    $trangthai = "Chưa tiếp nhận";
                                             }
                                             ?>
-                                                <tr>
+                                                <tr id="<?php echo $row['MADH']; ?>">
                                                     <td><?php echo $row['NAME']; ?></td>
                                                     <td><?php echo $row['ADDRESS']; ?></td>
                                                     <td><?php echo $row['PHONE']; ?></td>
@@ -123,9 +123,24 @@ include("includes/head.php");
             ]
         });
         $('#dataTable tbody').on('click', '.ct', function(e) {
-            //var productid = $(this).closest('tr').attr('id');
-            //bodyalert("kakak");
+            var id = $(this).closest('tr').attr('id');
+            var x = {
+                'action-dh': 'select-detail',
+                'id': id
+            };
+
+
+            console.log(JSON.stringify(x));
+            $.ajax({
+                type: "POST",
+                url: "handler.php",
+                data: x,
+                success: function(results) {
+                    $('#detailz tbody').html(results);
+                }
+            });
             $("#ordermodal").modal("show");
+            e.preventDefault();
         });
 
         //export report

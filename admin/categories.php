@@ -28,7 +28,7 @@ include("includes/head.php");
                     <h1 class="h3 mb-2 text-gray-800">Danh sách danh mục</h1>
 
                     <!-- Table button -->
-                    <div class="d-flex flex-row-reverse">
+                    <!-- <div class="d-flex flex-row-reverse">
                         <button type="button" class="btn btn-secondary mb-1">
                             <i class="fa fa-sync-alt"></i>
                         </button>
@@ -36,7 +36,7 @@ include("includes/head.php");
                             <i class="fa fa-plus"></i>
                         </button>
 
-                    </div>
+                    </div> -->
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -228,6 +228,7 @@ include("includes/head.php");
                 success: function(response) {
                     imageNameGlobal = "";
                     imageSrcGlobal = "";
+                    location.reload(true);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
 
