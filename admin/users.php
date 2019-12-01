@@ -42,6 +42,21 @@ include("includes/head.php");
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length">
+                                            <label>
+                                                <select id="role-filter" class="custom-select custom-select-sm form-control form-control-sm">
+                                                    <option value="" selected>Tìm theo vai trò</option>
+                                                    <option value="Admin">Admin</option>
+                                                    <option value="Quản lý">Quản lý</option>
+                                                    <option value="Nhân viên">Nhân viên</option>
+                                                    <option value="Khách hàng">Khách hàng</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -66,7 +81,7 @@ include("includes/head.php");
                                                     $role = "Admin";
                                                     break;
                                                 case 2:
-                                                    $role = "Nhân viên";
+                                                    $role = "Quản lý";
                                                     break;
                                                 case 1:
                                                     $role = "Nhân viên";
@@ -170,31 +185,36 @@ include("includes/head.php");
         });
         //handle click delete
         $('#dataTable tbody').on('click', '.delete', function(e) {
-            var selector = $(this).closest('tr'); 
+            var selector = $(this).closest('tr');
             var userid = selector.attr('id');
             var r = confirm("Xóa user");
             if (r == true) {
                 $.ajax({
-                type: "POST",
-                url: "edit-account.php",
-                data: {
-                    
+                    type: "POST",
+                    url: "edit-account.php",
+                    data: {
+
                         'action-delete': 'true',
                         'userid': userid
-                },
-                success: function(response) {
-                    $('#dataTable').DataTable().row(selector).remove().draw(false);
-                    //location.reload(true);
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
+                    },
+                    success: function(response) {
+                        $('#dataTable').DataTable().row(selector).remove().draw(false);
+                        //location.reload(true);
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
 
-                    alert("Xóa thất bại");
+                        alert("Xóa thất bại");
 
-                }
-            });
+                    }
+                });
             }
-            
+        });
+        $(document).ready(function() {
+            var table = $('#dataTable').DataTable();
 
+            $('#role-filter').on('change', function() {
+                table.columns(6).search(this.value).draw();
+            });
         });
     </script>
 

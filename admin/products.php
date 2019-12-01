@@ -66,9 +66,9 @@ $result = DataProvider::executeQuery($sql);
                                         <div class="dataTables_length">
                                             <label style="display:inline-block">
                                                 Tìm theo giá
-                                                <input class="form-control form-control-sm" id="minp">
+                                                <input type="number" step="25000" class="form-control form-control-sm" id="minp">
                                                 đến
-                                                <input class="form-control form-control-sm" id="maxp">
+                                                <input type="number" step="50000" class="form-control form-control-sm" id="maxp">
                                             </label>
                                         </div>
                                     </div>
@@ -238,6 +238,9 @@ $result = DataProvider::executeQuery($sql);
             var table = $('#dataTable').DataTable();
 
             // Event listener to the two range filtering inputs to redraw on input
+            $('#minp, #maxp').change(function() {
+                table.draw();
+            });
             $('#minp, #maxp').keyup(function() {
                 table.draw();
             });

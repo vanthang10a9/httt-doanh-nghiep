@@ -25,11 +25,26 @@ include("includes/head.php");
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">Danh sách nhập hàng</h1>
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Danh sách nhập hàng</h1>
+                        <a href="" id="export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Xuất báo cáo nhập</a>
+                    </div>
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length">
+                                            <label style="display:inline-block">
+                                                Tìm theo giá
+                                                <input type="number" step="100000" class="form-control form-control-sm" id="minp">
+                                                đến
+                                                <input type="number" step="100000" class="form-control form-control-sm" id="maxp">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -37,7 +52,7 @@ include("includes/head.php");
                                             <th>Người nhập</th>
                                             <th>Ngày nhập</th>
                                             <th>Tổng tiền</th>
-                                            <th>Chi tiết</th>
+                                            <th class="noExp">Chi tiết</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -48,10 +63,10 @@ include("includes/head.php");
                                             ?>
                                             <tr id="<?php echo $row['MADN']; ?>">
                                                 <td><?php echo $row['TENNCC']; ?></td>
-                                                <td><?php echo $row['MANV']; ?></td>
+                                                <td><?php echo $row['NAME']; ?></td>
                                                 <td><?php echo $row['NGAYNHAP']; ?></td>
                                                 <td><?php echo $row['TONGTIEN']; ?></td>
-                                                <td></td>
+                                                <td class="noExp"></td>
                                             </tr>
 
                                         <?php } ?>
@@ -91,7 +106,7 @@ include("includes/head.php");
                 <div class="modal-body">
                     <p>Xác nhận duyệt đơn nhập ?</p>
                 </div>
-                <div class="modal-footer" >
+                <div class="modal-footer">
                     <a href="" class="btn btn-primary" id="submit-active">
                         Chấp nhận
                     </a>
@@ -112,6 +127,7 @@ include("includes/head.php");
     include('deleteModal.php');
     ?>
     <!-- Page level plugins -->
+    <script src="vendor/jquery/jquery.table2excel.js"></script>
     <script src="vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
@@ -149,7 +165,7 @@ include("includes/head.php");
             });
             $("#receiptmodal").modal("show");
             e.preventDefault();
-            
+
         });
         //Handle click on "Edit" button
         $('#dataTable tbody').on('click', '.activation', function(e) {
@@ -186,6 +202,46 @@ include("includes/head.php");
             var userid = $(this).closest('tr').attr('id');
             var tds = $(this).closest('tr').find('td');
             $("#deleteModal").modal("show");
+        });
+        //export report
+        $("a#export").click(function() {
+            $("#dataTable").table2excel({
+                // exclude CSS class
+                name: "Worksheet Name",
+                exclude: ".noExp",
+                filename: "DS_hoadon_nhap", //do not include extensi
+                fileext: ".xls", // file extension
+                exclude_img: true,
+                exclude_links: true,
+                exclude_inputs: true,
+            });
+        });
+        /* Custom filtering function which will search data in column four between two values */
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = parseInt($('#minp').val(), 10);
+                var max = parseInt($('#maxp').val(), 10);
+                var price = parseFloat(data[3]) || 0; // use data for the age column
+
+                if ((isNaN(min) && isNaN(max)) ||
+                    (isNaN(min) && price <= max) ||
+                    (min <= price && isNaN(max)) ||
+                    (min <= price && price <= max)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+        $(document).ready(function() {
+            var table = $('#dataTable').DataTable();
+
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#minp, #maxp').change(function() {
+                table.draw();
+            });
+            $('#minp, #maxp').keyup(function() {
+                table.draw();
+            });
         });
     </script>
 
