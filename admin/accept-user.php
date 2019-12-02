@@ -60,7 +60,7 @@ include("includes/head.php");
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
-                                            <tr idUser="<?php echo $row['IDUSER']; ?>">
+                                            <tr id="<?php echo $row['IDUSER']; ?>">
                                                 <td><?php echo $row['USERNAME']; ?></td>
                                                 <td><?php echo $row['NAME']; ?></td>
                                                 <td><?php echo $row['CMND']; ?></td>
@@ -94,23 +94,22 @@ include("includes/head.php");
     </div>
     <!-- End of Page Wrapper -->
 
-    <!-- activation modal-->
+    <!--Activation Modal -->
     <div class="modal fade" id="activationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chấp nhận đăng kí tài khoản</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body">
+                    <p>Xác nhận duyệt tài khoản ?</p>
+                </div>
                 <div class="modal-footer">
-                    <a href="" class="btn btn-primary">
-                        Chấp nhận
-                    </a>
-                    <a href="" class="btn btn-secondary">
-                        Thoát
-                    </a>
+                    <button type="button" class="btn btn-primary" id="submit-active">Duyệt</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
                 </div>
             </div>
         </div>
@@ -155,17 +154,59 @@ include("includes/head.php");
 
         //Handle click on "Edit" button
         $('#dataTable tbody').on('click', '.activation', function(e) {
-            var userid = $(this).closest('tr').attr('id');
+            var selector = $(this).closest('tr');
+            var userid = selector.attr('id');
             var tds = $(this).closest('tr').find('td');
             $("#activationModal").modal("show");
+            $('#activationModal').on('click', '#submit-active', function(e) {
+                $.ajax({
+                    type: "POST",
+                    url: "handle-accept.php",
+                    data: {
 
+                        'action': 'activation',
+                        'userid': userid
+                    },
+                    success: function(response) {
+                        $('#dataTable').DataTable().row(selector).remove().draw(false);
+                        $("#activationModal").modal("hide");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+
+                        alert("Duyệt thất bại");
+
+                    }
+                });
+            });
         });
 
-        //Handle click on "Edit" button
+        //Handle click on "Delete" button
         $('#dataTable tbody').on('click', '.delete', function(e) {
             var userid = $(this).closest('tr').attr('id');
             var tds = $(this).closest('tr').find('td');
+            $('#deleteModal .modal-body p').html("Xác nhận xóa yêu cầu đăng kí");
             $("#deleteModal").modal("show");
+            $('#deleteModal').on('click', '#submit-delete', function(e) {
+                $.ajax({
+                    type: "POST",
+                    url: "handle-accept.php",
+                    data: {
+
+                        'action': 'delete',
+                        'userid': userid
+                    },
+                    success: function(response) {
+
+                        alert("Xóa yêu cầu thành công");
+                        $("deleteModal").modal("hide");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+
+                        alert("Duyệt thất bại");
+
+                    }
+                });
+            });
         });
     </script>
 

@@ -30,7 +30,7 @@ $result = DataProvider::executeQuery($sql);
                     <h1 class="h3 mb-2 text-gray-800">Danh sách danh mục</h1>
 
                     <!-- Table button -->
-                    <div class="d-flex flex-row-reverse">
+                    <!-- <div class="d-flex flex-row-reverse">
                         <button type="button" class="btn btn-secondary mb-1">
                             <i class="fa fa-sync-alt"></i>
                         </button>
@@ -38,7 +38,7 @@ $result = DataProvider::executeQuery($sql);
                             <i class="fa fa-plus"></i>
                         </button>
 
-                    </div>
+                    </div> -->
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -66,9 +66,9 @@ $result = DataProvider::executeQuery($sql);
                                         <div class="dataTables_length">
                                             <label style="display:inline-block">
                                                 Tìm theo giá
-                                                <input class="form-control form-control-sm" id="minp">
+                                                <input type="number" step="25000" class="form-control form-control-sm" id="minp">
                                                 đến
-                                                <input class="form-control form-control-sm" id="maxp">
+                                                <input type="number" step="50000" class="form-control form-control-sm" id="maxp">
                                             </label>
                                         </div>
                                     </div>
@@ -82,7 +82,7 @@ $result = DataProvider::executeQuery($sql);
                                             <th>Mô tả</th>
                                             <th>Loại sản phẩm</th>
                                             <th>Hình ảnh</th>
-                                            <th>Thao tác</th>
+                                            <th>Số lượng</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -98,8 +98,8 @@ $result = DataProvider::executeQuery($sql);
                                                 <td><?php echo $row['GIASP']; ?></td>
                                                 <td><?php echo $row['MOTASP']; ?></td>
                                                 <td id="<?php echo $row['MACL']; ?>"><?php echo $row['TENCL']; ?></td>
-                                                <td><img src="../images/products/<?php echo $row['HINHANHSP']; ?>.png" alt="" width="100px"></td>
-                                                <td style="display:flex"></td>
+                                                <td><img src="../images/products/<?php echo $row['HINHANHSP']; ?>" alt="" width="100px"></td>
+                                                <td><?php echo $row['SOLUONGSP']; ?></td>
                                             </tr>
 
                                         <?php } ?>
@@ -149,13 +149,7 @@ $result = DataProvider::executeQuery($sql);
         $('#dataTable').dataTable({
             "columnDefs": [{
                     "orderable": false,
-                    "targets": [5, -1]
-                },
-                {
-                    "targets": -1,
-                    "data": null,
-                    "defaultContent": '<button class="btn-xs btn-info m-1 edit"><i class="fa fa-edit"></i></button>' +
-                        '<button class="btn-xs btn-danger m-1 delete"><i class="fa fa-trash"></i></button>'
+                    "targets": [5]
                 }
             ]
         });
@@ -244,6 +238,9 @@ $result = DataProvider::executeQuery($sql);
             var table = $('#dataTable').DataTable();
 
             // Event listener to the two range filtering inputs to redraw on input
+            $('#minp, #maxp').change(function() {
+                table.draw();
+            });
             $('#minp, #maxp').keyup(function() {
                 table.draw();
             });

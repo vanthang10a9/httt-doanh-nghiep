@@ -41,11 +41,11 @@ include("includes/head.php");
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM nhacungcap";
+                                        $sql = "SELECT * FROM nhacungcap WHERE DUYET = 0";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
-                                            <tr>
+                                            <tr id="<?php echo $row['MANCC']; ?>">
                                                 <td><?php echo $row['MANCC']; ?></td>
                                                 <td><?php echo $row['TENNCC']; ?></td>
                                                 <td><?php echo $row['THONGTIN']; ?></td>
@@ -112,16 +112,19 @@ include("includes/head.php");
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Chấp nhận đăng kí tài khoản</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
+                <div class="modal-body">
+                    <p>Xác nhận duyệt nhà cung cấp mới ?</p>
+                </div>
                 <div class="modal-footer">
-                    <a href="" class="btn btn-primary">
+                    <a href="" class="btn btn-primary" id="submit-active">
                         Chấp nhận
                     </a>
-                    <a href="" class="btn btn-secondary">
+                    <a href="" class="btn btn-secondary" data-dismiss="modal">
                         Thoát
                     </a>
                 </div>
@@ -152,17 +155,61 @@ include("includes/head.php");
 
         //Handle click on "Edit" button
         $('#dataTable tbody').on('click', '.activation', function(e) {
-            var userid = $(this).closest('tr').attr('id');
-            var tds = $(this).closest('tr').find('td');
+            var selector = $(this).closest('tr');
+            var id = selector.attr('id');
             $("#activationModal").modal("show");
+            $('#activationModal').on('click', '#submit-active', function(event) {
+                $.ajax({
+                    type: "POST",
+                    url: "handler.php",
+                    data: {
 
+                        'action-supplier': 'activation',
+                        'id': id
+                    },
+                    success: function(response) {
+                        $('#dataTable').DataTable().row(selector).remove().draw(false);
+                        $("#activationModal").modal("hide");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+
+                        alert("Duyệt thất bại");
+
+                    }
+                });
+                event.preventDefault();
+            });
         });
 
         //Handle click on "delete" button
         $('#dataTable tbody').on('click', '.delete', function(e) {
-            var userid = $(this).closest('tr').attr('id');
-            var tds = $(this).closest('tr').find('td');
+            var selector = $(this).closest('tr');
+            var id = selector.attr('id');
+            //var tds = $(this).closest('tr').find('td');
+            $('#deleteModal .modal-body p').html("Xác nhận xóa yêu cầu thêm nhà cung cấp?");
             $("#deleteModal").modal("show");
+            $('#deleteModal').on('click', '#submit-delete', function(event) {
+                $.ajax({
+                    type: "POST",
+                    url: "handler.php",
+                    data: {
+
+                        'action-supplier': 'delete',
+                        'id': id
+                    },
+                    success: function(response) {
+                        $('#dataTable').DataTable().row(selector).remove().draw(false);
+                        $("#deleteModal").modal("hide");
+                    },
+                    error: function(jqXHR, textStatus, errorThrown) {
+
+                        alert("Duyệt thất bại");
+
+                    }
+                });
+                event.preventDefault();
+            });
+
         });
     </script>
 

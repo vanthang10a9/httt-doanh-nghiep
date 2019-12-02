@@ -40,7 +40,7 @@ include("includes/head.php");
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM nhacungcap";
+                                        $sql = "SELECT * FROM nhacungcap WHERE DUYET = 1";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             ?>

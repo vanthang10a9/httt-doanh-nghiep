@@ -33,6 +33,31 @@ include("includes/head.php");
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length">
+                                            <label>
+                                                <select id="status" class="custom-select custom-select-sm form-control form-control-sm">
+                                                    <option value="" selected>Tìm theo trạng thái</option>
+                                                    <option value="Chưa tiếp nhận">Chưa tiếp nhận</option>
+                                                    <option value="Hoàn thành">Hoàn thành</option>
+                                                </select>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-sm-12 col-md-6">
+                                        <div class="dataTables_length">
+                                            <label style="display:inline-block">
+                                                Tìm theo giá
+                                                <input type="number" step="100000" class="form-control form-control-sm" id="minp">
+                                                đến
+                                                <input type="number" step="100000" class="form-control form-control-sm" id="maxp">
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
                                 <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
@@ -51,24 +76,24 @@ include("includes/head.php");
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             switch ($row['STATUS']) {
-                                                case 1:
-                                                    $trangthai = "Tiếp nhận";
+                                                case 0:
+                                                    $trangthai = "Chưa tiếp nhận";
                                                     break;
-                                                case 2:
+                                                case 1:
                                                     $trangthai = "Hoàn thành";
                                                     break;
                                                 default:
-                                                    $trangthai = "Đang xử lý";
+                                                    $trangthai = "Chưa tiếp nhận";
                                             }
                                             ?>
-                                                <tr>
+                                                <tr id="<?php echo $row['MADH']; ?>">
                                                     <td><?php echo $row['NAME']; ?></td>
                                                     <td><?php echo $row['ADDRESS']; ?></td>
                                                     <td><?php echo $row['PHONE']; ?></td>
                                                     <td><?php echo $row['TONGTIEN']; ?></td>
                                                     <td><?php echo $row['NGAYDH']; ?></td>
                                                     <td class="noExp"></td>
-                                                    <td><?php echo $trangthai; ?></td>
+                                                    <td id="<?php echo $row['STATUS']; ?>"><?php echo $trangthai; ?></td>
                                                 </tr>
 
                                             <?php } ?>
@@ -123,9 +148,24 @@ include("includes/head.php");
             ]
         });
         $('#dataTable tbody').on('click', '.ct', function(e) {
-            //var productid = $(this).closest('tr').attr('id');
-            //bodyalert("kakak");
+            var id = $(this).closest('tr').attr('id');
+            var x = {
+                'action-dh': 'select-detail',
+                'id': id
+            };
+
+
+            console.log(JSON.stringify(x));
+            $.ajax({
+                type: "POST",
+                url: "handler.php",
+                data: x,
+                success: function(results) {
+                    $('#detailz tbody').html(results);
+                }
+            });
             $("#ordermodal").modal("show");
+            e.preventDefault();
         });
 
         //export report
@@ -139,6 +179,40 @@ include("includes/head.php");
                 exclude_img: true,
                 exclude_links: true,
                 exclude_inputs: true,
+            });
+        });
+        $(document).ready(function() {
+            var table = $('#dataTable').DataTable();
+
+            $('#status').on('change', function() {
+                table.columns(6).search(this.value).draw();
+            });
+        });
+        /* Custom filtering function which will search data in column four between two values */
+        $.fn.dataTable.ext.search.push(
+            function(settings, data, dataIndex) {
+                var min = parseInt($('#minp').val(), 10);
+                var max = parseInt($('#maxp').val(), 10);
+                var price = parseFloat(data[3]) || 0; // use data for the age column
+
+                if ((isNaN(min) && isNaN(max)) ||
+                    (isNaN(min) && price <= max) ||
+                    (min <= price && isNaN(max)) ||
+                    (min <= price && price <= max)) {
+                    return true;
+                }
+                return false;
+            }
+        );
+        $(document).ready(function() {
+            var table = $('#dataTable').DataTable();
+
+            // Event listener to the two range filtering inputs to redraw on input
+            $('#minp, #maxp').change(function() {
+                table.draw();
+            });
+            $('#minp, #maxp').keyup(function() {
+                table.draw();
             });
         });
     </script>

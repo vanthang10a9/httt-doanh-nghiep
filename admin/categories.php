@@ -28,7 +28,7 @@ include("includes/head.php");
                     <h1 class="h3 mb-2 text-gray-800">Danh sách danh mục</h1>
 
                     <!-- Table button -->
-                    <div class="d-flex flex-row-reverse">
+                    <!-- <div class="d-flex flex-row-reverse">
                         <button type="button" class="btn btn-secondary mb-1">
                             <i class="fa fa-sync-alt"></i>
                         </button>
@@ -36,7 +36,7 @@ include("includes/head.php");
                             <i class="fa fa-plus"></i>
                         </button>
 
-                    </div>
+                    </div> -->
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
@@ -57,7 +57,7 @@ include("includes/head.php");
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
-                                            <tr>
+                                            <tr id="<?php echo $row['MACL']; ?>">
                                                 <td><?php echo $row['MACL']; ?></td>
                                                 <td><?php echo $row['TENCL']; ?></td>
                                                 <td><img src="../images/products/<?php echo $row['HINHANHSP']; ?>" alt="" width="100px"></td>
@@ -92,7 +92,7 @@ include("includes/head.php");
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Thêm danh mục</h5>
+                    <h5 class="modal-title" id="exampleModalLabel">Danh mục</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -100,10 +100,10 @@ include("includes/head.php");
                 <div class="modal-body">
                     <form id="category">
                         <div class="form-group">
-                            <input type="text" class="form-control" id="categoryname" placeholder="Tên danh mục">
+                            <input type="text" class="form-control" name="categoryname" id="categoryname" placeholder="Tên danh mục">
                         </div>
                         <div class="custom-file" style="margin-bottom:1rem">
-                            <input type="file" id="image" class="custom-file-input">
+                            <input type="file" name="image" id="image" class="custom-file-input">
                             <label id="image-label" class="custom-file-label" for="validatedCustomFile">Chọn hình ảnh sản phẩm</label>
                         </div>
                         <div class="container js-file-list">
@@ -111,8 +111,8 @@ include("includes/head.php");
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <a href="" class="btn btn-primary">
-                        Thêm danh mục
+                    <a href="" class="btn btn-primary" id="addCategory">
+                        Xác nhận
                     </a>
                 </div>
             </div>
@@ -130,11 +130,18 @@ include("includes/head.php");
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     <script type="text/javascript" charset="utf-8">
+        var imageNameGlobal;
+        var imageSrcGlobal;
+        var categoryAction;
+        var editId;
         //clear data when add acccount
         $('#add').click(function(e) {
+
             $("#category")[0].reset();
             $('#image-label').text("Chọn hình ảnh sản phẩm");
             $('.js-file-list').html('');
+            categoryAction = "add";
+
         });
 
         $('#dataTable').dataTable({
@@ -143,27 +150,31 @@ include("includes/head.php");
                 "targets": 2,
                 "targets": -1,
                 "data": null,
-                "defaultContent": '<button class="btn-xs btn-info m-1 edit"><i class="fa fa-edit"></i></button>' +
-                    '<button class="btn-xs btn-danger m-1 delete"><i class="fa fa-trash"></i></button>'
+                "defaultContent": '<button class="btn btn-outline-info m-1 edit"><i class="fa fa-edit"></i></button>',
+                    // '<button class="btn btn-outline-danger m-1 delete"><i class="fa fa-trash"></i></button>'
             }]
         });
 
         //handle edit button
-        $('#dataTable tbody').on('click', '.btn-info', function(e) {
-            var categoryid = $(this).closest('tr').attr('id');
+        $('#dataTable tbody').on('click', '.edit', function(e) {
+
+            editId = $(this).closest('tr').attr('id');
             var tds = $(this).closest('tr').find('td');
 
             $(".modal-body #category #categoryname").val(tds.eq(1).text());
             var imageSrc = tds.eq(2).find('img').attr('src');
             //set image
             var str = '<div class="mb-3">' +
-                        '<img class="img-thumbnail js-file-image" style="width: 100px">' +
-                        '</div>';
-                    $('.js-file-list').html(str);
-                    var filename= imageSrc.split('/').pop()
-                    $('.js-file-image').attr('src', imageSrc);
-                    $('#image-label').text(filename);
+                '<img class="img-thumbnail js-file-image" style="width: 100px">' +
+                '</div>';
+            $('.js-file-list').html(str);
+            var filename = imageSrc.split('/').pop()
+            $('.js-file-image').attr('src', imageSrc);
+            $('#image-label').text(filename);
+            $('.js-file-image').attr('name', filename);
+            categoryAction = "edit";
             $("#categoryModal").modal("show");
+            //edit category
 
         });
 
@@ -177,16 +188,55 @@ include("includes/head.php");
                         '<img class="img-thumbnail js-file-image" style="width: 100px">' +
                         '</div>';
                     $('.js-file-list').html(str);
-                    var imageSrc = event.target.result;
-                    var fileName = file.name;
+                    imageSrcGlobal = event.target.result;
+                    imageNameGlobal = file.name;
                     var fileSize = file.size;
-                    $('.js-file-name').text(fileName);
-                    $('.js-file-size').text(fileSize);
-                    $('.js-file-image').attr('src', imageSrc);
-                    $('#image-label').text(fileName);
+                    $('.js-file-image').attr('src', imageSrcGlobal);
+                    $('.js-file-image').attr('name', imageNameGlobal);
+                    $('#image-label').text(imageNameGlobal);
                 };
                 fileReader.readAsDataURL(file);
             });
+        });
+        $("#categoryModal #addCategory").click(function(e) {
+            var imageName = typeof imageNameGlobal === "undefined" ? "" : imageNameGlobal;
+            var src = typeof imageSrcGlobal === "undefined" ? "" : imageSrcGlobal;
+            var x = $('form#category').serializeArray();
+            x.push({
+                'name': "category-action",
+                'value': categoryAction
+            });
+            if (categoryAction == "edit") {
+                x.push({
+                    'name': "id",
+                    'value': editId
+                });
+            }
+            x.push({
+                'name': "image-name",
+                'value': imageName
+            });
+            x.push({
+                'name': "image-src",
+                'value': src
+            });
+            console.log(JSON.stringify(x));
+            $.ajax({
+                type: "POST",
+                url: "handle-accept.php",
+                data: x,
+                success: function(response) {
+                    imageNameGlobal = "";
+                    imageSrcGlobal = "";
+                    location.reload(true);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                    alert("Chỉnh sửa thất bại");
+
+                }
+            });
+            e.preventDefault();
         });
     </script>
 
