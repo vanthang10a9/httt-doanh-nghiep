@@ -27,6 +27,7 @@
 
   <link rel="stylesheet" href="css/flaticon.css">
   <link rel="stylesheet" href="css/icomoon.css">
+  <link rel="stylesheet" href="css/bootstrap.min.css">
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -110,6 +111,7 @@
 
   <?php include('modules/footer.php'); ?>
 
+  
   <script src="js/jquery.min.js"></script>
   <script src="js/jquery-migrate-3.0.1.min.js"></script>
   <script src="js/popper.min.js"></script>
@@ -127,6 +129,9 @@
   <script src="js/google-map.js"></script>
   <script src="js/main.js"></script>
 
+  <script>
+    $('.nav-item-about').addClass("active");
+  </script>
 </body>
 
 </html>

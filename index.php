@@ -2,12 +2,11 @@
 <html lang="en">
 
 <head>
-	<title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+	<title>PizzaHot - Index</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap"
-		rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,500,600,700,800&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i&display=swap" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Amatic+SC:400,700&display=swap" rel="stylesheet">
 
@@ -32,12 +31,12 @@
 </head>
 
 <body class="goto-here">
-	<?php 
-		include('modules/header.php'); //navbar & info
-		include('modules/slideshow.php');
-		include('modules/body.php');
-		include('modules/content/subcribe.php');//subcrible to our newsletter
-		include('modules/footer.php');
+	<?php
+	include('modules/header.php'); //navbar & info
+	include('modules/slideshow.php');
+	include('modules/body.php');
+	include('modules/content/subcribe.php'); //subcrible to our newsletter
+	include('modules/footer.php');
 	?>
 
 
@@ -54,11 +53,12 @@
 	<script src="js/jquery.animateNumber.min.js"></script>
 	<script src="js/bootstrap-datepicker.js"></script>
 	<script src="js/scrollax.min.js"></script>
-	<script
-		src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
+	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
-
+	<script>
+		$('.nav-item-home').addClass("active");
+	</script>
 </body>
 
 </html>

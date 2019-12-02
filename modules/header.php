@@ -1,5 +1,11 @@
 <?php
-    require 'core/DataProvider.php';
+require 'core/DataProvider.php';
+// include 'addcart.php' ;
+// if(isset($_POST['quantity'])){
+//     $amount += $_POST['quantity'];
+// }else{
+//     $amount = 0;
+// }
 ?>
 <div class="py-1 bg-primary">
     <div class="container">
@@ -31,20 +37,25 @@
 
         <div class="collapse navbar-collapse" id="ftco-nav">
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active"><a href="index.php" class="nav-link">Trang chủ</a></li>
-                <li class="nav-item dropdown">
+                <li class="nav-item nav-item-home"><a href="index.php" class="nav-link">Trang chủ</a></li>
+                <li class="nav-item dropdown nav-item-shop">
                     <a class="nav-link dropdown-toggle" href="#" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Mua sắm</a>
                     <div class="dropdown-menu" aria-labelledby="dropdown04">
-                        <a class="dropdown-item" href="shop.php">Mua sắm</a>            
+                        <a class="dropdown-item" href="shop.php">Mua sắm</a>
                         <a class="dropdown-item" href="product-single.php">Sản phẩm đơn</a>
                         <a class="dropdown-item" href="cart.php">Giỏ hàng</a>
-                        <a class="dropdown-item" href="checkout.php">Thanh toán</a>
+                        <a class="dropdown-item" id="subitem-checkout" href="checkout.php">Thanh toán</a>
                     </div>
                 </li>
-                <li class="nav-item"><a href="about.php" class="nav-link">Thông tin</a></li>
-                <li class="nav-item"><a href="blog.php" class="nav-link">Blog</a></li>
-                <li class="nav-item"><a href="contact.php" class="nav-link">Liên hệ</a></li>
-                <li class="nav-item cta cta-colored"><a href="cart.php" class="nav-link"><span class="icon-shopping_cart"></span>[0]</a></li>
+                <li class="nav-item nav-item-about"><a href="about.php" class="nav-link">Thông tin</a></li>
+                <!-- <li class="nav-item"><a href="blog.php" class="nav-link">Blog</a></li> -->
+                <li class="nav-item nav-item-contact"><a href="contact.php" class="nav-link">Liên hệ</a></li>
+                <li class="nav-item cta-colored nav-item-cart">
+                    <a href="cart.php" class="nav-link" >
+                        <span class="icon-shopping_cart"></span>
+                        [<span id="header-amount-cart">0</span>]
+                    </a>
+                </li>
                 <li class="nav-item"><a href="admin/congcu/login.html" class="nav-link">Đăng nhập</a></li>
                 <li class="nav-item"><a href="admin/congcu/register.html" class="nav-link">Đăng kí</a></li>
 
@@ -52,3 +63,4 @@
         </div>
     </div>
 </nav>
+

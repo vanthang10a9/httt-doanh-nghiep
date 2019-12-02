@@ -9,5 +9,6 @@
 		//2. Thiet lap font Unicode
 		if (!(mysqli_set_charset($connection,"utf8")))
 			showError();
+			else echo "set tieng viet";
 		
 ?>

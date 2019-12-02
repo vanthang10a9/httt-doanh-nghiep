@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-	<title>Vegefoods - Free Bootstrap 4 Template by Colorlib</title>
+	<title>PizzaHot - Shop</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -30,7 +30,7 @@
 	<link rel="stylesheet" href="css/style.css">
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 
-  
+
 </head>
 
 <body class="goto-here">
@@ -44,14 +44,16 @@
 			<div class="row justify-content-center">
 				<div class="col-md-10 mb-5 text-center">
 					<ul class="product-category">
-						<li><a href="#" class="active" id="li-all">Tất cả</a></li>
+						<li><a href="shop.php" class="active" id="all">Tất cả</a></li>
 						<?php
+						$categoryGet = isset($_GET['category']) ? $_GET['category'] : null;
 						$result = DataProvider::executeQuery("SELECT * FROM loaisanpham");
 						while ($row = mysqli_fetch_assoc($result)) {
 							$category = $row['TENCL'];
 							$categoryId = $row['MACL'];
 							?>
-							<li><a id="li-<?php echo $categoryId; ?>" href="shop.php?category=<?php echo $categoryId; ?>"><?php echo $category; ?></a></li>
+							<li><a id="<?php echo $categoryId; ?>" href="shop.php?category=<?php echo $categoryId; ?>"><?php echo $category; ?></a></li>
+
 						<?php
 						}
 						?>
@@ -209,6 +211,15 @@
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
+	<script type="text/javascript" charset="utf-8">
+		var categorySelect = "<?php echo $category;?>" != "" ? "<?php echo $category;?>" : "all";
+		$(document).ready(function() {
+			$('li a').removeClass('active');
+			$("li a#"+categorySelect+"").addClass('active');
+		});
+
+		$('.nav-item-shop').addClass('active');
+	</script>
 
 
 </body>

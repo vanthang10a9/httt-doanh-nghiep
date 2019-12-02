@@ -3,6 +3,7 @@
 
 <head>
 	<?php
+
 	if (!isset($_GET['id'])) {
 		header('location: shop.php');
 	} else {
@@ -42,7 +43,7 @@
 	include('modules/header.php');
 	include('modules/content/title.php'); //tieu de & hinh nen tieu de
 	?>
-	
+
 	<section class="ftco-section">
 		<div class="container">
 			<div class="row">
@@ -115,14 +116,16 @@
 						</div>
 						<div class="w-100"></div>
 						<div class="col-md-12">
-							<p style="color: #000;"><?php
-									$soluong = "";
-									$soluongsp= $row['SOLUONGSP'];
-								
-								if($row['SOLUONGSP'] >= 1) $soluong ="Còn &nbsp" . $row['SOLUONGSP'] . " &nbsp cái";
-								else $soluong = "Hết hàng";
-								echo $soluong;
-							?></p>
+							<?php
+							$textsl = "";
+							//alert($soluongsp);
+							$soluongsp = $row['SOLUONGSP'];
+
+							if ($row['SOLUONGSP'] >= 1) $textsl = "Còn &nbsp" . $row['SOLUONGSP'] . " &nbsp cái";
+							else $textsl = "Hết hàng";
+
+							?>
+							<p id="textsl" style="color: #000;"><?php echo $textsl; ?></p>
 						</div>
 					</div>
 					<p><a href="" class="btn btn-black py-3 px-5" id="add-cart">Thêm vào giỏ hàng</a></p>
@@ -143,14 +146,14 @@
 		</div>
 		<div class="container">
 			<div class="row">
-				<?php 
-					include('modules/content/featured-product.php');
+				<?php
+				include('modules/content/featured-product.php');
 				?>
 			</div>
 		</div>
 	</section>
 
-<?php include('modules/content/subcribe.php') ?>
+	<?php include('modules/content/subcribe.php') ?>
 
 	<?php include('modules/footer.php'); ?>
 	<style>
@@ -177,10 +180,10 @@
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 
-	
+
 	<script>
 		$(document).ready(function() {
-			
+			var soluongsp = <?php echo $soluongsp; ?>;
 			var quantitiy = 0;
 			$('.quantity-right-plus').click(function(e) {
 
@@ -213,29 +216,37 @@
 			});
 
 			$('a#add-cart').click(function(e) {
-				e.preventDefault(); 
-						//xử lí alert ko đủ hàng
-				var slcon = <?php echo $soluongsp; ?>;
+				e.preventDefault();
+				//xử lí alert ko đủ hàng
+				var slcon = $('#textsl').attr('count') ? $('#textsl').attr('count') : soluongsp;
 				slcon = parseInt(slcon);
 				var slmua = parseInt($('#quantity').val());
 				slmua = parseInt(slmua);
-				if(slcon<slmua){					
+				//var count = $('#textsl').attr('count');
+				var count = slcon - slmua;
+				if (count < 0) {
 					alert("Không đủ hàng !");
 					return;
-				}
-			
-
-		item = {'id': '<?php echo $idSP ;?>' , 'quantity': $('#quantity').val()}
-				$.ajax({
-					type: "POST",
-					url: "addcart.php",
-					data: item,
-					cache: false,
-					success: function(results) {
-						console.log(results);
-						alert(results);
+				} else {
+					item = {
+						'id': '<?php echo $idSP; ?>',
+						'quantity': $('#quantity').val()
 					}
-				})
+					$.ajax({
+						type: "POST",
+						url: "addcart.php",
+						data: item,
+						cache: false,
+						success: function(results) {
+							// $('#header-amount-cart').html(soluongsp);
+							alert("Thêm vào giỏ hàng thành công !");
+							if (count == 0) $('#textsl').html('Hết hàng').attr('count', '0');
+							else {
+								$('#textsl').html('Còn hàng').attr('count', count);
+							}
+						}
+					})
+				}
 			});
 
 		});

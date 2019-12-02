@@ -9,6 +9,7 @@ if (isset($_SESSION['cart'])) {
 	foreach ($_SESSION['cart'] as $k => $v) {
 		if (isset($k))
 			$ok = 2;
+			
 	}
 }
 
@@ -57,7 +58,7 @@ if (isset($_SESSION['cart'])) {
 			<div class="row">
 				<div class="col-md-12 ftco-animate">
 					<?php
-					if ($ok == 2) { 
+					if ($ok == 2) {
 						?>
 						<div class="cart-list">
 							<table class="table">
@@ -75,17 +76,16 @@ if (isset($_SESSION['cart'])) {
 									<?php
 										//tìm kiếm, hiển thị tất cả sản phẩm có id trong session
 										foreach ($_SESSION['cart'] as $key => $value) {
-											$item[] = "'".$key."'";	
-																				
+											$item[] = "'" . $key . "'";
 										}
-										$str = implode(",", $item); 
+										$str = implode(",", $item);
 										$query = "SELECT * FROM sanpham WHERE MASP IN ($str)";
 										$results = DataProvider::executeQuery($query);
 										$totalPrice = 0;
-										while ($row = mysqli_fetch_array($results)) { 
-											$idSP = $row['MASP'];	
-										?>
-								
+										while ($row = mysqli_fetch_array($results)) {
+											$idSP = $row['MASP'];
+											?>
+
 										<tr class="text-center" id="product-<?php echo $row['MASP']; ?>">
 											<td class="product-remove"><a id="delete-product-<?php echo $row['MASP']; ?>" href=""><span class="ion-ios-close"></span></a></td>
 
@@ -122,7 +122,7 @@ if (isset($_SESSION['cart'])) {
 											<script type="text/javascript">
 												$("a#delete-product-<?php echo $row['MASP']; ?>").click(function(e) {
 													e.preventDefault();
-													$.ajax ({
+													$.ajax({
 														type: "POST",
 														url: "delete-cart.php?id=<?php echo $row['MASP']; ?>",
 														success: function(results) {
@@ -183,17 +183,17 @@ if (isset($_SESSION['cart'])) {
 										<span><?php echo $totalPrice; ?></span>
 									</p>
 									<p class="d-flex">
-							<span>Phí vận chuyển</span>
-							<span>15000</span>
-						</p>
-						<!-- <p class="d-flex">
+										<span>Phí vận chuyển</span>
+										<span>15000</span>
+									</p>
+									<!-- <p class="d-flex">
 							<span>Discount</span>
 							<span>$3.00</span>
 						</p> -->
 									<hr>
 									<p class="d-flex total-price">
 										<span>Tổng tiền</span>
-										<span><?php echo (int)$totalPrice+15000; ?></span>
+										<span><?php echo (int) $totalPrice + 15000; ?></span>
 									</p>
 								</div>
 								<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
@@ -226,6 +226,10 @@ if (isset($_SESSION['cart'])) {
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBVWaKrjvy3MaE7SQ74_uJiULgl1JY0H2s&sensor=false"></script>
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
+
+	<script>
+		$('.nav-item-cart').addClass("active");
+	</script>
 
 	<script>
 		$(document).ready(function() {

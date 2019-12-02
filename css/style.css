@@ -10931,12 +10931,13 @@ h5,
 }
 
 .ftco-navbar-light .navbar-nav>.nav-item.active>a {
-    color: #000000;
+    color: #82ae46;
+    background-color: #E6E6E6;
 }
 
 @media (max-width: 991.98px) {
     .ftco-navbar-light .navbar-nav>.nav-item.active>a {
-        color: #fff;
+        color: #82ae46 !important;
     }
 }
 
@@ -13603,4 +13604,8 @@ textarea.form-control {
         stroke-dasharray: 89, 200;
         stroke-dashoffset: -136px;
     }
+}
+
+.active {
+    color: red !important;
 }
