@@ -4,7 +4,7 @@ $cur_year = date('Y');
 $cur_month = date('m');
 $s_monthlyIncome = "SELECT MONTH(NGAYDH) as thang, SUM(TONGTIEN) as tt 
                     FROM DONHANG 
-                    WHERE year(NGAYDH) = $cur_year
+                    WHERE year(NGAYDH) = '$cur_year'
                     GROUP BY thang";
 $run_monthlyIncome = DataProvider::executeQuery($s_monthlyIncome);
 $months = array();

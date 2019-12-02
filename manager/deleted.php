@@ -83,19 +83,25 @@ $result = DataProvider::executeQuery($sql);
                                             <th>Loại sản phẩm</th>
                                             <th>Hình ảnh</th>
                                             <th>Số lượng</th>
+                                            <th>Tình trạng</th>
                                             <th>Thao tác</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT sp.*, lsp.MACL, lsp.TENCL FROM sanpham sp INNER JOIN loaisanpham lsp ON sp.MACL = lsp.MACL WHERE sp.DUYET=2";
+                                        $sql = "SELECT sp.*, lsp.MACL, lsp.TENCL FROM sanpham sp INNER JOIN loaisanpham lsp ON sp.MACL = lsp.MACL WHERE sp.DUYET=1 OR sp.DUYET=0";
                                         $result = DataProvider::executeQuery($sql);
                                         $arrMASP = [];
-                                        
+
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             array_push($arrMASP, $row['MASP']);
+                                            if ($row['DUYET'] == 0) {
+                                                $tinhtrang = "Admin chưa duyệt";
+                                            } else {
+                                                $tinhtrang = "Chưa đăng bán";
+                                            }
                                             ?>
-                                            <tr id="<?php echo $row['MASP']; ?>" ncc="<?php echo $row['MANCC']; ?>">
+                                            <tr duyet="<?php echo $row['DUYET']; ?>" id="<?php echo $row['MASP']; ?>" ncc="<?php echo $row['MANCC']; ?>">
                                                 <td><?php echo $row['MASP']; ?></td>
                                                 <td><?php echo $row['TENSP']; ?></td>
                                                 <td><?php echo $row['GIASP']; ?></td>
@@ -103,6 +109,7 @@ $result = DataProvider::executeQuery($sql);
                                                 <td id="<?php echo $row['MACL']; ?>"><?php echo $row['TENCL']; ?></td>
                                                 <td><img src="../images/products/<?php echo $row['HINHANHSP']; ?>" alt="" width="100px"></td>
                                                 <td><?php echo $row['SOLUONGSP']; ?></td>
+                                                <td><?php echo $tinhtrang; ?></td>
                                                 <td style="display:flex"></td>
                                             </tr>
 
@@ -129,9 +136,29 @@ $result = DataProvider::executeQuery($sql);
 
     </div>
     <!-- End of Page Wrapper -->
+    <!--Activation Modal -->
+    <div class="modal fade" id="activationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Xác nhận hiển thị bán sản phẩm này ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="submit-active">Duyệt</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <?php
-    include('deleteModal.php');
+    include('alertModal.php');
     include('productmodal.php');
     include('includes/scroll-logout.php');
     include('includes/scripts.php')
@@ -147,8 +174,8 @@ $result = DataProvider::executeQuery($sql);
         var imageSrcGlobal;
         var productAction;
         var editId;
-        var arrMASP = '<?php echo JSON_encode($arrMASP);?>';
-        //clear data when add acccount
+        var arrMASP = '<?php echo JSON_encode($arrMASP); ?>';
+        //clear data when add
         $('#add').click(function(e) {
             $("#product")[0].reset();
             $('#image-label').text("Chọn hình ảnh sản phẩm");
@@ -165,8 +192,7 @@ $result = DataProvider::executeQuery($sql);
                 {
                     "targets": -1,
                     "data": null,
-                    "defaultContent": '<button class="btn btn-outline-info m-1 edit"><i class="fa fa-edit"></i></button>' +
-                        '<button class="btn btn-outline-danger m-1 delete"><i class="fa fa-trash"></i></button>'
+                    "defaultContent": '<button class="btn btn-outline-info m-1 activation"><i class="fa fa-check"></i></button>'
                 },
                 {
                     "width": "120px",
@@ -179,44 +205,37 @@ $result = DataProvider::executeQuery($sql);
             $('#dataTable').DataTable().ajax().reload();
         });
 
-        //handle edit button
-        $('#dataTable tbody').on('click', '.btn-outline-info', function(e) {
-            var mancc = $(this).closest('tr').attr('ncc');
-            var tds = $(this).closest('tr').find('td');
-            var elements = [];
-            for (i = 0; i < tds.length; i++) {
-                if (i == 4) {
-                    elements[i] = tds.eq(i).attr('id');
-                } else if (i == 5) {
-                    elements[i] = tds.eq(i).find('img').attr('src');
-                } else {
-                    elements[i] = tds.eq(i).text();
-                }
+        //active
+        $('#dataTable tbody').on('click', '.activation', function(e) {
+            var selector = $(this).closest('tr');
+            var id = selector.attr('id');
+            var duyet = selector.attr('duyet');
+
+            if (duyet == "1") {
+                $("#activationModal").modal("show");
+                $('#activationModal').on('click', '#submit-active', function(e) {
+                    $.ajax({
+                        type: "POST",
+                        url: "handle-manager.php",
+                        data: {
+                            'product-action': 'activation',
+                            'id': id
+                        },
+                        success: function(response) {
+                            $('#dataTable').DataTable().row(selector).remove().draw(false);
+                            $("#activationModal").modal("hide");
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+
+                            alert("Duyệt thất bại");
+
+                        }
+                    });
+                });
+            } else {
+                $('#alertModal .modal-body p').html("Không thể đăng bán sản phẩm admin chưa duyệt");
+                $('#alertModal').modal('show');
             }
-
-            $(".modal-body #product #productcode").val(elements[0]);
-            $(".modal-body #product #productname").val(elements[1]);
-            $(".modal-body #product #price").val(elements[2]);
-            $(".modal-body #product #description").val(elements[3]);
-            $(".modal-body #product #category").val(elements[4]);
-            $(".modal-body #product #supplier").val(mancc);
-            //set image
-            var str = '<div class="mb-3">' +
-                '<img class="img-thumbnail js-file-image" style="width: 100px">' +
-                '</div>';
-            $('.js-file-list').html(str);
-            var imageSrc = elements[5];
-            var filename = imageSrc.split('/').pop()
-            $('.js-file-image').attr('src', imageSrc);
-            $('#image-label').text(filename);
-            $("#productModal #action-button").html("Sửa sản phẩm");
-            $(".modal-body #product #productcode").prop("readonly", true);
-            $("#productModal").modal("show");
-            productAction = "edit";
-            // editId = $(".modal-body #product #productcode").val(elements[0]);
-            
-
-
         });
 
         $(document).ready(function() {
@@ -271,7 +290,6 @@ $result = DataProvider::executeQuery($sql);
                 success: function(response) {
                     imageNameGlobal = "";
                     imageSrcGlobal = "";
-                    $(".modal-body #product #productcode").removeProp("readonly");
                     location.reload(true);
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
@@ -282,45 +300,6 @@ $result = DataProvider::executeQuery($sql);
             });
             e.preventDefault();
         });
-        /**********************delete***************************/
-        //Handle click on "delete" button
-        $('#dataTable tbody').on('click', '.delete', function(e) {
-            var selector = $(this).closest('tr');
-            var id = selector.attr('id');
-            //var tds = $(this).closest('tr').find('td');
-            $('#deleteModal .modal-body p').html("Xác nhận xóa sản phẩm ?");
-            $("#deleteModal").modal("show");
-            $('#deleteModal').on('click', '#submit-delete', function(event) {
-                $.ajax({
-                    type: "POST",
-                    url: "handle-manager.php",
-                    data: {
-
-                        'product-action': 'delete',
-                        'id': id
-                    },
-                    success: function(response) {
-                        $('#dataTable').DataTable().row(selector).remove().draw(false);
-                        $("#deleteModal").modal("hide");
-                        if (response != 1) {
-                            $('#alertModal .modal-body p').html(response);                       
-                            $('#alertModal').modal('show');
-                            
-                        }
-                    },
-                    error: function(jqXHR, textStatus, errorThrown) {
-
-                        alert("Duyệt thất bại");
-
-                    }
-                });
-                event.preventDefault();
-            });
-
-        });
-        $('#alertModal').on('hide.bs.modal', function() {
-            location.reload();
-        })
 
         /******************************************************/
         $(document).ready(function() {
@@ -372,7 +351,7 @@ $result = DataProvider::executeQuery($sql);
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    
+
     td.description :hover,
     td.description>p:hover {
         z-index: 1;

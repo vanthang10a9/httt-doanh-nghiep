@@ -49,7 +49,8 @@
         <div id="collapseThree" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản lý sản phẩm</h6>
-                <a class="collapse-item" href="products.php">Tất cả sản phẩm</a>
+                <a class="collapse-item" href="deleted.php">Sản phẩm chưa được bán</a>
+                <a class="collapse-item" href="products.php">Tất cả sản phẩm đang bán</a>
                 <!-- <a class="collapse-item" href="utilities-color.php">Sản phẩm khuyến mãi</a> -->
                 <!-- <a class="collapse-item" href="utilities-color.php">Sản phẩm mới</a> -->
             </div>

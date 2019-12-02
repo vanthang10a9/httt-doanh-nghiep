@@ -40,14 +40,14 @@ include("includes/head.php");
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM nhacungcap";
+                                        $sql = "SELECT * FROM nhacungcap WHERE DUYET = 1";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             ?>
                                             <tr>
-                                                <td><?php echo $row['maNCC']; ?></td>
-                                                <td><?php echo $row['tenNCC']; ?></td>
-                                                <td><?php echo $row['thongtin']; ?></td>
+                                                <td><?php echo $row['MANCC']; ?></td>
+                                                <td><?php echo $row['TENNCC']; ?></td>
+                                                <td><?php echo $row['THONGTIN']; ?></td>
                                             </tr>
 
                                         <?php } ?>

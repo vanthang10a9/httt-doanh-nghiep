@@ -73,21 +73,4 @@ if(isset($_POST['action-supplier'])) {
         echo $id;
     }
 }
-
-if(isset($_POST['action-category'])) {
-
-    if($_POST['action-category'] == "delete") {
-        $id = $_POST['id'];
-        $sql_check = "SELECT * FROM sanpham WHERE MACL='$id'";
-        $run_check = DataProvider::executeQuery($sql_check);
-        if(mysqli_num_rows($run_check) == 0) {
-            $sql = "DELETE FROM loaisanpham WHERE MACL='$id'";
-            $run = DataProvider::executeQuery($sql);
-            echo $run;
-        } else {
-            echo "Có sản phẩm tồn tại trong danh mục, không thể xóa!";
-            return false;
-        }
-    }
-}
 ?>

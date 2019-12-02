@@ -87,7 +87,7 @@ $result = DataProvider::executeQuery($sql);
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM sanpham sp INNER JOIN loaisanpham lsp ON sp.MACL = lsp.MACL";
+                                        $sql = "SELECT sp.*, lsp.MACL, lsp.TENCL FROM sanpham sp INNER JOIN loaisanpham lsp ON sp.MACL = lsp.MACL WHERE sp.DUYET= 2";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_array($result)) {
                                             
