@@ -9,6 +9,17 @@
 	} else {
 		$idSP = $_GET['id'];
 	}
+
+	//session_start();
+	$icon_cart = 0;
+	if (isset($_SESSION['cart'])) {
+		foreach ($_SESSION['cart'] as $k => $v) {
+			if (isset($k))
+				$icon_cart += $v;
+		}
+	} else {
+		$icon_cart = 0;
+	}
 	?>
 	<title>PizzaHot - product-single</title>
 	<meta charset="utf-8">
@@ -243,6 +254,7 @@
 							if (count == 0) $('#textsl').html('Hết hàng').attr('count', '0');
 							else {
 								$('#textsl').html('Còn hàng').attr('count', count);
+								$('#header-amount-cart').html("<?php echo $icon_cart ?>");//ajax hiện số trên giỏ hàng, nhưng ko thành công, phải reload trang
 							}
 						}
 					})

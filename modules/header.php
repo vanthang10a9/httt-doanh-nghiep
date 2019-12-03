@@ -1,11 +1,18 @@
 <?php
 require 'core/DataProvider.php';
-// include 'addcart.php' ;
-// if(isset($_POST['quantity'])){
-//     $amount += $_POST['quantity'];
-// }else{
-//     $amount = 0;
-// }
+
+if(!isset($_SESSION)){
+	session_start();
+}
+	$icon_cart = 0;
+	if (isset($_SESSION['cart'])) {
+		foreach ($_SESSION['cart'] as $k => $v) {
+			if (isset($k))
+				$icon_cart += $v;
+		}
+	} else {
+		$icon_cart = 0;
+	}
 ?>
 <div class="py-1 bg-primary">
     <div class="container">
@@ -53,7 +60,7 @@ require 'core/DataProvider.php';
                 <li class="nav-item cta-colored nav-item-cart">
                     <a href="cart.php" class="nav-link" >
                         <span class="icon-shopping_cart"></span>
-                        [<span id="header-amount-cart">0</span>]
+                        [<span id="header-amount-cart"><?php echo $icon_cart ?></span>]
                     </a>
                 </li>
                 <li class="nav-item"><a href="admin/congcu/login.html" class="nav-link">Đăng nhập</a></li>

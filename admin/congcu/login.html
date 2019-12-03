@@ -18,6 +18,12 @@
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
 
+    <script>
+        if (isset($_GET['status'])) {
+            alert("Sai thông tin đăng nhập !");
+        }
+    </script>
+
 </head>
 
 <body style="background-color: #82ae46 !important;">
@@ -39,12 +45,12 @@
                                     <div class="text-center ">
                                         <h1 class="h4 text-gray-900 mb-4 ">Chào mừng bạn trở lại !</h1>
                                     </div>
-                                    <form class="user ">
+                                    <form class="user" action="login.php" method="POST" onsubmit="return check()">
                                         <div class="form-group ">
-                                            <input type="email " class="form-control form-control-user " id="exampleInputEmail " aria-describedby="emailHelp " placeholder="Nhập địa chỉ email... ">
+                                            <input name="txtUsername" id="txtUsername" type="text" class="form-control form-control-user" aria-describedby="emailHelp " placeholder="Tên đăng nhập " />
                                         </div>
                                         <div class="form-group ">
-                                            <input type="password " class="form-control form-control-user " id="exampleInputPassword " placeholder="Mật khẩu ">
+                                            <input name="txtPassword" id="txtPassword" type="password " class="form-control form-control-user" placeholder="Mật khẩu " />
                                         </div>
                                         <div class="form-group ">
                                             <div class="custom-control custom-checkbox small ">
@@ -52,12 +58,12 @@
                                                 <label class="custom-control-label " for="customCheck ">Ghi nhớ đăng nhập</label>
                                             </div>
                                         </div>
-                                        <a href="index.html " class="btn btn-primary btn-user btn-block "> Đăng nhập </a>
+                                        <input type="submit" class="btn btn-primary btn-user btn-block " value="Đăng nhập" />
                                         <hr>
-                                        <a href="index.html " class="btn btn-google btn-user btn-block ">
+                                        <a href="#" class="btn btn-google btn-user btn-block ">
                                             <i class="fab fa-google fa-fw "></i> Đăng nhập với Google
                                         </a>
-                                        <a href="index.html " class="btn btn-facebook btn-user btn-block ">
+                                        <a href="#" class="btn btn-facebook btn-user btn-block ">
                                             <i class="fab fa-facebook-f fa-fw "></i> Đăng nhập với Facebook
                                         </a>
                                     </form>
@@ -89,6 +95,16 @@
 
     <!-- Custom scripts for all pages-->
     <script src="js/sb-admin-2.min.js "></script>
+
+    <script>
+        function check() {
+            if ($('#txtUsername').val() == '' || $('#txtPassword').val() == '') {
+                alert('Vui lòng nhập đầy đủ thông tin !');
+                return false;
+            }
+            return true;
+        }
+    </script>
 
 </body>
 

@@ -1,5 +1,7 @@
 <?php
-session_start();
+if(!isset($_SESSION)){
+	session_start();
+}
 //print_r($_SESSION);
 //xử lý khi người dùng chỉnh sửa đơn hàng
 
@@ -8,8 +10,7 @@ $ok = 1;
 if (isset($_SESSION['cart'])) {
 	foreach ($_SESSION['cart'] as $k => $v) {
 		if (isset($k))
-			$ok = 2;
-			
+			$ok = 2;			
 	}
 }
 
