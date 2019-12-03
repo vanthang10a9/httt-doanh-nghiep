@@ -73,3 +73,35 @@ if (isset($_POST['product-action'])) {
         echo $run;
     }
 }
+
+if (isset($_POST['supplier-action'])) {
+    if ($_POST['supplier-action'] == 'add') {
+        $TENNCC = $_POST['supplierName'];
+        $THONGTIN = $_POST['supplierDetail'];
+        $sql = "INSERT INTO nhacungcap(TENNCC, THONGTIN, DUYET) VALUES('$TENNCC', '$THONGTIN', '0')";
+        $run = DataProvider::executeQuery($sql);
+        echo $run;
+    }
+
+    if ($_POST['supplier-action'] == 'edit') {
+        $MANCC = $_POST['id'];
+        $TENNCC = $_POST['supplierName'];
+        $THONGTIN = $_POST['supplierDetail'];
+        $sql = "UPDATE nhacungcap SET TENNCC='$TENNCC', THONGTIN='$THONGTIN' WHERE MANCC='$MANCC'";
+        $run = DataProvider::executeQuery($sql);
+        echo $run;
+    }
+}
+
+if (isset($_POST['receipt-action'])) {
+    if ($_POST['receipt-action'] == "add") {
+        $MANCC = $_POST['supplier'];
+        $MANV = "4";
+        //$NGAYNHAP = $_POST['date'];
+        $NGAYNHAP = str_replace('/', '-', $_POST['date']);
+        $NGAYNHAP = date('Y-m-d', strtotime($NGAYNHAP));
+        $TONGTIEN = $_POST['total'];
+        $sql = "INSERT INTO donnhap(MANCC, MANV, NGAYNHAP, TONGTIEN) VALUES('$MANCC', '$MANV', '$NGAYNHAP', '$TONGTIEN')";
+        echo $sql;
+    }
+}

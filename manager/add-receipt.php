@@ -46,9 +46,9 @@ while ($row = mysqli_fetch_assoc($run_products)) {
                             <div class="row justify-content-md-center">
                                 <div class="col-lg-11">
                                     <div class="p-5">
-                                        <form>
+                                        <form id="receipt">
                                             <div class="form-group">
-                                                <select required class="form-control" id="supplier">
+                                                <select required class="form-control" name="supplier" id="supplier">
                                                     <option value="" disabled selected>Chọn nhà cung cấp</option>
                                                     <option value="">Thêm nhà cung cấp mới...</option>
                                                     <?php while ($row = mysqli_fetch_assoc($run_suppliers)) { ?>
@@ -58,42 +58,15 @@ while ($row = mysqli_fetch_assoc($run_products)) {
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    <input class="form-control" type="text" placeholder="Người nhập " readonly>
+                                                    <input class="form-control" type="text" name="manager" placeholder="Người nhập " readonly>
                                                 </div>
                                                 <div class="col-sm-6">
-                                                    <input class="form-control" type="text" placeholder="<?php echo date('d/m/Y'); ?>" readonly>
+                                                    <input class="form-control" type="text" name="date" value="<?php echo date('d/m/Y'); ?>" readonly>
                                                 </div>
                                             </div>
-                                            <hr>
-                                            <div class="form-group row add-product struc" style="display:none">
-                                                <div class="col-sm-12 mb-0">
-                                                    <h1 class="h5 text-gray-900 mb-2">Nhập sản phẩm</h1>
-                                                </div>
-                                                <div class="col-sm-12 mb-3 mb-0">
-                                                    <select required class="form-control category">
-                                                        <option value="" disabled selected>Chọn danh mục</option>
-                                                        <option value="">Thêm danh mục mới...</option>
-                                                        <?php foreach ($arr_categories as $row) { ?>
-                                                            <option value="<?php echo $row['MACL']; ?>"><?php echo $row['TENCL']; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-6 mb-3 mb-0">
-                                                    <select required class="form-control product">
-                                                        <option value="" disabled selected>Chọn sản phẩm</option>
-                                                        <option value="">Thêm sản phẩm mới...</option>
-                                                        <?php foreach ($arr_products as $row) { ?>
-                                                            <option value="<?php echo $row['MASP']; ?>" macl="<?php echo $row['MACL']; ?>"><?php echo $row['TENSP']; ?></option>
-                                                        <?php } ?>
-                                                    </select>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <input type="number" value="0" class="form-control soluong" min="1" placeholder="Số lượng nhập">
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <input type="number" value="0" class="form-control gianhap" min="1" placeholder="Giá nhập">
-                                                </div>
-                                            </div>
+                                        </form>
+                                        <hr>
+                                        <form class="struc detail-receipt" style="display:none">
                                             <div class="form-group row add-product">
                                                 <div class="col-sm-12 mb-0">
                                                     <h1 class="h5 text-gray-900 mb-2">Nhập sản phẩm</h1>
@@ -108,7 +81,38 @@ while ($row = mysqli_fetch_assoc($run_products)) {
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6 mb-3 mb-0">
-                                                <select required class="form-control product">
+                                                    <select required class="form-control product" disabled>
+                                                        <option value="" disabled selected>Chọn sản phẩm</option>
+                                                        <option value="">Thêm sản phẩm mới...</option>
+                                                        <?php foreach ($arr_products as $row) { ?>
+                                                            <option value="<?php echo $row['MASP']; ?>" macl="<?php echo $row['MACL']; ?>"><?php echo $row['TENSP']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input disabled type="number" value="0" class="form-control soluong" min="1" placeholder="Số lượng nhập">
+                                                </div>
+                                                <div class="col-sm-3">
+                                                    <input disabled type="number" value="0" class="form-control gianhap" min="1" placeholder="Giá nhập">
+                                                </div>
+                                            </div>
+                                        </form>
+                                        <form class="detail-receipt save-receipt">
+                                            <div class="form-group row add-product">
+                                                <div class="col-sm-12 mb-0">
+                                                    <h1 class="h5 text-gray-900 mb-2">Nhập sản phẩm</h1>
+                                                </div>
+                                                <div class="col-sm-12 mb-3 mb-0">
+                                                    <select required class="form-control category">
+                                                        <option value="" disabled selected>Chọn danh mục</option>
+                                                        <option value="">Thêm danh mục mới...</option>
+                                                        <?php foreach ($arr_categories as $row) { ?>
+                                                            <option value="<?php echo $row['MACL']; ?>"><?php echo $row['TENCL']; ?></option>
+                                                        <?php } ?>
+                                                    </select>
+                                                </div>
+                                                <div class="col-sm-6 mb-3 mb-0">
+                                                    <select required class="form-control product" disabled>
                                                         <option value="" disabled selected>Chọn sản phẩm</option>
                                                         <option value="">Thêm sản phẩm mới...</option>
                                                         <?php foreach ($arr_products as $row) { ?>
@@ -118,26 +122,26 @@ while ($row = mysqli_fetch_assoc($run_products)) {
 
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <input type="number" value="0" class="form-control soluong" min="1" placeholder="Số lượng nhập">
+                                                    <input disabled type="number" value="0" class="form-control soluong" min="1" placeholder="Số lượng nhập">
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <input type="number" value="0" class="form-control gianhap" min="1" placeholder="Giá nhập">
+                                                    <input disabled type="number" value="0" class="form-control gianhap" min="1" placeholder="Giá nhập">
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn btn-outline-primary mb-1 mr-1 b-add" data-toggle="tooltip" data-placement="top" title="Thêm sản phẩm">
-                                                <i class="fa fa-plus"></i>
-                                            </button>
-                                            <hr>
-                                            <div class="col-sm-6 mb-3 mb-0">
-                                                Tổng tiền: <label id="total">0</label> VNĐ
-                                            </div>
-
-                                            <hr>
-
-                                            <a href="" id="submit" class="btn btn-primary btn-user btn-block">
-                                                Thêm đơn hàng
-                                            </a>
                                         </form>
+                                        <button type="button" class="btn btn-outline-primary mb-1 mr-1 b-add" data-toggle="tooltip" data-placement="top" title="Thêm sản phẩm">
+                                            <i class="fa fa-plus"></i>
+                                        </button>
+                                        <hr>
+                                        <div class="col-sm-6 mb-3 mb-0">
+                                            Tổng tiền: <label id="total">0</label> VNĐ
+                                        </div>
+
+                                        <hr>
+
+                                        <a href="" id="submit" class="btn btn-primary btn-user btn-block">
+                                            Thêm đơn nhập
+                                        </a>
                                     </div>
                                 </div>
 
@@ -175,7 +179,7 @@ while ($row = mysqli_fetch_assoc($run_products)) {
         })
         //add div container product
         $('.b-add').click(function(e) {
-            $(this).before('<hr>', $('.struc').clone(true).removeClass('struc').removeAttr('style'));
+            $(this).before('<hr>', $('.struc').clone(true).removeClass('struc').removeAttr('style').addClass('save-receipt'));
         });
 
         var updateTotal = function() {
@@ -217,36 +221,70 @@ while ($row = mysqli_fetch_assoc($run_products)) {
                 location.href = 'categories.php';
             }
         });
-
-        var initProduct = function() {
-            $('.add-product').each(function() {
-
-
-                if ($('select.category', this).val() != null) {
-                    $('datalist option', this).attr('disabled', 'disabled');
-                    //alert("aaa");
-                    //console.log($('.category', this).val());
-                    //$('datalist option[idcl="' + $('.category', this).val() + '"]', this).prop('disabled', false);
-                    // // add this code to select 1'st of streets automaticaly 
-                    // // when city changed
-                } else {
-                    console.log("ssss");
-                }
-                // if ($('.datalist option[idcl="' + cat + '"]', this).length) {
-                //     $('.datalist option[idcl="' + cat + '"]', this).first().prop('selected', true);
-                // }
-                // // in case if there's no corresponding street: 
-                // // reset select element
-                // else {
-                //     $('.datalist', this).val('');
-                // };
-            });
-        }
-
-        $('.category').on('change', function() {
-            //alert($(this).val());
-            initProduct();
+        $('select#supplier').on('change', function() {
+            if ($(this)[0].selectedIndex == 1) {
+                location.href = 'suppliers.php';
+            }
         });
+
+        $('select.category').on('change', function() {
+            if ($(this)[0].selectedIndex == 1) {
+                location.href = 'categories.php';
+            }
+        });
+
+
+        var options = $('.struc').find('select.product').find('option');
+        $('.category').on('change', function() {
+            //alert($(this).val());   
+            var selector = $(this).closest('.add-product');
+            selector.find('select.product').removeAttr('disabled');
+            selector.find('input.soluong').removeAttr('disabled');
+            selector.find('input.gianhap').removeAttr('disabled');
+            
+            selector.find('select.product').html(options.filter('[macl="' + this.value + '"]'));
+            if (selector.find('select.product').has('option').length == 0 ) {
+                selector.find('input.soluong').prop('disabled', true);
+                selector.find('input.gianhap').prop('disabled', true);
+            }
+        });
+        // $('.product').on('change', function() {
+        //     //alert($(this).val());   
+        //     var selector = $(this).closest('.add-product');
+        //     if ($(this).val === "") {
+        //         selector.find('input.soluong').prop('disabled');
+        //         selector.find('input.gianhap').prop('disabled');
+        //     }
+        // });
+
+        $('#submit').click(function(e) {
+            var x = $('#receipt').serializeArray();
+            var total = $('#total').text();
+            x.push({
+                'name': "total",
+                'value': total
+            });
+            x.push({
+                'name': "receipt-action",
+                'value': 'add'
+            });
+            $.ajax({
+                type: "POST",
+                url: "handle-manager.php",
+                data: x,
+                success: function(response) {
+                    
+                    //location.reload(true);
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+
+                    alert("Chỉnh sửa thất bại");
+
+                }
+            });
+            console.log(JSON.stringify(x));
+            e.preventDefault();
+        })
     </script>
 
 </body>

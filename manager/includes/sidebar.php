@@ -82,8 +82,8 @@
         <div id="collapseFive" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản lý nhà cung cấp</h6>
-                <a class="collapse-item" href="accept-supplier.php">Thêm nhà cung cấp mới</a>
-                <a class="collapse-item" href="suppliers.php">Nhà cung cấp</a>
+                <a class="collapse-item" href="wait-accept-supplier.php">Nhà cung cấp chờ duyệt</a>
+                <a class="collapse-item" href="suppliers.php">Tất cả nhà cung cấp</a>
             </div>
         </div>
     </li>
