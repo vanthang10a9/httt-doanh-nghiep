@@ -7,14 +7,14 @@
 đơn hàng trong các thời điểm tùy chọn
 
 ## Văn Thắng
-- Xử lý trang giỏ hàng với AJAX:
-+ Xóa sản phẩm trong giỏ hàng không load lại trang
-+ Chỉnh sửa sản phẩm trong giỏ hàng không load lại trang
-- Chức năng đăng kí user (DUYET gán = 0 khi tạo)
-- Thay đổi số lượng icon giỏ hàng khi thêm vào giỏ hàng
+- Xử lý trang giỏ hàng với AJAX: (đã có )
++ Xóa sản phẩm trong giỏ hàng không load lại trang (đã có ajax sẵn)
++ Chỉnh sửa sản phẩm trong giỏ hàng không load lại trang 
+- Chức năng đăng kí user (DUYET gán = 0 khi tạo) (đã có, nhưng chưa có kiểm tra dữ liệu đầu vào)
+- Thay đổi số lượng icon giỏ hàng khi thêm vào giỏ hàng (đã có, nhưng ajax chưa dc, reload trang)
 
 ## Quốc Thắng
-- Thêm chức năng đăng nhập
+- Thêm chức năng đăng nhập 
 - Kiểm tra lại database
 - Tìm hiểu store procedured áp dụng cho 1 số trường hợp.
 
