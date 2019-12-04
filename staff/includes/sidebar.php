@@ -52,7 +52,7 @@
         <div id="collapseFour" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Quản lý bán</h6>
-                <a class="collapse-item" href="orders.php">Xử lý đơn hàng</a>
+                <a class="collapse-item" href="wait-accept.php">Xử lý đơn hàng</a>
                 <a class="collapse-item" href="orders.php">Hóa đơn bán hàng</a>
                 
             </div>

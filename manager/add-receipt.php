@@ -81,19 +81,19 @@ while ($row = mysqli_fetch_assoc($run_products)) {
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6 mb-3 mb-0">
-                                                    <select required class="form-control product" disabled>
+                                                    <select name="productId" required class="form-control product" disabled>
                                                         <option value="" disabled selected>Chọn sản phẩm</option>
-                                                        <option value="">Thêm sản phẩm mới...</option>
+                                                        <option value="add-productz">Thêm sản phẩm mới...</option>
                                                         <?php foreach ($arr_products as $row) { ?>
-                                                            <option value="<?php echo $row['MASP']; ?>" macl="<?php echo $row['MACL']; ?>"><?php echo $row['TENSP']; ?></option>
+                                                            <option value="<?php echo $row['MASP']; ?>" data-mancc="<?php echo $row['MANCC']; ?>" data-macl="<?php echo $row['MACL']; ?>"><?php echo $row['TENSP']; ?></option>
                                                         <?php } ?>
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <input disabled type="number" value="0" class="form-control soluong" min="1" placeholder="Số lượng nhập">
+                                                    <input disabled type="number" name="soluong" value="0" class="form-control soluong" min="1" placeholder="Số lượng nhập">
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <input disabled type="number" value="0" class="form-control gianhap" min="1" placeholder="Giá nhập">
+                                                    <input disabled type="number" name="gianhap" value="0" class="form-control gianhap" min="1" placeholder="Giá nhập">
                                                 </div>
                                             </div>
                                         </form>
@@ -112,20 +112,20 @@ while ($row = mysqli_fetch_assoc($run_products)) {
                                                     </select>
                                                 </div>
                                                 <div class="col-sm-6 mb-3 mb-0">
-                                                    <select required class="form-control product" disabled>
+                                                    <select name="productId" required class="form-control product" disabled>
                                                         <option value="" disabled selected>Chọn sản phẩm</option>
-                                                        <option value="">Thêm sản phẩm mới...</option>
+                                                        <option value="add-productz">Thêm sản phẩm mới...</option>
                                                         <?php foreach ($arr_products as $row) { ?>
-                                                            <option value="<?php echo $row['MASP']; ?>" macl="<?php echo $row['MACL']; ?>"><?php echo $row['TENSP']; ?></option>
+                                                            <option value="<?php echo $row['MASP']; ?>" data-mancc="<?php echo $row['MANCC']; ?>" data-macl="<?php echo $row['MACL']; ?>"><?php echo $row['TENSP']; ?></option>
                                                         <?php } ?>
                                                     </select>
 
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <input disabled type="number" value="0" class="form-control soluong" min="1" placeholder="Số lượng nhập">
+                                                    <input disabled type="number" name="soluong" value="0" class="form-control soluong" min="1" placeholder="Số lượng nhập">
                                                 </div>
                                                 <div class="col-sm-3">
-                                                    <input disabled type="number" value="0" class="form-control gianhap" min="1" placeholder="Giá nhập">
+                                                    <input disabled type="number" name="gianhap" value="0" class="form-control gianhap" min="1" placeholder="Giá nhập">
                                                 </div>
                                             </div>
                                         </form>
@@ -174,6 +174,7 @@ while ($row = mysqli_fetch_assoc($run_products)) {
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     <script type="text/javascript" charset="utf-8">
+        var manccGlobal;
         $(function() {
             $('[data-toggle="tooltip"]').tooltip()
         })
@@ -225,6 +226,7 @@ while ($row = mysqli_fetch_assoc($run_products)) {
             if ($(this)[0].selectedIndex == 1) {
                 location.href = 'suppliers.php';
             }
+            manccGlobal = $(this).val();
         });
 
         $('select.category').on('change', function() {
@@ -233,32 +235,42 @@ while ($row = mysqli_fetch_assoc($run_products)) {
             }
         });
 
+        $('select.product').on('change', function() {
+            if ($(this).val()== 'add-productz') {
+                location.href = 'products.php';
+            }
+        });
 
-        var options = $('.struc').find('select.product').find('option');
+        //var defaultSelect = $('.struc').find('select.product');
         $('.category').on('change', function() {
-            //alert($(this).val());   
+            var vals = $(this).val();
             var selector = $(this).closest('.add-product');
-            selector.find('select.product').removeAttr('disabled');
+            var options = selector.find('select.product').find('option');
+            var selectProduct = selector.find('select.product');
+            selectProduct.prop("selectedIndex", 0).val();
+            selectProduct.removeAttr('disabled');
             selector.find('input.soluong').removeAttr('disabled');
             selector.find('input.gianhap').removeAttr('disabled');
-            
-            selector.find('select.product').html(options.filter('[macl="' + this.value + '"]'));
-            if (selector.find('select.product').has('option').length == 0 ) {
+            options.hide();
+            selectProduct.children("option[data-macl=" + vals + "][data-mancc=" + manccGlobal + "]").show();
+            //alert(selectProduct.val());
+            if (selectProduct.val() == null) {
                 selector.find('input.soluong').prop('disabled', true);
                 selector.find('input.gianhap').prop('disabled', true);
             }
         });
-        // $('.product').on('change', function() {
-        //     //alert($(this).val());   
-        //     var selector = $(this).closest('.add-product');
-        //     if ($(this).val === "") {
-        //         selector.find('input.soluong').prop('disabled');
-        //         selector.find('input.gianhap').prop('disabled');
-        //     }
-        // });
+        $('.product').on('change', function() {
+            //alert($(this).val());   
+            var selector = $(this).closest('.add-product');
+            if ($(this).val != null && $(this).val != "") {
+                selector.find('input.soluong').removeAttr('disabled');
+                selector.find('input.gianhap').removeAttr('disabled');
+            }
+        });
 
         $('#submit').click(function(e) {
             var x = $('#receipt').serializeArray();
+            var madn;
             var total = $('#total').text();
             x.push({
                 'name': "total",
@@ -273,8 +285,28 @@ while ($row = mysqli_fetch_assoc($run_products)) {
                 url: "handle-manager.php",
                 data: x,
                 success: function(response) {
-                    
+                    madn = response;
                     //location.reload(true);
+                    $('.save-receipt').each(function() {
+                        var detail = $(this).serializeArray();
+                        detail.push({
+                            'name': "receipt-action",
+                            'value': 'add-detail'
+                        });
+                        detail.push({
+                            'name': "id",
+                            'value': madn
+                        });
+                        $.ajax({
+                            type:"POST",
+                            url: "handle-manager.php",
+                            data: detail,
+                            success : function(result) {
+                                
+                            }
+                        })
+                        console.log(JSON.stringify(detail));
+                    });
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
 

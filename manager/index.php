@@ -2,37 +2,37 @@
 include('includes/head.php');
 $cur_year = date('Y');
 $cur_month = date('m');
-$s_monthlyIncome = "SELECT MONTH(NGAYDH) as thang, SUM(TONGTIEN) as tt 
-                    FROM DONHANG 
-                    WHERE year(NGAYDH) = '$cur_year'
+$s_monthlyIssue = "SELECT MONTH(NGAYNHAP) as thang, SUM(TONGTIEN) as tt 
+                    FROM DONNHAP 
+                    WHERE year(NGAYNHAP) = '$cur_year'
                     GROUP BY thang";
-$run_monthlyIncome = DataProvider::executeQuery($s_monthlyIncome);
+$run_monthlyIssue = DataProvider::executeQuery($s_monthlyIssue);
 $months = array();
-$monthlyIncomes = array();
+$monthlyIssues = array();
 for ($i = 1; $i <= 12; $i++) {
   array_push($months, "Tháng " . $i);
-  $monthlyIncomes[$i] = 0;
+  $monthlyIssues[$i] = 0;
 }
-while ($monthlyIncome = mysqli_fetch_assoc($run_monthlyIncome)) {
-  $monthlyIncomes[$monthlyIncome['thang']] = $monthlyIncome['tt'];
-  $rowIncomes[] = $monthlyIncome;
+while ($monthlyIssue = mysqli_fetch_assoc($run_monthlyIssue)) {
+  $monthlyIssues[$monthlyIssue['thang']] = $monthlyIssue['tt'];
+  $rowIssues[] = $monthlyIssue;
 }
-$monthlyIncomes = array_values($monthlyIncomes);
+$monthlyIssues = array_values($monthlyIssues);
 
 //
-$s_lastMonthIncome = "SELECT MONTH(NGAYDH) as thang, SUM(TONGTIEN) as tt 
-                      FROM DONHANG 
-                      WHERE year(NGAYDH) = $cur_year AND month(NGAYDH) = ($cur_month - 1)
+$s_lastMonthIssue = "SELECT MONTH(NGAYNHAP) as thang, SUM(TONGTIEN) as tt 
+                      FROM DONNHAP 
+                      WHERE year(NGAYNHAP) = $cur_year AND month(NGAYNHAP) = ($cur_month - 1)
                       GROUP BY thang";
-$run_lastMonthIncome = DataProvider::executeQuery($s_lastMonthIncome);
-$lastMonthIncome = mysqli_fetch_assoc($run_lastMonthIncome);
+$run_lastMonthIssue = DataProvider::executeQuery($s_lastMonthIssue);
+$lastMonthIssue = mysqli_fetch_assoc($run_lastMonthIssue);
 //
-$s_currentYearIncome = "SELECT YEAR(NGAYDH) as y, SUM(TONGTIEN) as tt 
-                      FROM DONHANG 
-                      WHERE year(NGAYDH) = $cur_year
+$s_currentYearIssue = "SELECT YEAR(NGAYNHAP) as y, SUM(TONGTIEN) as tt 
+                      FROM DONNHAP 
+                      WHERE year(NGAYNHAP) = $cur_year
                       GROUP BY y";
-$run_currentYearIncome = DataProvider::executeQuery($s_currentYearIncome);
-$currentYearIncome = mysqli_fetch_assoc($run_currentYearIncome);
+$run_currentYearIssue = DataProvider::executeQuery($s_currentYearIssue);
+$currentYearIssue = mysqli_fetch_assoc($run_currentYearIssue);
 
 //
 $s_categories = "SELECT SUM(SOLUONGSP) as sl, TENCL 
@@ -56,9 +56,9 @@ foreach ($arrs as &$obj) {
 }
 //print_r($arrs);
 //---------------------------
-$s_unactive_user = "SELECT * FROM taikhoan WHERE LEVEL = 0 AND DUYET = 0";
-$run_unactive_user = DataProvider::executeQuery($s_unactive_user);
-$count_user = mysqli_num_rows($run_unactive_user);
+$s_out_of_stock = "SELECT * FROM sanpham WHERE SOLUONGSP < 10 AND DUYET = 2";
+$run_out_of_stock = DataProvider::executeQuery($s_out_of_stock);
+$count_products = mysqli_num_rows($run_out_of_stock);
 
 //---------------------------
 $s_unaccept_recept = "SELECT * FROM donnhap WHERE DUYET = 0";
@@ -93,7 +93,7 @@ $count_recept = mysqli_num_rows($run_unaccept_recept);
           <!-- Page Heading -->
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
             <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
-            <a href="" id="export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Thống kê doanh thu</a>
+            <a href="" id="export" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-download fa-sm text-white-50"></i> Thống kê nhập hàng</a>
           </div>
 
           <!-- Content Row -->
@@ -105,8 +105,8 @@ $count_recept = mysqli_num_rows($run_unaccept_recept);
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Doanh thu (Tháng <?php echo ($lastMonthIncome['thang']); ?>)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo ($lastMonthIncome['tt']); ?> VNĐ</div>
+                      <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Tiền nhập hàng (Tháng <?php echo ($cur_month -1); ?>)</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo ($lastMonthIssue['tt']); ?> VNĐ</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -122,8 +122,8 @@ $count_recept = mysqli_num_rows($run_unaccept_recept);
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tổng doanh thu (Năm <?php echo $cur_year; ?>)</div>
-                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $currentYearIncome['tt']; ?> VNĐ</div>
+                      <div class="text-xs font-weight-bold text-success text-uppercase mb-1">Tổng tiền nhập (Năm <?php echo $cur_year; ?>)</div>
+                      <div class="h5 mb-0 font-weight-bold text-gray-800"><?php echo $currentYearIssue['tt']; ?> VNĐ</div>
                     </div>
                     <div class="col-auto">
                       <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -139,10 +139,10 @@ $count_recept = mysqli_num_rows($run_unaccept_recept);
                 <div class="card-body">
                   <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
-                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Tài khoản chưa duyệt</div>
+                      <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Sản phầm gần hết hàng</div>
                       <div class="row no-gutters align-items-center">
                         <div class="col-auto">
-                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $count_user; ?></div>
+                          <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"><?php echo $count_products; ?></div>
                         </div>
                         
                       </div>
@@ -227,11 +227,11 @@ $count_recept = mysqli_num_rows($run_unaccept_recept);
                 <thead>
                   <tr>
                     <th>Tháng</th>
-                    <th>Doanh thu</th>
+                    <th>Tổng tiền</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php foreach ($rowIncomes as $row) : array_map('htmlentities', $row); ?>
+                  <?php foreach ($rowIssues as $row) : array_map('htmlentities', $row); ?>
                     <tr>
                       <td><?php echo implode('</td><td>', $row); ?></td>
                     </tr>
@@ -266,7 +266,7 @@ $count_recept = mysqli_num_rows($run_unaccept_recept);
   <script src="vendor/jquery/jquery.table2excel.js"></script>
   <script type="text/javascript" charset="utf-8">
     var months = <?php echo json_encode($months); ?>;
-    var monthlyIncomes = <?php echo json_encode($monthlyIncomes); ?>;
+    var monthlyIssues = <?php echo json_encode($monthlyIssues); ?>;
     //set chart
     var ctx = document.getElementById("myCustomChart");
     var myLineChart = new Chart(ctx, {
@@ -286,7 +286,7 @@ $count_recept = mysqli_num_rows($run_unaccept_recept);
           pointHoverBorderColor: "rgba(78, 115, 223, 1)",
           pointHitRadius: 10,
           pointBorderWidth: 2,
-          data: monthlyIncomes,
+          data: monthlyIssues,
         }],
       },
       options: {
@@ -408,7 +408,7 @@ $count_recept = mysqli_num_rows($run_unaccept_recept);
         // exclude CSS class
         name: "Worksheet Name",
         exclude: ".noExp",
-        filename: "doanh_thu_nam", //do not include extensi
+        filename: "nhap_hang_nam", //do not include extensi
         fileext: ".xls", // file extension
         exclude_img: true,
         exclude_links: true,

@@ -49,7 +49,7 @@ include("includes/head.php");
                                             ?>
                                             <tr id="<?php echo $row['MADN']; ?>">
                                                 <td><?php echo $row['TENNCC']; ?></td>
-                                                <td><?php echo $row['MANV']; ?></td>
+                                                <td><?php echo $row['USERNAME']; ?></td>
                                                 <td><?php echo $row['NGAYNHAP']; ?></td>
                                                 <td><?php echo $row['TONGTIEN']; ?></td>
                                                 <td></td>

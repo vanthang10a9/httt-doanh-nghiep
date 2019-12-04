@@ -42,6 +42,14 @@ if(isset($_POST['action-receipt'])) {
     if($_POST['action-receipt'] == "activation") {
         $id = $_POST['id'];
         $sql = "UPDATE donnhap SET DUYET = 1 WHERE MADN='$id'";
+        $sql_detail = "SELECT MASP, SOLUONG FROM chitietdonnhap WHERE MADN = '$id'";
+        $run_detail = DataProvider::executeQuery($sql_detail);
+        while($row_detail = mysqli_fetch_assoc($run_detail)) {
+            $MASP = $row_detail['MASP'];
+            $SOLUONG = $row_detail['SOLUONG'];
+            $sql_product = "UPDATE sanpham SET DUYET = 2, SOLUONGSP = SOLUONGSP + '$SOLUONG' WHERE MASP = '$MASP'";
+            DataProvider::executeQuery($sql_product);
+        }
         $run = DataProvider::executeQuery($sql);
         echo $run;
     }

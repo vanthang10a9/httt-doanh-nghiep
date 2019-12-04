@@ -67,12 +67,12 @@ include("includes/head.php");
                                             <th>Tổng tiền</th>
                                             <th>Thời gian đặt</th>
                                             <th class="noExp">Chi tiết</th>
-                                            <th>Trạng thái</th>
+                                            <th>Duyệt đơn</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM donhang";
+                                        $sql = "SELECT * FROM donhang WHERE STATUS = 0";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             switch ($row['STATUS']) {
@@ -93,7 +93,7 @@ include("includes/head.php");
                                                     <td><?php echo $row['TONGTIEN']; ?></td>
                                                     <td><?php echo $row['NGAYDH']; ?></td>
                                                     <td class="noExp"></td>
-                                                    <td id="<?php echo $row['STATUS']; ?>"><?php echo $trangthai; ?></td>
+                                                    <td style="display:flex"></td>
                                                 </tr>
 
                                             <?php } ?>
@@ -119,11 +119,32 @@ include("includes/head.php");
 
     </div>
     <!-- End of Page Wrapper -->
-
+    
+    <!--Activation Modal -->
+    <div class="modal fade" id="activationModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Xác nhận</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Xác nhận duyệt đơn hàng này ?</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="submit-active">Duyệt</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Thoát</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <?php
     include('ordermodal.php');
+    include('alertModal.php');
     include('includes/scroll-logout.php');
     include('includes/scripts.php')
     ?>
@@ -144,11 +165,17 @@ include("includes/head.php");
                     "targets": 5,
                     "data": null,
                     "defaultContent": '<button class="btn btn-outline-primary m-1 ct">Chi tiết</button>'
+                },
+                {
+                    "targets": -1,
+                    "data": null,
+                    "defaultContent": '<button class="btn btn-outline-info m-1 activation"><i class="fa fa-check"></i></button>'
                 }
             ]
         });
         $('#dataTable tbody').on('click', '.ct', function(e) {
-            var id = $(this).closest('tr').attr('id');
+            var selector = $(this).closest('tr');
+            var id = selector.attr('id');
             var x = {
                 'action-dh': 'select-detail',
                 'id': id
@@ -165,6 +192,49 @@ include("includes/head.php");
                 }
             });
             $("#ordermodal").modal("show");
+            e.preventDefault();
+        });
+
+        $('#dataTable tbody').on('click', '.activation', function(e) {
+            var selector = $(this).closest('tr');
+            var id = selector.attr('id');
+
+
+            //console.log(JSON.stringify(x));
+            // $.ajax({
+            //     type: "POST",
+            //     url: "handler.php",
+            //     data: x,
+            //     success: function(results) {
+                    
+            //     }
+            // });
+            $("#activationModal").modal("show");
+            $('#activationModal').on('click', '#submit-active', function(e) {
+                    $.ajax({
+                        type: "POST",
+                        url: "handler.php",
+                        data: {
+                            'order-action': 'add',
+                            'id': id
+                        },
+                        success: function(response) {
+                            
+                            if(response == 0) {
+                                $('#alertModal .modal-body p').html("Số lượng sản phẩm không đủ để bán ! <br> Chờ quản lý kho nhập thêm hàng");
+                                $('#alertModal').modal('show');
+                            } else {
+                                $('#dataTable').DataTable().row(selector).remove().draw(false);
+                            }
+                            $("#activationModal").modal("hide");
+                        },
+                        error: function(jqXHR, textStatus, errorThrown) {
+
+                            alert("Duyệt thất bại");
+
+                        }
+                    });
+                });
             e.preventDefault();
         });
 

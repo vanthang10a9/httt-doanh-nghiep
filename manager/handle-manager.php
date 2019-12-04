@@ -91,6 +91,13 @@ if (isset($_POST['supplier-action'])) {
         $run = DataProvider::executeQuery($sql);
         echo $run;
     }
+
+    if ($_POST['supplier-action'] == 'delete') {
+        $MANCC = $_POST['id'];
+        $sql = "UPDATE nhacungcap SET DUYET = '0' WHERE MANCC='$MANCC'";
+        $run = DataProvider::executeQuery($sql);
+        echo $run;
+    }
 }
 
 if (isset($_POST['receipt-action'])) {
@@ -101,7 +108,22 @@ if (isset($_POST['receipt-action'])) {
         $NGAYNHAP = str_replace('/', '-', $_POST['date']);
         $NGAYNHAP = date('Y-m-d', strtotime($NGAYNHAP));
         $TONGTIEN = $_POST['total'];
-        $sql = "INSERT INTO donnhap(MANCC, MANV, NGAYNHAP, TONGTIEN) VALUES('$MANCC', '$MANV', '$NGAYNHAP', '$TONGTIEN')";
-        echo $sql;
+        $sql = "INSERT INTO donnhap(MANCC, MANV, NGAYNHAP, TONGTIEN, DUYET) VALUES('$MANCC', '$MANV', '$NGAYNHAP', '$TONGTIEN', '0')";
+        $run = DataProvider::executeQuery($sql);
+        $id =  DataProvider::executeQuery("SELECT max(MADN) AS id FROM donnhap");
+        $row = mysqli_fetch_assoc($id);
+        echo $row['id'];
+    }
+    if ($_POST['receipt-action'] == "add-detail") {
+        $MASP = $_POST['productId'];
+        $SOLUONG = $_POST['soluong'];
+        $GIANHAP = $_POST['gianhap'];
+        $MADN = $_POST['id'];
+
+        $sql = "INSERT INTO chitietdonnhap(MADN, MASP, SOLUONG, GIANHAP) VALUES('$MADN', '$MASP', '$SOLUONG', '$GIANHAP')";
+        
+        $run = DataProvider::executeQuery($sql);
+        echo $run;
+        
     }
 }

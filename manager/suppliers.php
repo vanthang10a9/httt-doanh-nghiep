@@ -130,7 +130,7 @@ include("includes/head.php");
         var supplierAction;
         var editMANCC;
         $('#add').click(function(e) {
-            $("#product")[0].reset();
+            $("#supplier")[0].reset();
             supplierAction = "add";
             $('#supplierModal').modal('show');
         });
@@ -156,7 +156,7 @@ include("includes/head.php");
                     url: "handle-manager.php",
                     data: {
 
-                        'product-action': 'delete',
+                        'supplier-action': 'delete',
                         'id': id
                     },
                     success: function(response) {
