@@ -12,7 +12,15 @@ if(!isset($_SESSION)){
 		}
 	} else {
 		$icon_cart = 0;
-	}
+    }
+    
+    $user = "Đăng nhập";
+    if(isset($_SESSION['username'])){
+        $sql = "SELECT NAME FROM taikhoan WHERE USERNAME='".$_SESSION['username']."'";
+        $result = DataProvider::executeQuery($sql);
+        $row = mysqli_fetch_array($result);
+        $user = $row['NAME'];
+    }
 ?>
 <div class="py-1 bg-primary">
     <div class="container">
@@ -63,7 +71,7 @@ if(!isset($_SESSION)){
                         [<span id="header-amount-cart"><?php echo $icon_cart ?></span>]
                     </a>
                 </li>
-                <li class="nav-item"><a href="admin/congcu/login.html" class="nav-link">Đăng nhập</a></li>
+                <li class="nav-item"><a href="admin/congcu/login.html" class="nav-link"><?php echo $user ?></a></li>
                 <li class="nav-item"><a href="admin/congcu/register.html" class="nav-link">Đăng kí</a></li>
 
             </ul>
