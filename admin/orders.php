@@ -67,12 +67,13 @@ include("includes/head.php");
                                             <th>Tổng tiền</th>
                                             <th>Thời gian đặt</th>
                                             <th class="noExp">Chi tiết</th>
+                                            <th>Nhân viên</th>
                                             <th>Trạng thái</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                        $sql = "SELECT * FROM donhang";
+                                        $sql = "SELECT dh.*, tk.USERNAME FROM donhang dh INNER JOIN taikhoan tk ON dh.MANV = tk.IDUSER";
                                         $result = DataProvider::executeQuery($sql);
                                         while ($row = mysqli_fetch_assoc($result)) {
                                             switch ($row['STATUS']) {
@@ -93,6 +94,7 @@ include("includes/head.php");
                                                     <td><?php echo $row['TONGTIEN']; ?></td>
                                                     <td><?php echo $row['NGAYDH']; ?></td>
                                                     <td class="noExp"></td>
+                                                    <td><?php echo $row['USERNAME']; ?></td>
                                                     <td id="<?php echo $row['STATUS']; ?>"><?php echo $trangthai; ?></td>
                                                 </tr>
 
@@ -138,7 +140,7 @@ include("includes/head.php");
         $('#dataTable').dataTable({
             "columnDefs": [{
                     "orderable": false,
-                    "targets": [5, 6]
+                    "targets": [5, 6, 7]
                 },
                 {
                     "targets": 5,

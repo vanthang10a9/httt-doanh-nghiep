@@ -156,6 +156,7 @@ include("includes/head.php");
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
     <script type="text/javascript">
+        var manv = "<?php echo $re['IDUSER'];?>";
         $('#dataTable').dataTable({
             "columnDefs": [{
                     "orderable": false,
@@ -178,7 +179,8 @@ include("includes/head.php");
             var id = selector.attr('id');
             var x = {
                 'action-dh': 'select-detail',
-                'id': id
+                'id': id,
+                
             };
 
 
@@ -216,7 +218,8 @@ include("includes/head.php");
                         url: "handler.php",
                         data: {
                             'order-action': 'add',
-                            'id': id
+                            'id': id,
+                            'manv': manv
                         },
                         success: function(response) {
                             

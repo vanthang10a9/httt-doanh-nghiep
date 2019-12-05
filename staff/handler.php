@@ -103,7 +103,8 @@ if (isset($_POST['order-action'])) {
 
     if ($_POST['order-action'] == "add") {
         $id = $_POST['id'];
-        $sql = "UPDATE donhang SET STATUS = 1 WHERE MADH = '$id'";
+        $manv = $_POST['manv'];
+        $sql = "UPDATE donhang SET STATUS = 1, MANV = '$manv' WHERE MADH = '$id'";
         
 
         $sql_detail = "SELECT MASP, SOLUONG FROM chitietdonhang WHERE MADH='$id'";

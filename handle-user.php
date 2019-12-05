@@ -69,7 +69,24 @@ if(isset($_POST['order-action'])) {
 
         $sql = "INSERT INTO chitietdonhang(MADH, MASP, SOLUONG, GIASP) VALUES('$MADH', '$MASP', '$SOLUONG', '$GIASP')";
         $run = DataProvider::executeQuery($sql);
+        if(isset($_SESSION['cart'])) {
+            unset($_SESSION['cart']);
+        }
         //echo $sql;
         echo $run;
     }
+
+    if($_POST['order-action']=='update-detail') {
+        $NAME = $_POST['name'];
+        $ADDRESS = $_POST['address'];
+        $PHONE = $_POST['phone'];
+        $EMAIL = $_POST['email'];
+        $MADH = $_POST['madh'];
+
+        $sql = "UPDATE donhang SET NAME='$NAME', ADDRESS='$ADDRESS', PHONE='$PHONE', EMAIL='$EMAIL' WHERE MADH = '$MADH'";
+        $run = DataProvider::executeQuery($sql);
+        //echo $sql;
+        echo $run;
+    }
+    
 }

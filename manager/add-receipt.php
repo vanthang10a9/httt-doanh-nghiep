@@ -307,6 +307,7 @@ while ($row = mysqli_fetch_assoc($run_products)) {
                         })
                         console.log(JSON.stringify(detail));
                     });
+                    location.href = 'wait-accept.php';
                 },
                 error: function(jqXHR, textStatus, errorThrown) {
 

@@ -56,10 +56,14 @@ $ok_user = 0;
 	include('modules/header.php');
 	include('modules/content/title.php'); //tieu de & hinh nen tieu de
 	if (isset($_SESSION['username'])) {
-		$ok_user = 1;
 		$USERNAME = $_SESSION['username'];
 		$account = DataProvider::executeQuery("SELECT * FROM taikhoan WHERE USERNAME = '$USERNAME' LIMIT 1");
 		$re = mysqli_fetch_assoc($account);
+		if($re['LEVEL'] != '0') {
+			$ok_user = 1;
+		} else {
+		$ok_user = 2;
+		}
 	}
 	?>
 
@@ -265,10 +269,15 @@ $ok_user = 0;
 			//alert($(this).val());
 		});
 		$('#submit-checkout').on('click', function(e) {
-			if (okUser == 0) {
+			if (okUser == '0') {
 				$('#alertModal .modal-body p').html("Phải đăng nhập mới thanh toán được!");
 				$('#alertModal').modal('show');
-			} else if (okUser == 1) {
+			} 
+			else if(okUser == '1'){
+				$('#alertModal .modal-body p').html("Admin, quản lý, nhân viên không mua hàng được!");
+				$('#alertModal').modal('show');
+			}
+			else if (okUser == '2') {
 				var totalAll = $('#sumtotalz').html();
 				var idUser = "<?php echo $re['IDUSER']; ?>";
 				var madh;
@@ -300,13 +309,15 @@ $ok_user = 0;
 								success: function(result) {
 
 								}
-							})
+							});
 							// console.log(JSON.stringify(detail));
 						});
+						location.href = "checkout.php?user-order="+idUser+"&madh="+madh;
 					},
 				});
-				e.preventDefault();
+				
 			}
+			e.preventDefault();
 		});
 	</script>
 
