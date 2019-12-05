@@ -46,7 +46,7 @@
                                             <input name="txtUsername" id="txtUsername" type="text" class="form-control form-control-user" aria-describedby="emailHelp " placeholder="Tên đăng nhập " />
                                         </div>
                                         <div class="form-group ">
-                                            <input name="txtPassword" id="txtPassword" type="password " class="form-control form-control-user" placeholder="Mật khẩu " />
+                                            <input type="password" name="txtPassword" id="txtPassword" class="form-control form-control-user" placeholder="Mật khẩu " />
                                         </div>
                                         <div class="form-group ">
                                             <div class="custom-control custom-checkbox small ">
