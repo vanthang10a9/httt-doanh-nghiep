@@ -1,5 +1,6 @@
 <?php
-if(!isset($_SESSION)){
+include('admin/alertModal.php');
+if (!isset($_SESSION)) {
 	session_start();
 }
 //print_r($_SESSION);
@@ -10,9 +11,11 @@ $ok = 1;
 if (isset($_SESSION['cart'])) {
 	foreach ($_SESSION['cart'] as $k => $v) {
 		if (isset($k))
-			$ok = 2;			
+			$ok = 2;
 	}
 }
+//check đăng nhập mới bấm giỏ hàng
+$ok_user = 0;
 
 ?>
 <!DOCTYPE html>
@@ -52,6 +55,12 @@ if (isset($_SESSION['cart'])) {
 	<?php
 	include('modules/header.php');
 	include('modules/content/title.php'); //tieu de & hinh nen tieu de
+	if (isset($_SESSION['username'])) {
+		$ok_user = 1;
+		$USERNAME = $_SESSION['username'];
+		$account = DataProvider::executeQuery("SELECT * FROM taikhoan WHERE USERNAME = '$USERNAME' LIMIT 1");
+		$re = mysqli_fetch_assoc($account);
+	}
 	?>
 
 	<section class="ftco-section ftco-cart">
@@ -87,7 +96,7 @@ if (isset($_SESSION['cart'])) {
 											$idSP = $row['MASP'];
 											?>
 
-										<tr class="text-center" id="product-<?php echo $row['MASP']; ?>">
+										<tr masp="<?php echo $row['MASP']; ?>" class="text-center detail-order" id="product-<?php echo $row['MASP']; ?>">
 											<td class="product-remove"><a id="delete-product-<?php echo $row['MASP']; ?>" href=""><span class="ion-ios-close"></span></a></td>
 
 											<td class="image-prod">
@@ -113,7 +122,7 @@ if (isset($_SESSION['cart'])) {
 
 											<td class="quantity">
 												<div class="input-group mb-3">
-													<input type="text" name="quantity" class="quantity form-control input-number" value="<?php echo $_SESSION['cart'][$row['MASP']]; ?>" min="1" max="100">
+													<input type="number" name="quantity" class="quantityi form-control input-number" value="<?php echo $_SESSION['cart'][$row['MASP']]; ?>" min="1" max="100">
 												</div>
 											</td>
 
@@ -128,6 +137,7 @@ if (isset($_SESSION['cart'])) {
 														url: "delete-cart.php?id=<?php echo $row['MASP']; ?>",
 														success: function(results) {
 															$('#product-<?php echo $row['MASP']; ?>').remove();
+															location.reload();
 														}
 													});
 												});
@@ -181,7 +191,7 @@ if (isset($_SESSION['cart'])) {
 									<h3>Thanh toán</h3>
 									<p class="d-flex">
 										<span>Tiền sản phẩm</span>
-										<span><?php echo $totalPrice; ?></span>
+										<span id="sumtotal"><?php echo $totalPrice; ?></span>
 									</p>
 									<p class="d-flex">
 										<span>Phí vận chuyển</span>
@@ -194,10 +204,10 @@ if (isset($_SESSION['cart'])) {
 									<hr>
 									<p class="d-flex total-price">
 										<span>Tổng tiền</span>
-										<span><?php echo (int) $totalPrice + 15000; ?></span>
+										<span id="sumtotalz"><?php echo (int) $totalPrice + 15000; ?></span>
 									</p>
 								</div>
-								<p><a href="checkout.php" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
+								<p><a href="" id="submit-checkout" class="btn btn-primary py-3 px-4">Thanh toán</a></p>
 							</div>
 						</div>
 				</div>
@@ -233,39 +243,70 @@ if (isset($_SESSION['cart'])) {
 	</script>
 
 	<script>
-		$(document).ready(function() {
-
-			var quantitiy = 0;
-			$('.quantity-right-plus').click(function(e) {
-
-				// Stop acting like a button
-				e.preventDefault();
-				// Get the field name
-				var quantity = parseInt($('#quantity').val());
-
-				// If is not undefined
-
-				$('#quantity').val(quantity + 1);
-
-
-				// Increment
-
+		var okUser = '<?php echo $ok_user; ?>';
+		var updateTotal = function() {
+			var sumtotal = 0;
+			$(".total").each(function() {
+				sumtotal += Number($(this).html());
 			});
+			$('#sumtotal').html(sumtotal);
+			$('#sumtotalz').html(Number(sumtotal) + 15000);
+		}
+		$('.quantityi').on('change', function(e) {
+			var selector = $(this).closest('tr');
+			var price = selector.find('.price').html();
+			var total = selector.find('.total');
+			var quantity = $(this).val();
+			var result = Number(quantity) * Number(price);
+			total.html(result);
+			updateTotal();
+			e.preventDefault();
+			//alert(total);
+			//alert($(this).val());
+		});
+		$('#submit-checkout').on('click', function(e) {
+			if (okUser == 0) {
+				$('#alertModal .modal-body p').html("Phải đăng nhập mới thanh toán được!");
+				$('#alertModal').modal('show');
+			} else if (okUser == 1) {
+				var totalAll = $('#sumtotalz').html();
+				var idUser = "<?php echo $re['IDUSER']; ?>";
+				var madh;
+				$.ajax({
+					type: "POST",
+					url: "handle-user.php",
+					data: {
+						'order-action': 'add',
+						'tongtien': totalAll,
+						'idUser': idUser
+					},
+					success: function(results) {
+						madh = results;
+						$('.detail-order').each(function() {
+							var masp= $(this).attr('masp');
+							var price = $(this).find('.price').html();
+							var quantity = $(this).find('.quantityi').val();
+							
+							$.ajax({
+								type: "POST",
+								url: "handle-user.php",
+								data: {
+									'order-action': 'add-detail',
+									'masp': masp,
+									'price': price,
+									'quantity': quantity,
+									'madh': madh
+								},
+								success: function(result) {
 
-			$('.quantity-left-minus').click(function(e) {
-				// Stop acting like a button
+								}
+							})
+							// console.log(JSON.stringify(detail));
+						});
+					},
+				});
 				e.preventDefault();
-				// Get the field name
-				var quantity = parseInt($('#quantity').val());
-
-				// If is not undefined
-
-				// Increment
-				if (quantity > 0) {
-					$('#quantity').val(quantity - 1);
-				}
-			});
-
+			}
 		});
 	</script>
 

@@ -137,6 +137,7 @@
 										</div>
 									</div>
 									<script type="text/javascript">
+										var mount;
 										$("a#addcart-<?php echo $row['MASP']; ?>").click(function(e) {
 											e.preventDefault();
 											var item = {
@@ -150,6 +151,8 @@
 												cache: false,
 												success: function(results) {
 													//console.log(data);
+													mount = $('#header-amount-cart').html();
+													$('#header-amount-cart').html(Number(mount) + 1);
 													console.log(results);
 													//window.location.reload();
 												}
@@ -212,10 +215,10 @@
 	<script src="js/google-map.js"></script>
 	<script src="js/main.js"></script>
 	<script type="text/javascript" charset="utf-8">
-		var categorySelect = "<?php echo $category;?>" != "" ? "<?php echo $category;?>" : "all";
+		var categorySelect = "<?php echo $category; ?>" != "" ? "<?php echo $category; ?>" : "all";
 		$(document).ready(function() {
 			$('li a').removeClass('active');
-			$("li a#"+categorySelect+"").addClass('active');
+			$("li a#" + categorySelect + "").addClass('active');
 		});
 
 		$('.nav-item-shop').addClass('active');
@@ -226,8 +229,8 @@
 
 </html>
 <style>
-.img-fluid {
-    max-width: 100%;
-    max-height: 170px;
-}
+	.img-fluid {
+		max-width: 100%;
+		max-height: 170px;
+	}
 </style>

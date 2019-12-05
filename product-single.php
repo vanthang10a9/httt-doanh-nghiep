@@ -3,7 +3,7 @@
 
 <head>
 	<?php
-
+	include('admin/alertModal.php');
 	if (!isset($_GET['id'])) {
 		header('location: shop.php');
 	} else {
@@ -47,6 +47,7 @@
 	<link rel="stylesheet" href="css/flaticon.css">
 	<link rel="stylesheet" href="css/icomoon.css">
 	<link rel="stylesheet" href="css/style.css">
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 </head>
 
 <body class="goto-here">
@@ -99,7 +100,7 @@
 					</p>
 					<div class="row mt-4">
 						<div class="col-md-6">
-							<div class="form-group d-flex">
+							<!-- <div class="form-group d-flex">
 								<div class="select-wrap">
 									<div class="icon"><span class="ion-ios-arrow-down"></span></div>
 									<select name="" id="" class="form-control">
@@ -109,7 +110,7 @@
 										<option value="">Đặc biệt</option>
 									</select>
 								</div>
-							</div>
+							</div> -->
 						</div>
 						<div class="w-100"></div>
 						<div class="input-group col-md-6 d-flex mb-3">
@@ -229,6 +230,7 @@
 			$('a#add-cart').click(function(e) {
 				e.preventDefault();
 				//xử lí alert ko đủ hàng
+				var mount;
 				var slcon = $('#textsl').attr('count') ? $('#textsl').attr('count') : soluongsp;
 				slcon = parseInt(slcon);
 				var slmua = parseInt($('#quantity').val());
@@ -250,11 +252,14 @@
 						cache: false,
 						success: function(results) {
 							// $('#header-amount-cart').html(soluongsp);
-							alert("Thêm vào giỏ hàng thành công !");
+							$('#alertModal .modal-body p').html("Thêm vào giỏ hàng thành công");
+							mount = $('#header-amount-cart').html();
+							$('#header-amount-cart').html(Number(mount) + Number($('#quantity').val()));
+							$('#alertModal').modal('show');
 							if (count == 0) $('#textsl').html('Hết hàng').attr('count', '0');
 							else {
 								$('#textsl').html('Còn hàng').attr('count', count);
-								$('#header-amount-cart').html("<?php echo $icon_cart ?>");//ajax hiện số trên giỏ hàng, nhưng ko thành công, phải reload trang
+								//$('#header-amount-cart').html("<?php echo $icon_cart ?>"); //ajax hiện số trên giỏ hàng, nhưng ko thành công, phải reload trang
 							}
 						}
 					})
