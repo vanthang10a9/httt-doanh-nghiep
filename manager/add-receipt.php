@@ -58,7 +58,7 @@ while ($row = mysqli_fetch_assoc($run_products)) {
                                             </div>
                                             <div class="form-group row">
                                                 <div class="col-sm-6 mb-3 mb-sm-0">
-                                                    <input class="form-control" type="text" name="manager" placeholder="Người nhập " readonly>
+                                                    <input class="form-control" type="text" name="manager" placeholder="<?php echo $USERNAME; ?>" readonly>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <input class="form-control" type="text" name="date" value="<?php echo date('d/m/Y'); ?>" readonly>

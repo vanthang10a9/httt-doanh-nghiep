@@ -65,10 +65,10 @@
                                     </form>
                                     <hr>
                                     <div class="text-center ">
-                                        <a class="small " href="forgot-password.html "> Quên mật khẩu?</a>
+                                        <a class="small " href="forgot-password.php "> Quên mật khẩu?</a>
                                     </div>
                                     <div class="text-center ">
-                                        <a class="small " href="register.html ">Tạo mới tài khoản!</a>
+                                        <a class="small " href="register.php ">Tạo mới tài khoản!</a>
                                     </div>
                                 </div>
                             </div>

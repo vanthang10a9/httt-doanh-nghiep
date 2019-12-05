@@ -40,3 +40,8 @@ if ($_POST['user-action'] == 'login') {
     //     }
     // }
 }
+
+if(isset($_POST['logout'])) {
+    unset($_SESSION['username']);
+    header('location: login.php');
+}

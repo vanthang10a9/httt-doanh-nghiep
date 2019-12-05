@@ -1,26 +1,26 @@
 <?php
 require 'core/DataProvider.php';
 
-if(!isset($_SESSION)){
-	session_start();
+if (!isset($_SESSION)) {
+    session_start();
 }
-	$icon_cart = 0;
-	if (isset($_SESSION['cart'])) {
-		foreach ($_SESSION['cart'] as $k => $v) {
-			if (isset($k))
-				$icon_cart += $v;
-		}
-	} else {
-		$icon_cart = 0;
+$icon_cart = 0;
+if (isset($_SESSION['cart'])) {
+    foreach ($_SESSION['cart'] as $k => $v) {
+        if (isset($k))
+            $icon_cart += $v;
     }
-    
-    $user = "Đăng nhập";
-    if(isset($_SESSION['username'])){
-        $sql = "SELECT NAME FROM taikhoan WHERE USERNAME='".$_SESSION['username']."'";
-        $result = DataProvider::executeQuery($sql);
-        $row = mysqli_fetch_array($result);
-        $user = $row['NAME'];
-    }
+} else {
+    $icon_cart = 0;
+}
+
+$user = "Đăng nhập";
+if (isset($_SESSION['username'])) {
+    $sql = "SELECT NAME FROM taikhoan WHERE USERNAME='" . $_SESSION['username'] . "'";
+    $result = DataProvider::executeQuery($sql);
+    $row = mysqli_fetch_array($result);
+    $user = $row['NAME'];
+}
 ?>
 <div class="py-1 bg-primary">
     <div class="container">
@@ -66,16 +66,37 @@ if(!isset($_SESSION)){
                 <!-- <li class="nav-item"><a href="blog.php" class="nav-link">Blog</a></li> -->
                 <li class="nav-item nav-item-contact"><a href="contact.php" class="nav-link">Liên hệ</a></li>
                 <li class="nav-item cta-colored nav-item-cart">
-                    <a href="cart.php" class="nav-link" >
+                    <a href="cart.php" class="nav-link">
                         <span class="icon-shopping_cart"></span>
                         [<span id="header-amount-cart"><?php echo $icon_cart ?></span>]
                     </a>
                 </li>
-                <li class="nav-item"><a href="login.php" class="nav-link"><?php echo $user ?></a></li>
-                <li class="nav-item"><a href="register.php" class="nav-link">Đăng kí</a></li>
+                <?php
+                if (isset($_SESSION['username'])) { ?>
+                    <li class="nav-item dropdown no-arrow">
+                        <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span class="mr-2 d-none d-lg-inline text-gray-600 small"><?php echo $_SESSION['username']; ?></span>
+
+                        </a>
+                        <!-- Dropdown - User Information -->
+                        <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
+
+                            <a class="dropdown-item" href="#" data-toggle="modal" data-target="#logoutModal">
+                                <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                                Đăng xuất
+                            </a>
+                        </div>
+                    </li>
+                <?php
+                } else {
+                    ?>
+                    <li class="nav-item"><a href="login.php" class="nav-link">Đăng nhập</a></li>
+                    <li class="nav-item"><a href="register.php" class="nav-link">Đăng kí</a></li>
+                <?php
+                }
+                ?>
 
             </ul>
         </div>
     </div>
 </nav>
-
