@@ -112,3 +112,22 @@ if (isset($_POST['user-action'])) {
             echo '0';
     }
 }
+
+if (isset($_POST['action-dh'])) {
+    if ($_POST['action-dh'] == 'select-detail') {
+        $id = $_POST['id'];
+        $sql = "SELECT * FROM chitietdonhang ct INNER JOIN sanpham sp ON ct.MASP = sp.MASP WHERE ct.MADH = '$id'";
+        $result = DataProvider::executeQuery($sql);
+        $table = "";
+        while ($row = mysqli_fetch_assoc($result)) {
+            $table .= "<tr>";
+            $table .= "<td><img src='images/products/" . $row['HINHANHSP'] . "' alt='' width='100px'></td>";
+            $table .= "<td>" . $row['TENSP'] . "</td>";
+            $table .= "<td>" . $row['GIASP'] . "</td>";
+            $table .= "<td>" . $row['SOLUONG'] . "</td>";
+            $table .= "</tr>";
+        }
+
+        print $table;
+    }
+}

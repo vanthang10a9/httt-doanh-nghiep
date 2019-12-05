@@ -113,27 +113,27 @@
 												<?php
 														if (!empty($row['KMSP'])) {
 															$price = $row['GIASP'] - ($row['GIASP'] * $row['KMSP']) / 100; ?>
-													<span class="mr-2 price-dc"><?php echo $row['GIASP']; ?></span>
+													<span class="mr-2 price-dc"><?php echo $row['GIASP']; ?> Đ</span>
 												<?php
 														} else {
 															$price = $row['GIASP'];
 														}
 														?>
-												<span class="price-sale"><?php echo $price; ?></span>
+												<span class="price-sale"><?php echo $price; ?> Đ</span>
 											</p>
 										</div>
 									</div>
 									<div class="bottom-area d-flex px-3 product-id-<?php echo $row['MASP']; ?>" id="<?php echo $row['MASP']; ?>">
 										<div class="m-auto d-flex">
-											<a href="#" class="add-to-cart d-flex justify-content-center align-items-center text-center">
+											<a href="product-single.php?id=<?php echo $row['MASP']; ?>" class="add-to-cart d-flex justify-content-center align-items-center text-center">
 												<span><i class="ion-ios-menu"></i></span>
 											</a>
 											<a href="" class="buy-now d-flex justify-content-center align-items-center mx-1" id="addcart-<?php echo $row['MASP']; ?>">
 												<span><i class="ion-ios-cart"></i></span>
 											</a>
-											<a href="#" class="heart d-flex justify-content-center align-items-center ">
+											<!-- <a href="#" class="heart d-flex justify-content-center align-items-center ">
 												<span><i class="ion-ios-heart"></i></span>
-											</a>
+											</a> -->
 										</div>
 									</div>
 									<script type="text/javascript">

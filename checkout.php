@@ -42,11 +42,18 @@ $madh = isset($_GET['madh']) ? $_GET['madh'] : "";
 	if ($iduser != "") {
 		$account = DataProvider::executeQuery("SELECT * FROM taikhoan WHERE IDUSER = '$iduser' LIMIT 1");
 		$re = mysqli_fetch_assoc($account);
-	}
+	} else {
+		$re['NAME'] = "";
+		$re['ADDRESS'] = "";
+		$re['PHONE'] = "";
+		$re['EMAIL'] = "";
+ 	}
 	echo $madh;
 	if ($madh != "") {
 		$order = DataProvider::executeQuery("SELECT * FROM donhang WHERE MADH = '$madh' LIMIT 1");
 		$re_order = mysqli_fetch_assoc($order);
+	} else {
+		$re_order = 0;
 	}
 	?>
 
@@ -98,7 +105,7 @@ $madh = isset($_GET['madh']) ? $_GET['madh'] : "";
 								<h3 class="billing-heading mb-4">Tổng chi</h3>
 								<p class="d-flex">
 									<span>Tổng tiền sản phẩm</span>
-									<span><?php echo ($re_order['TONGTIEN'] - 15000); ?></span>
+									<span><?php if($re_order['TONGTIEN'] !=0 ) echo ($re_order['TONGTIEN'] - 15000); ?></span>
 								</p>
 								<p class="d-flex">
 									<span>Phí giao</span>
