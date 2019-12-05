@@ -1,40 +1,4 @@
-<?php
-session_start();
-require('../../../HTTT/core/DataProvider.php');
-//Khai báo utf-8 để hiển thị được tiếng việt
-header('Content-Type: text/html; charset=UTF-8');
-//Nếu không phải là sự kiện đăng ký thì không xử lý
-if (!isset($_POST['txtUsername'])) {
-    die('');
-}
-
-$username   = addslashes($_POST['txtUsername']);
-$password   = addslashes($_POST['txtPassword']);
-
-$password = $password;
-
-if ($result = DataProvider::executeQuery('SELECT * FROM taikhoan')) {
-    if ($result != null) {
-        while ($row = mysqli_fetch_array($result)) {
-            if ($row['USERNAME'] == $username) {
-                if ($row['PASSWORD'] == $password) {
-                    echo "Đăng nhập thành công ! <a href='../../../HTTT/index.php'>Về trang chủ</a>";
-                    $_SESSION['username'] = $username;
-                    //header("Location: ../../index.php"); //điều hướng tự chuyển hướng về home
-                    break;
-                } else {
-                    echo "Password không đúng !  <a href='javascript: history.go(-1)'>Trở lại</a>";
-                    //header("Location: login.html?status=false"); //tự chuyển về lại trang login.html
-                }
-            }
-        }
-        // if(!isset($_SESSION['username'])){
-        //     echo "Đăng nhập không thành công !";
-
-        // }
-    }
-}
-?>
+<?php include('admin/alertModal.php'); ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -49,17 +13,12 @@ if ($result = DataProvider::executeQuery('SELECT * FROM taikhoan')) {
     <title>PizzaHot - Login</title>
 
     <!-- Custom fonts for this template-->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="admin/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
 
     <!-- Custom styles for this template-->
-    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="admin/css/sb-admin-2.min.css" rel="stylesheet">
 
-    <script>
-        if (isset($_GET['status'])) {
-            alert("Sai thông tin đăng nhập !");
-        }
-    </script>
 
 </head>
 
@@ -76,13 +35,13 @@ if ($result = DataProvider::executeQuery('SELECT * FROM taikhoan')) {
                     <div class="card-body p-0">
                         <!-- Nested Row within Card Body -->
                         <div class="row">
-                            <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background-image: url(img/bg_login.jpg)"></div>
+                            <div class="col-lg-6 d-none d-lg-block bg-login-image" style="background-image: url(admin/congcu/img/bg_login.jpg)"></div>
                             <div class="col-lg-6 ">
                                 <div class="p-5 ">
                                     <div class="text-center ">
                                         <h1 class="h4 text-gray-900 mb-4 ">Chào mừng bạn trở lại !</h1>
                                     </div>
-                                    <form class="user" action="login.php" method="POST" onsubmit="return check()">
+                                    <form class="user" id="loginForm" onsubmit="return check()">
                                         <div class="form-group ">
                                             <input name="txtUsername" id="txtUsername" type="text" class="form-control form-control-user" aria-describedby="emailHelp " placeholder="Tên đăng nhập " />
                                         </div>
@@ -95,14 +54,14 @@ if ($result = DataProvider::executeQuery('SELECT * FROM taikhoan')) {
                                                 <label class="custom-control-label " for="customCheck ">Ghi nhớ đăng nhập</label>
                                             </div>
                                         </div>
-                                        <input type="submit" class="btn btn-primary btn-user btn-block " value="Đăng nhập" />
+                                        <input type="submit" id="submit-login" class="btn btn-primary btn-user btn-block " value="Đăng nhập" />
                                         <hr>
-                                        <a href="#" class="btn btn-google btn-user btn-block ">
+                                        <!-- <a href="#" class="btn btn-google btn-user btn-block ">
                                             <i class="fab fa-google fa-fw "></i> Đăng nhập với Google
                                         </a>
                                         <a href="#" class="btn btn-facebook btn-user btn-block ">
                                             <i class="fab fa-facebook-f fa-fw "></i> Đăng nhập với Facebook
-                                        </a>
+                                        </a> -->
                                     </form>
                                     <hr>
                                     <div class="text-center ">
@@ -124,14 +83,14 @@ if ($result = DataProvider::executeQuery('SELECT * FROM taikhoan')) {
     </div>
 
     <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js "></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js "></script>
+    <script src="admin/vendor/jquery/jquery.min.js "></script>
+    <script src="admin/vendor/bootstrap/js/bootstrap.bundle.min.js "></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js "></script>
+    <script src="admin/vendor/jquery-easing/jquery.easing.min.js "></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js "></script>
+    <script src="admin/js/sb-admin-2.min.js "></script>
 
     <script>
         function check() {
@@ -141,6 +100,49 @@ if ($result = DataProvider::executeQuery('SELECT * FROM taikhoan')) {
             }
             return true;
         }
+        var ok = 0;
+        $('#submit-login').click(function(e) {
+            var x = $('#loginForm').serializeArray();
+
+            x.push({
+                'name': 'user-action',
+                'value': 'login'
+            })
+            $.ajax({
+                type: "POST",
+                url: "handle-user.php",
+                data: x,
+                success: function(results) {
+                    var r = $.parseJSON(results);
+                    if (r == null) {
+                        $('#alertModal .modal-body p').html("Tài khoản hoặc mật khẩu không đúng!");
+                        $('#alertModal').modal('show');
+                    } else if (r['DUYET'] == '0') {
+                        $('#alertModal .modal-body p').html("Tài khoản chưa được kích hoạt!");
+                        $('#alertModal').modal('show');
+                    } else {
+                        $('#alertModal .modal-body p').html("Đăng nhập thành công");
+                        ok = Number(r['LEVEL'] )+ 1;
+                        $('#alertModal').modal('show');
+                    }
+                }
+            });
+            e.preventDefault();
+        });
+        $('#alertModal').on('hidden.bs.modal', function(e) {
+            if (ok == 1) {
+                location.href = 'index.php';
+            }
+            if (ok == 2) {
+                location.href = 'staff/index.php';
+            }
+            if (ok == 3) {
+                location.href = 'manager/index.php';
+            }
+            if (ok == 4) {
+                location.href = 'admin/index.php';
+            }
+        });
     </script>
 
 </body>

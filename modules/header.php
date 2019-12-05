@@ -71,8 +71,8 @@ if(!isset($_SESSION)){
                         [<span id="header-amount-cart"><?php echo $icon_cart ?></span>]
                     </a>
                 </li>
-                <li class="nav-item"><a href="admin/congcu/login.html" class="nav-link"><?php echo $user ?></a></li>
-                <li class="nav-item"><a href="admin/congcu/register.html" class="nav-link">Đăng kí</a></li>
+                <li class="nav-item"><a href="login.php" class="nav-link"><?php echo $user ?></a></li>
+                <li class="nav-item"><a href="register.php" class="nav-link">Đăng kí</a></li>
 
             </ul>
         </div>

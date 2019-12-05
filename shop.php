@@ -225,3 +225,9 @@
 </body>
 
 </html>
+<style>
+.img-fluid {
+    max-width: 100%;
+    max-height: 170px;
+}
+</style>

@@ -1,5 +1,12 @@
 <?php
 require('../core/DataProvider.php');
+session_start();
+$USERNAME = $_SESSION['username'];
+$account = DataProvider::executeQuery("SELECT * FROM taikhoan WHERE USERNAME = '$USERNAME' LIMIT 1");
+$re = mysqli_fetch_assoc($account);
+if ($re['LEVEL'] != 3) {
+    header('location: ../login.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
